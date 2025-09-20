@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolaborasi - Gema Nusa</title>
+    <meta name="description" content="Bergabung dengan komunitas Gema Nusa dan berkolaborasi dengan pemuda Indonesia lainnya.">
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/css/luma-ai.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Custom TailwindCSS Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nusantara-green': '#2D5A27',
+                        'tradisi-gold': '#D4AF37',
+                        'samudra-blue': '#1B4B73',
+                        'kapas-white': '#FEFEFE',
+                        'batu-gray': '#4A5568'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Poppins', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-kapas-white text-batu-gray">
+    <!-- Navigation -->
+    <nav id="navbar"></nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Collaboration Map -->
+        <section id="collaboration-map"></section>
+        
+        <!-- Partner Network -->
+        <section id="partner-network"></section>
+        
+        <!-- Join Community -->
+        <section id="join-community"></section>
+    </main>
+    
+    <!-- Footer -->
+    <footer id="footer"></footer>
+    
+    <!-- Luma Chatbot -->
+    <div id="luma-chatbot"></div>
+    
+    <!-- Scripts -->
+    <script src="../assets/js/component-loader.js"></script>
+    <script src="../assets/js/luma-chatbot.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

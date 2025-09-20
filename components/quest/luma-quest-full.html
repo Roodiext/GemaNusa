@@ -1,0 +1,132 @@
+<section class="py-20 bg-white relative overflow-hidden" id="luma-quest-section">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="quest-full-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+            <circle cx="50" cy="50" r="2" fill="#2D5A27" opacity="0.4"/>
+            <circle cx="25" cy="25" r="1" fill="#1B4B73" opacity="0.2"/>
+            <circle cx="75" cy="75" r="1" fill="#D4AF37" opacity="0.2"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#quest-full-pattern)"/>
+      </svg>
+    </div>
+  
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Intro Section -->
+      <div id="quest-intro" class="text-center mb-12" data-animate="fade-in-up">
+        <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-nusantara-green to-samudra-blue rounded-full text-white text-sm font-medium mb-6 shadow-lg">
+          <div class="luma-avatar mr-3 bg-white/20 rounded-full flex items-center justify-center" style="width: 24px; height: 24px; font-size: 0.7rem;">L</div>
+          Luma Quest - Temukan Minat & Bakatmu
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-display font-bold text-batu-gray mb-6">
+          Temukan Minat & Bakatmu dengan
+          <span class="text-transparent bg-gradient-to-r from-nusantara-green to-tradisi-gold bg-clip-text">Luma Quest</span>
+        </h1>
+        
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
+          Jawab 5 pertanyaan singkat untuk menemukan peran & program sosial yang cocok untukmu
+        </p>
+  
+        <button id="start-quest-btn" class="bg-gradient-to-r from-nusantara-green to-samudra-blue text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 transform">
+          <span class="flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            Mulai Quest
+          </span>
+        </button>
+      </div>
+  
+      <!-- Quest Container (Hidden initially) -->
+      <div id="quest-container" class="bg-white rounded-3xl p-8 md:p-12 border-2 border-gray-100 shadow-2xl hidden">
+        <!-- Progress Bar -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-600">Progress</span>
+            <span id="progress-text" class="text-sm font-medium text-gray-600">Pertanyaan 1 dari 5</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progress-bar" class="bg-gradient-to-r from-nusantara-green to-samudra-blue h-2 rounded-full transition-all duration-500" style="width: 20%"></div>
+          </div>
+        </div>
+  
+        <!-- Question Content -->
+        <div id="question-content">
+          <!-- Questions will be dynamically inserted here -->
+        </div>
+  
+        <!-- Navigation -->
+        <div class="flex justify-between mt-8">
+          <button id="prev-btn" class="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            ← Sebelumnya
+          </button>
+          <button id="next-btn" class="px-8 py-3 bg-gradient-to-r from-nusantara-green to-samudra-blue text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            Selanjutnya →
+          </button>
+        </div>
+      </div>
+  
+      <!-- Results Section (Hidden initially) -->
+      <div id="quest-results" class="bg-white rounded-3xl p-8 md:p-12 border-2 border-gray-100 shadow-2xl hidden">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-gradient-to-r from-nusantara-green to-samudra-blue rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-batu-gray mb-4">Quest Selesai! 🎉</h2>
+          <p class="text-gray-600 mb-2">Peran utama kamu adalah:</p>
+          <div id="main-role" class="text-2xl font-bold text-transparent bg-gradient-to-r from-nusantara-green to-tradisi-gold bg-clip-text mb-6">
+            <!-- Role will be inserted here -->
+          </div>
+        </div>
+  
+        <div id="recommended-programs" class="space-y-6">
+          <!-- Recommended programs will be inserted here -->
+        </div>
+  
+        <div class="text-center mt-8">
+          <button id="view-all-programs" class="bg-gradient-to-r from-samudra-blue to-nusantara-green text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all">
+            Lihat Semua Program
+          </button>
+        </div>
+      </div>
+  
+      <!-- Benefits (Always visible) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12" data-animate="fade-in-up">
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+          <div class="w-12 h-12 bg-gradient-to-br from-nusantara-green to-tradisi-gold rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-batu-gray mb-2">AI yang Memahami</h3>
+          <p class="text-gray-600 text-sm">Algoritma cerdas yang menganalisis kepribadian dan minatmu</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+          <div class="w-12 h-12 bg-gradient-to-br from-samudra-blue to-nusantara-green rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-batu-gray mb-2">Hasil Instan</h3>
+          <p class="text-gray-600 text-sm">Rekomendasi program plus roadmap aksi yang jelas</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 text-center group">
+          <div class="w-12 h-12 bg-gradient-to-br from-tradisi-gold to-samudra-blue rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-batu-gray mb-2">Komunitas Siap</h3>
+          <p class="text-gray-600 text-sm">Langsung terhubung dengan mentor dan komunitas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  

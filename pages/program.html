@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program - Gema Nusa</title>
+    <meta name="description" content="Temukan program lingkungan yang sesuai dengan passion dan kemampuanmu melalui Luma Quest.">
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/css/luma-ai.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Custom TailwindCSS Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nusantara-green': '#2D5A27',
+                        'tradisi-gold': '#D4AF37',
+                        'samudra-blue': '#1B4B73',
+                        'kapas-white': '#FEFEFE',
+                        'batu-gray': '#4A5568'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Poppins', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-kapas-white text-batu-gray">
+    <!-- Navigation -->
+    <nav id="navbar"></nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Map Hero Section -->
+        <section id="map-hero"></section>
+        
+        <!-- Program Catalog -->
+        <section id="program-catalog"></section>
+        
+        <!-- Success Stories -->
+        <section id="success-stories"></section>
+    </main>
+    
+    <!-- Footer -->
+    <footer id="footer"></footer>
+    
+    <!-- Luma Chatbot -->
+    <div id="luma-chatbot"></div>
+    
+    <!-- Scripts -->
+    <script src="../assets/js/component-loader.js"></script>
+    <script src="../assets/js/map.js"></script>
+    <script src="../assets/js/program-catalog.js"></script>
+    
+    <!-- Quest Integration Script -->
+    <script>
+        // Debug logging
+        console.log("=== PROGRAM PAGE LOADED ===")
+        
+        // Handle Quest results integration
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM Content Loaded - Program Page")
+            
+            // Debug: Check if components are loading
+            setTimeout(() => {
+                console.log("Map container exists:", !!document.getElementById('map-container'))
+                console.log("Map system exists:", !!window.mapSystem)
+                console.log("Program catalog exists:", !!window.programCatalog)
+            }, 2000)
+            
+            // Check for quest results from localStorage
+            const questResults = localStorage.getItem('luma_quest_results')
+            if (questResults) {
+                try {
+                    const results = JSON.parse(questResults)
+                    console.log('Quest results found:', results)
+                    
+                    // Initialize map with quest scope
+                    if (window.mapSystem && results.userScope) {
+                        setTimeout(() => {
+                            window.mapSystem.handleQuestIntegration(results)
+                        }, 1000)
+                    }
+                    
+                    // Highlight recommended programs
+                    if (window.programCatalog && results.results) {
+                        setTimeout(() => {
+                            results.results.forEach(([programId], index) => {
+                                if (index === 0) { // Highlight top recommendation
+                                    window.programCatalog.highlightProgram(programId)
+                                }
+                            })
+                        }, 1500)
+                    }
+                    
+                    // Clear quest results after processing
+                    localStorage.removeItem('luma_quest_results')
+                } catch (e) {
+                    console.error('Error parsing quest results:', e)
+                }
+            }
+            
+            // Handle URL parameters for direct program highlighting
+            const urlParams = new URLSearchParams(window.location.search)
+            const highlightProgram = urlParams.get('highlight')
+            const scope = urlParams.get('scope')
+            
+            if (highlightProgram) {
+                setTimeout(() => {
+                    if (window.programCatalog) {
+                        window.programCatalog.highlightProgram(highlightProgram)
+                    }
+                }, 1000)
+            }
+            
+            if (scope && window.mapSystem) {
+                setTimeout(() => {
+                    window.mapSystem.setScope(scope)
+                }, 500)
+            }
+        })
+        
+        // Additional debugging after page load
+        window.addEventListener('load', function() {
+            console.log("Window loaded - checking components...")
+            setTimeout(() => {
+                const mapContainer = document.getElementById('map-container')
+                if (mapContainer) {
+                    console.log("Map container found:", mapContainer)
+                    if (!window.mapSystem) {
+                        console.log("Map system not found, creating manually...")
+                        // Force create map system if not exists
+                        if (typeof MapSystem !== 'undefined') {
+                            window.mapSystem = new MapSystem()
+                        }
+                    }
+                } else {
+                    console.log("Map container NOT found - component may not be loaded")
+                }
+            }, 3000)
+        })
+    </script>
+    <script src="../assets/js/luma-chatbot.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

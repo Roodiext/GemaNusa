@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gema Nusa - Platform Kolaborasi Generasi Muda Indonesia</title>
+    <meta name="description" content="Gema Nusa adalah gerakan sosial dan kreatif yang menyatukan generasi muda Indonesia dalam aksi nyata untuk lingkungan dan keberlanjutan.">
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fixed CSS file paths to be relative from pages folder -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/css/luma-ai.css">
+    <link rel="icon" href="../assets/img/logo/Logo-Light-Solid.png" type="image/x-icon">
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Custom TailwindCSS Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nusantara-green': '#2D5A27',
+                        'tradisi-gold': '#D4AF37',
+                        'samudra-blue': '#1B4B73',
+                        'kapas-white': '#FEFEFE',
+                        'batu-gray': '#4A5568',
+                        'sabang' : '#B0E638',
+                        'merauke': '#5E1EE6',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Poppins', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+     <style>
+    /* Fade-out animasi preloader */
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.8s ease-out, visibility 0.8s;
+      visibility: hidden;
+    }
+  </style>
+
+</head>
+<body class="bg-kapas-white text-batu-gray">
+
+   <!-- PRELOADER -->
+  <div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+    <!-- Logo -->
+    <img src="../assets/img/logo/Logo-Light-Solid.png" alt="Logo Gema Nusa" class="w-24 h-24 mb-6">
+
+    <!-- Lingkaran Spinner -->
+    <div class="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+    <!-- Navigation -->
+    <nav id="navbar"></nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero"></section>
+
+
+        
+        <!-- Tentang Section -->
+        <section id="tentang"></section>
+
+        
+  <!-- Stats Box floating di bawah Hero -->
+  <div class="absolute -bottom-36 left-1/2 -translate-x-1/2 
+              z-20 grid grid-cols-2 md:grid-cols-4 gap-6 
+              bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+    <div class="text-center">
+      <h3 class="text-2xl font-bold text-purple-600">500+</h3>
+      <p class="text-sm text-gray-600">Komunitas</p>
+    </div>
+    <div class="text-center">
+      <h3 class="text-2xl font-bold text-purple-600">1200+</h3>
+      <p class="text-sm text-gray-600">Relawan</p>
+    </div>
+    <div class="text-center">
+      <h3 class="text-2xl font-bold text-purple-600">30+</h3>
+      <p class="text-sm text-gray-600">Provinsi</p>
+    </div>
+    <div class="text-center">
+      <h3 class="text-2xl font-bold text-purple-600">99K</h3>
+      <p class="text-sm text-gray-600">Partisipan</p>
+    </div>
+  </div>
+
+        
+        <!-- Featured Programs -->
+        <section id="featured-programs"></section>
+        
+        <!-- Luma Quest Intro -->
+        <section id="luma-quest-intro"></section>
+        
+        <!-- Impact Stats -->
+        <section id="dampak-stats"></section>
+        
+        <!-- Testimonials -->
+        <section id="testimonials"></section>
+        
+        <!-- Call to Action -->
+        <section id="ajakan"></section>
+    </main>
+    
+    <!-- Footer -->
+    <footer id="footer"></footer>
+    
+    <!-- Luma Chatbot -->
+    <div id="luma-chatbot"></div>
+    
+   
+    
+    <!-- Fixed JavaScript file paths to be relative from pages folder -->
+    <script src="../assets/js/component-loader.js"></script>
+    <script src="../assets/js/luma-chatbot.js"></script>
+    <script src="../assets/js/luma-quest.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      const mainContent = document.getElementById("main-content");
+      setTimeout(() => {
+        preloader.classList.add("fade-out");
+        mainContent.classList.remove("opacity-0");
+      }, 800); // delay biar smooth
+    });
+  </script>
+</body>
+</html>

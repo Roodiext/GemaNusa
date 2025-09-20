@@ -1,0 +1,126 @@
+<!-- Map Hero Section -->
+<section class="py-12 bg-gradient-to-br from-nusantara-green to-samudra-blue relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Simple Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-4">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        Jelajahi Program di Seluruh Nusantara
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-4">
+        Peta Program <span class="text-tradisi-gold">Interaktif</span>
+      </h1>
+      <p class="text-lg text-white/90 max-w-2xl mx-auto">
+        Temukan program sosial dan lingkungan di seluruh Indonesia. Hover untuk melihat detail, klik wilayah untuk eksplorasi lebih lanjut.
+      </p>
+    </div>
+
+    <!-- Simple Map Container -->
+    <div class="bg-white rounded-2xl p-6 shadow-2xl">
+      <!-- Map Controls -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-semibold text-batu-gray">Pilih Cakupan Peta</h3>
+          <div id="active-scope-indicator" class="text-sm text-gray-600">
+            Cakupan: <span class="font-semibold text-nusantara-green">Indonesia</span>
+          </div>
+        </div>
+        <div class="flex justify-center gap-3">
+          <button class="map-scope-btn px-6 py-2 bg-nusantara-green text-white rounded-lg font-semibold transition-all shadow-lg" data-scope="indonesia">
+            Indonesia
+          </button>
+          <button class="map-scope-btn px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all" data-scope="world">
+            Dunia
+          </button>
+        </div>
+      </div>
+
+      <!-- Map Container -->
+      <div id="map-container" class="w-full h-96 bg-gray-50 rounded-xl border border-gray-200 relative overflow-hidden">
+        <div id="map-loading" class="absolute inset-0 flex items-center justify-center">
+          <div class="text-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-nusantara-green mx-auto mb-2"></div>
+            <p class="text-gray-600 text-sm">Memuat peta...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simple Legend -->
+      <div class="mt-4 flex justify-center gap-6 text-sm">
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 bg-gray-200 border border-black rounded"></div>
+          <span class="text-gray-600">Wilayah Normal</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 bg-blue-300 border border-black rounded"></div>
+          <span class="text-gray-600">Ada Program</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 bg-green-300 border border-black rounded"></div>
+          <span class="text-gray-600">Program Aktif</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Simple Map Control Script -->
+<script>
+function setupSimpleMapControls() {
+  console.log("Setting up simple map controls...")
+  
+  const scopeButtons = document.querySelectorAll('.map-scope-btn')
+  const scopeIndicator = document.getElementById('active-scope-indicator')
+  
+  if (scopeButtons.length === 0) {
+    setTimeout(setupSimpleMapControls, 500)
+    return
+  }
+  
+  scopeButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const scope = this.dataset.scope
+      console.log("Map scope changed to:", scope)
+      
+      // Update button states
+      scopeButtons.forEach(btn => {
+        btn.classList.remove('bg-nusantara-green', 'text-white', 'shadow-lg')
+        btn.classList.add('bg-gray-200', 'text-gray-700')
+      })
+      
+      this.classList.remove('bg-gray-200', 'text-gray-700')
+      this.classList.add('bg-nusantara-green', 'text-white', 'shadow-lg')
+      
+      // Update indicator
+      const scopeNames = {
+        'indonesia': 'Indonesia',
+        'world': 'Dunia'
+      }
+      
+      if (scopeIndicator) {
+        scopeIndicator.innerHTML = `Cakupan: <span class="font-semibold text-nusantara-green">${scopeNames[scope]}</span>`
+      }
+      
+      // Update map
+      if (window.simpleMapSystem) {
+        window.simpleMapSystem.switchMap(scope)
+      }
+    })
+  })
+  
+  // Initialize map
+  setTimeout(() => {
+    if (window.simpleMapSystem && document.getElementById('map-container')) {
+      window.simpleMapSystem.initializeMap()
+    }
+  }, 500)
+}
+
+// Initialize controls
+document.addEventListener('DOMContentLoaded', setupSimpleMapControls)
+setTimeout(setupSimpleMapControls, 1000)
+</script>
