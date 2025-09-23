@@ -1,30 +1,35 @@
-<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 
-            bg-white/70 backdrop-blur-md 
-            transition duration-300 px-6 py-3 w-[90%] max-w-7xl 
-            rounded-2xl ">
-  <div class="flex items-center justify-between">
+<!-- components/navbar.html -->
+<nav id="navbar-wrapper" 
+     class="fixed top-0 left-0 right-0 z-50 
+            bg-white/30 backdrop-blur-md shadow-sm  flex items-center justify-center    ">
+  <div class="flex items-center justify-between w-[90%] max-w-7xl mx-auto py-3">
+
     <!-- Logo -->
-    <div class="flex items-center">
-      <img src="/assets/img/logo/Logo-Light-Text.png" alt="Logo" class="h-12 w-12">
+    <a href="index.html#beranda" 
+       class="flex items-center px-4 py-2 rounded-full bg-merauke">
+      <img src="/assets/img/Logo-Dark-Text.svg" 
+           alt="Logo Gema Nusa" 
+           class="h-6 w-auto">
+    </a>
+
+    <!-- Menu (Desktop) -->
+    <div id="navbar-menu" 
+         class="hidden md:flex items-center gap-6 
+                px-6 py-2 rounded-full bg-merauke 
+                text-white font-medium">
+      <a href="index.html#beranda" class="hover:opacity-80 transition">Beranda</a>
+      <a href="index.html#tentang" class="hover:opacity-80 transition">Tentang Kami</a>
+      <a href="index.html#program" class="hover:opacity-80 transition">Program</a>
+      <a href="index.html#lumaai" class="hover:opacity-80 transition">Luma AI</a>
+      <a href="index.html#contact" class="hover:opacity-80 transition">Contact</a>
     </div>
 
-    <!-- Menu -->
-    <ul class="hidden md:flex items-center space-x-8 font-inter font-medium text-gray-700">
-      <li><a href="#beranda" class="hover:text-purple-600 transition">Beranda</a></li>
-      <li><a href="#about" class="hover:text-purple-600 transition">Tentang Kami</a></li>
-      <li><a href="#program" class="hover:text-purple-600 transition">Program</a></li>
-      <li><a href="#contact-us" class="hover:text-purple-600 transition">Contact</a></li>
-    </ul>
+    <!-- CTA Button -->
+    <a href="index.html#mulai" 
+       class="hidden sm:inline-block px-6 py-3 rounded-full bg-merauke 
+              text-white font-semibold shadow-md hover:opacity-90 transition">
+      Mulai Quest
+    </a>
 
-    <!-- Mulai Quest Button -->
-    <div class="flex items-center">
-      <a href="program.html" 
-         class="px-4 py-2 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">
-        Mulai Quest
-      </a>
-    </div>
   </div>
 </nav>
-
-<!-- Spacer biar konten tidak ketutup navbar -->
-<div class="h-28"></div>

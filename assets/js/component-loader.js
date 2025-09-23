@@ -262,28 +262,31 @@ document.addEventListener("componentLoaded", (event) => {
 })
 
 // Navigation initialization
-function initializeNavigation() {
-  // Mobile menu toggle
-  const mobileMenuButton = document.querySelector("[data-mobile-menu-toggle]")
-  const mobileMenu = document.querySelector("[data-mobile-menu]")
+  function initializeNavigation() {
+    const mobileMenuButton = document.querySelectorAll("[data-mobile-menu-toggle]");
+    const mobileMenu = document.querySelector("[data-mobile-menu]");
 
-  if (mobileMenuButton && mobileMenu) {
-    mobileMenuButton.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden")
-    })
+    mobileMenuButton.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (mobileMenu) {
+          mobileMenu.classList.toggle("-translate-x-full");
+        }
+      });
+    });
+
+    // Active page highlighting
+    const currentPage = window.componentLoader?.getCurrentPage?.() || '';
+    const navLinks = document.querySelectorAll("[data-nav-link]");
+
+    navLinks.forEach((link) => {
+      const linkPage = link.getAttribute("data-nav-link");
+      if (linkPage === currentPage) {
+        link.classList.add("active");
+      }
+    });
   }
 
-  // Active page highlighting
-  const currentPage = window.componentLoader.getCurrentPage()
-  const navLinks = document.querySelectorAll("[data-nav-link]")
-
-  navLinks.forEach((link) => {
-    const linkPage = link.getAttribute("data-nav-link")
-    if (linkPage === currentPage) {
-      link.classList.add("active")
-    }
-  })
-}
+  initializeNavigation();
 
 // Counter animations for stats
 function initializeCounterAnimations() {
@@ -323,3 +326,108 @@ function animateCounter(element, target) {
     element.textContent = Math.floor(current).toLocaleString("id-ID")
   }, stepTime)
 }
+
+const sabangWords = ["SABANG", "ROTE", "ENDE"];
+const meraukeWords = ["MERAUKE", "ENDE", "SABANG"];
+
+let sabangIndex = 0;
+let meraukeIndex = 0;
+
+function morphText(id, words, indexVar, callback) {
+  const el = document.getElementById(id);
+  el.classList.add("fade-out");
+  setTimeout(() => {
+    indexVar = (indexVar + 1) % words.length;
+    el.textContent = words[indexVar];
+    el.classList.remove("fade-out");
+    callback(indexVar);
+  }, 600); // durasi fade
+}
+
+setInterval(() => {
+  morphText("sabang", sabangWords, sabangIndex, i => sabangIndex = i);
+  morphText("merauke", meraukeWords, meraukeIndex, i => meraukeIndex = i);
+}, 2500); // ganti setiap 2,5 detik
+
+$(document).ready(function() {
+  function checkFade() {
+    $('.fade-scroll').each(function(i) {
+      var bottom_of_element = $(this).offset().top + $(this).outerHeight() / 4;
+      var bottom_of_window = $(window).scrollTop() + $(window).height();
+
+      if (bottom_of_window > bottom_of_element) {
+        // tambahkan delay biar muncul satu per satu
+        $(this).delay(i * 200).queue(function(next) {
+          $(this).addClass('show');
+          next();
+        });
+      }
+    });
+  }
+
+  // Cek pertama kali load
+  checkFade();
+
+  // Cek saat discroll
+  $(window).on('scroll', function() {
+    checkFade();
+  });
+});
+
+function initProgramCards(cardSelector, programsData) {
+  const cards = document.querySelectorAll(cardSelector);
+  const detailSection = document.getElementById("programDetail");
+  const detailImage = document.getElementById("detailImage");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailDesc = document.getElementById("detailDesc");
+  const detailLink = document.getElementById("detailLink");
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const programKey = card.dataset.program;
+      const program = programsData[programKey];
+      if (!program) return;
+
+      // Update detail section
+      detailImage.src = program.image;
+      detailImage.alt = program.title;
+      detailTitle.textContent = program.title;
+      detailDesc.textContent = program.desc;
+      detailLink.href = program.link;
+
+      // Tampilkan section
+      detailSection.classList.remove("hidden");
+
+      // Scroll ke section
+      detailSection.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+}
+
+// Panggil function
+initProgramCards(".card", {
+  mengajar: {
+    title: "Kegiatan Sosial Mengajar",
+    desc: "Kami aktif dalam berbagai program sosial—dari kegiatan mengajar, bakti sosial, hingga pemberdayaan masyarakat. Gema Nusa menjadi penggema pendidikan di titik kehampaan gelapnya dunia.",
+    image: "/assets/img/mengajar.jpg",
+    link: "#"
+  },
+  bakti: {
+    title: "Kegiatan Bakti Sosial",
+    desc: "Program bakti sosial Gema Nusa berfokus pada kepedulian dan aksi nyata bagi masyarakat yang membutuhkan.",
+    image: "/assets/img/bakti.jpg",
+    link: "#"
+  },
+  bantuan: {
+    title: "Bantuan Pangan",
+    desc: "Distribusi bantuan pangan bagi mereka yang terdampak ketidakstabilan ekonomi dan bencana alam.",
+    image: "/assets/img/bantuan.jpg",
+    link: "#"
+  },
+  lainnya: {
+    title: "Program Lainnya",
+    desc: "Berbagai program inovatif Gema Nusa lainnya untuk memberdayakan masyarakat.",
+    image: "/assets/img/lainnya.jpg",
+    link: "#"
+  }
+});

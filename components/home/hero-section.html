@@ -1,29 +1,91 @@
 <!-- Hero Section -->
-<section class="relative w-full min-h-screen flex flex-col justify-center items-center bg-white overflow-hidden py-4">
-  <!-- Gambar Peta -->
-  <div class="w-full flex justify-center items-center -mt-20"> <!-- gambar lebih naik -->
-    <img src="/assets/img/3.png" 
-         alt="Peta Indonesia" 
-         class="w-[65%] md:w-[50%] object-contain pointer-events-none" />
-  </div>
+<section id="beranda" 
+  class="relative w-full min-h-screen bg-white overflow-hidden flex flex-col items-center justify-center py-20">
 
-  <!-- Konten Teks -->
-  <div class="relative z-10 text-center mt-4 -translate-y-12"> <!-- teks lebih naik -->
-    <h1 class="text-4xl md:text-5xl font-extrabold text-black leading-snug">
-      DARI <span class="text-sabang">SABANG</span> HINGGA <span class="text-merauke">MERAUKE</span>
-    </h1>
-    <p class="mt-4 text-gray-600 text-lg md:text-xl">Bersama Kita Wujudkan Harapan</p>
+  <!-- Dekorasi Kiri -->
+  <img src="/assets/img/hero-kids-kiri.svg" 
+       alt="Ilustrasi anak-anak kiri" 
+       class="absolute left-0 bottom-0 w-auto max-h-[70vh] object-bottom pointer-events-none fade-only">
+
+  <!-- Dekorasi Kanan -->
+  <img src="/assets/img/hero-kids-kanan.svg" 
+       alt="Ilustrasi anak-anak kanan" 
+       class="absolute right-0 bottom-0 w-auto max-h-[70vh] object-bottom pointer-events-none fade-only delay-200">
+
+  <!-- Konten -->
+  <div class="relative z-10 text-center max-w-3xl px-6 space-y-8">
+    
+    <!-- Tagar + Slogan -->
+    <div class="flex items-center justify-center gap-3 fade-up">
+      <p class="text-sm md:text-base font-medium text-gray-700">
+        Be The Change, Donate Today
+      </p>
+    </div>
+
+<!-- Judul dengan Tagar -->
+<div class="fade-up delay-200 text-center">
+  <h1 class="text-2xl md:text-4xl lg:text-6xl font-bold leading-snug text-black">
+    <span class="inline-flex items-center justify-center">
+      <img src="/assets/img/tagar.svg" 
+           alt="Ikon tagar" 
+           class="w-10 h-10 md:w-14 md:h-14 inline-block align-middle -mt-1 mr-1">
+      <span class="align-middle">
+        Dari <span class="text-green-700">Sabang</span>
+      </span>
+    </span><br>
+    Hingga <span class="text-yellow-600">Merauke</span><br>
+    <span class="text-black">Kita Peduli</span>
+  </h1>
+</div>
+
+
+
+
+    <!-- Sub Judul -->
+    <p class="text-gray-600 text-base md:text-lg fade-up delay-400">
+      Bersama Kita Wujudkan Harapan
+    </p>
 
     <!-- Tombol -->
-    <div class="mt-8 flex justify-center gap-4">
+    <div class="flex flex-col sm:flex-row gap-4 pt-6 justify-center fade-up delay-600">
       <a href="#"
-        class="px-6 py-3 bg-purple-600 text-white rounded-full font-medium shadow hover:bg-purple-700 transition">
-        Lihat Selengkapnya
+         class="px-6 py-3 rounded-full bg-purple-600 text-white font-semibold 
+                hover:bg-purple-700 hover:shadow-md transition">
+        Baca Selengkapnya
       </a>
       <a href="#"
-        class="px-6 py-3 border border-purple-600 text-purple-600 rounded-full font-medium hover:bg-purple-50 transition">
-        Jadi Penggerak
+         class="px-6 py-3 rounded-full border-2 border-purple-600 text-purple-600 font-semibold 
+                hover:bg-purple-600 hover:text-white hover:shadow-md transition">
+        Jadi Penggema
       </a>
     </div>
+
   </div>
 </section>
+
+<!-- Animasi CSS -->
+<style>
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOnly {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.9s ease-out forwards;
+}
+
+.fade-only {
+  opacity: 0;
+  animation: fadeOnly 1.2s ease-out forwards;
+}
+
+.delay-200 { animation-delay: 0.2s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-600 { animation-delay: 0.6s; }
+</style>

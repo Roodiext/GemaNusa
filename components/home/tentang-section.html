@@ -1,4 +1,4 @@
-<section id="about" class="relative bg-black overflow-hidden py-20">
+<section id="about" class="relative bg-black overflow-hidden py-28">
 
     <!-- Background Image -->
     <div class="absolute inset-0 opacity-20 z-0">
@@ -6,23 +6,23 @@
     </div>
 
     <!-- Main Content -->
-    <div class="relative z-10 flex items-center px-8 lg:px-16 mt-20">
+    <div class="relative z-10 flex items-center px-8 lg:px-16 mt-10">
         <div class="max-w-6xl mx-auto w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
 
                 <!-- Left Content -->
-                <div class="text-white">
-                    <h1 class="text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+                <div class="text-white fade-scroll">
+                    <h1 class="text-5xl lg:text-6xl font-bold mb-10 leading-tight fade-scroll">
                         Kenal Lebih Dekat
                     </h1>
-                    <p class="text-lg lg:text-xl leading-relaxed opacity-90">
+                    <p class="text-lg lg:text-xl leading-relaxed opacity-90 fade-scroll">
                         Gema Nusa adalah gerakan sosial dan kreatif yang lahir untuk menyatukan generasi muda Indonesia dalam aksi nyata. Kami hadir sebagai ruang kolaborasi untuk belajar, berkarya, dan berdampak—mulai dari edukasi, teknologi, budaya, hingga aksi sosial di seluruh Nusantara. Gema Nusa sudah menghasilkan
                     </p>
                 </div>
 
                 <!-- Right Content -->
-                <div class="flex justify-center lg:justify-end">
-                    <div class="relative w-full max-w-lg h-[400px]">
+                <div class="flex justify-center lg:justify-end fade-scroll">
+                    <div class="relative w-full max-w-lg h-[420px]">
                         <div class="absolute inset-0 flex items-center justify-center">
                             <img src="/assets/img/logo/Logo-Dark-Solid.png" alt="Logo" class="w-72 h-72 lg:w-96 lg:h-96">
                         </div>
@@ -33,3 +33,23 @@
         </div>
     </div>
 </section>
+
+<!-- jQuery (Wajib ada) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+/* Default hidden */
+.fade-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+/* Saat muncul */
+.fade-scroll.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+

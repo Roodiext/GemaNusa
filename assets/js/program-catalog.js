@@ -12,6 +12,13 @@ class ProgramCatalog {
       skills: [],
       roles: []
     }
+
+    this._boundHandleOutsideClick = this.handleOutsideClick.bind(this)
+    this._boundEscHandler = (e) => {
+      if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
+        this.closeAdvancedFilter()
+  }
+}
     
     // Performance optimization
     this.filteredCache = new Map()
@@ -20,6 +27,17 @@ class ProgramCatalog {
     
     console.log("Program database loaded:", Object.keys(this.programDatabase).length, "programs")
     this.init()
+
+    // Tambahkan state untuk modal filter
+    this.isAdvancedFilterOpen = false
+
+    // Tambahkan reference untuk event handler yang dipakai ulang
+    this._boundHandleOutsideClick = this.handleOutsideClick.bind(this)
+    this._boundEscHandler = (e) => {
+      if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
+        this.closeAdvancedFilter()
+      }
+    }
   }
 
   init() {
@@ -178,20 +196,105 @@ class ProgramCatalog {
         scope: "local",
         skills: ["technical", "leadership"],
         rolesAvailable: ["mentor", "relawan"],
+        gradient: "from-purple-500 to-pink-500",
         activities: [
           "Deploy sensor IoT untuk pertanian",
           "Aplikasi marketplace produk desa",
-          "Training digital literacy"
+          "Training digital literacy",
+          "Sistem informasi desa"
         ],
-        impact: "20+ desa ter-digitalisasi, 500+ petani terbantu teknologi",
-        gradient: "from-teal-500 to-green-600",
-        
+        impact: "20+ desa ter-digitalisasi, 500+ petani terbantu teknologi"
+      },
+      global_climate_action: {
+        name: "Global Climate Action",
+        description: "Aksi kolaboratif lintas negara untuk mengatasi perubahan iklim di Asia Tenggara",
+        category: "conservation",
+        commitment: "high",
+        scope: "global",
+        skills: ["leadership", "communication"],
+        rolesAvailable: ["mentor", "relawan"],
+        gradient: "from-green-600 to-blue-600",
+        activities: [
+          "Kampanye kesadaran perubahan iklim",
+          "Proyek energi terbarukan regional",
+          "Workshop sustainability lintas negara",
+          "Research kolaboratif dampak iklim"
+        ],
+        impact: "4 negara terlibat, 50+ proyek energi hijau"
+      },
+      asean_youth_exchange: {
+        name: "ASEAN Youth Exchange",
+        description: "Program pertukaran pemuda ASEAN untuk berbagi pengetahuan dan budaya",
+        category: "education",
+        commitment: "mid",
+        scope: "global",
+        skills: ["communication", "leadership"],
+        rolesAvailable: ["mentor", "relawan"],
+        gradient: "from-blue-500 to-purple-500",
+        activities: [
+          "Program pertukaran mahasiswa",
+          "Cultural immersion workshops",
+          "Leadership training internasional",
+          "Collaborative social projects"
+        ],
+        impact: "500+ youth participants, 5 negara ASEAN terlibat"
+      },
+      ocean_guardian_network: {
+        name: "Ocean Guardian Network",
+        description: "Jaringan penjaga laut Asia-Pasifik untuk konservasi ekosistem laut",
+        category: "conservation",
+        commitment: "high",
+        scope: "global",
+        skills: ["technical", "leadership"],
+        rolesAvailable: ["mentor", "relawan"],
+        gradient: "from-blue-400 to-teal-500",
+        activities: [
+          "Marine protected area establishment",
+          "Coral reef restoration projects",
+          "Sustainable fishing practices",
+          "Ocean pollution monitoring"
+        ],
+        impact: "3 negara, 15 marine reserves, 200+ fishermen trained"
+      },
+      digital_literacy_asia: {
+        name: "Digital Literacy Asia",
+        description: "Program literasi digital untuk masyarakat kurang mampu di Asia",
+        category: "technology",
+        commitment: "mid",
+        scope: "global",
+        skills: ["technical", "communication"],
+        rolesAvailable: ["mentor", "relawan"],
+        gradient: "from-indigo-500 to-cyan-500",
+        activities: [
+          "Basic computer skills training",
+          "Internet safety workshops",
+          "Digital entrepreneurship programs",
+          "Online learning platform development"
+        ],
+        impact: "4 negara, 2000+ people trained, 50+ digital centers"
+      },
+      sustainable_cities_initiative: {
+        name: "Sustainable Cities Initiative",
+        description: "Inisiatif kota berkelanjutan dengan teknologi smart city",
+        category: "technology",
+        commitment: "high",
+        scope: "global",
+        skills: ["technical", "leadership"],
+        rolesAvailable: ["mentor", "relawan"],
+        gradient: "from-gray-600 to-green-500",
+        activities: [
+          "Smart traffic management systems",
+          "Waste management optimization",
+          "Green building certifications",
+          "Urban farming initiatives"
+        ],
+        impact: "6 cities, 1M+ residents benefited, 30% waste reduction"
       }
     }
   }
 
   setupEventListeners() {
-    console.log("Setting up event listeners...")
+    console.log("Setting up program catalog event listeners...")
     
     // Multiple attempts to setup filter buttons
     const setupFilters = () => {
@@ -218,9 +321,12 @@ class ProgramCatalog {
           this.debouncedRender()
         })
       })
+
+      
       
       console.log("Filter buttons setup completed!")
     }
+    
     
     // Try immediately and with delays
     setupFilters()
@@ -257,113 +363,120 @@ class ProgramCatalog {
       // Advanced filter modal setup with retry mechanism
       this.setupAdvancedFilterListeners()
     }, 200)
+
+    // Tambahkan event listener untuk advanced filter
+    let advancedFilterBtn = document.getElementById('advanced-filter-btn')
+    if (advancedFilterBtn) {
+      // remove previous possible listeners safely by cloning node
+      const btnClone = advancedFilterBtn.cloneNode(true)
+      advancedFilterBtn.parentNode.replaceChild(btnClone, advancedFilterBtn)
+      advancedFilterBtn = document.getElementById('advanced-filter-btn')
+
+      // Attach robust click handler that always opens modal (creates if necessary)
+      advancedFilterBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        this.openAdvancedFilter()
+      })
+    }
+
+    // Event listener untuk menutup modal dengan escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
+        this.closeAdvancedFilter()
+      }
+    })
   }
 
-  openAdvancedFilterModal() {
-    console.log("Opening advanced filter modal...")
+  // Tambahkan method untuk toggle advanced filter
+  toggleAdvancedFilter() {
     const modal = document.getElementById('advanced-filter-modal')
-    if (modal) {
+    if (!modal) return
+    
+    this.isAdvancedFilterOpen = !this.isAdvancedFilterOpen
+    
+    if (this.isAdvancedFilterOpen) {
       modal.classList.remove('hidden')
-      // Lock body scroll for better UX
-      document.body.style.overflow = 'hidden'
-      console.log("Modal opened and body scroll locked")
+      // Tambahkan event listener untuk close ketika klik di luar modal
+      document.addEventListener('click', this.handleOutsideClick.bind(this))
     } else {
-      console.error("Advanced filter modal not found!")
-    }
-  }
-
-  closeAdvancedFilterModal() {
-    console.log("Closing advanced filter modal...")
-    const modal = document.getElementById('advanced-filter-modal')
-    if (modal) {
       modal.classList.add('hidden')
-      // Restore body scroll
-      document.body.style.overflow = ''
-      console.log("Modal closed and body scroll restored")
+      document.removeEventListener('click', this.handleOutsideClick.bind(this))
     }
   }
 
-  setupAdvancedFilterListeners() {
-    // Store reference to this for use in event handlers
-    const self = this
+  // Tambahkan method untuk handle click di luar modal
+  handleOutsideClick(event) {
+    const modal = document.getElementById('advanced-filter-modal')
+    const advancedFilterBtn = document.getElementById('advanced-filter-btn')
     
-    // Check if event delegation is already setup
-    if (document.hasAttribute('data-advanced-filter-setup')) {
-      console.log("Advanced filter listeners already setup, skipping...")
-      return
+    if (modal && !modal.contains(event.target) && 
+        advancedFilterBtn && !advancedFilterBtn.contains(event.target)) {
+      this.closeAdvancedFilter()
+    }
+  }
+
+  // Method untuk membuka advanced filter
+  openAdvancedFilter() {
+  // Ensure modal exists
+  let modal = document.getElementById('advanced-filter-modal');
+  if (!modal) {
+    this.createAdvancedFilterModal()
+    modal = document.getElementById('advanced-filter-modal')
+  }
+
+  if (!modal) {
+    console.error("Could not create advanced filter modal")
+    return
+  }
+
+  // Show modal
+  modal.classList.remove('hidden')
+  this.isAdvancedFilterOpen = true
+
+  // Setup listeners for modal elements (idempotent)
+  this.setupAdvancedFilterListeners()
+
+  // Add click-outside handler on the next tick so the click that opened modal
+  // doesn't immediately trigger the handler.
+  setTimeout(() => {
+    // Remove first to avoid duplicates, then add (use stored bound reference)
+    document.removeEventListener('click', this._boundHandleOutsideClick)
+    document.addEventListener('click', this._boundHandleOutsideClick)
+  }, 0)
+}
+
+  // Method untuk menutup advanced filter
+  closeAdvancedFilter() {
+    const modal = document.getElementById('advanced-filter-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      this.isAdvancedFilterOpen = false;
+      // Remove event listener ketika modal ditutup
+      document.removeEventListener('click', this.handleOutsideClick.bind(this));
+    }
+  }
+
+  // Method untuk reset filter
+  resetAdvancedFilters() {
+    this.advancedFilters = {
+      commitment: [],
+      scope: [],
+      skills: [],
+      roles: []
     }
     
-    // Use robust event delegation with matches() and closest()
-    document.addEventListener('click', function(e) {
-      console.log("Document click detected:", e.target.id, e.target.className)
-      
-      // Advanced filter button click - more robust detection
-      if (e.target.matches('#advanced-filter-btn') || 
-          e.target.closest('#advanced-filter-btn') ||
-          e.target.matches('#advanced-filter-btn *')) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log("Advanced filter button clicked via robust delegation!")
-        self.openAdvancedFilterModal()
-        return
-      }
-      
-      // Close button click
-      if (e.target.matches('#close-advanced-filter') || 
-          e.target.closest('#close-advanced-filter') ||
-          e.target.matches('#close-advanced-filter *')) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log("Close button clicked")
-        self.closeAdvancedFilterModal()
-        return
-      }
-      
-      // Apply filter button click
-      if (e.target.matches('#apply-advanced-filter')) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log("Apply filter button clicked")
-        if (self.applyAdvancedFilters) {
-          self.applyAdvancedFilters()
-        }
-        self.closeAdvancedFilterModal()
-        return
-      }
-      
-      // Reset filter button click
-      if (e.target.matches('#reset-advanced-filter')) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log("Reset filter button clicked")
-        if (self.resetAdvancedFilters) {
-          self.resetAdvancedFilters()
-        }
-        return
-      }
-      
-      // Click outside modal to close (click on backdrop)
-      if (e.target.matches('#advanced-filter-modal')) {
-        console.log("Clicked outside modal, closing...")
-        self.closeAdvancedFilterModal()
-        return
-      }
+    // Reset semua checkbox
+    const checkboxes = document.querySelectorAll('#advanced-filter-modal input[type="checkbox"]')
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false
     })
-    
-    // Also handle Escape key to close modal
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        const modal = document.getElementById('advanced-filter-modal')
-        if (modal && !modal.classList.contains('hidden')) {
-          console.log("Escape key pressed, closing modal...")
-          self.closeAdvancedFilterModal()
-        }
-      }
-    })
-    
-    // Mark as setup
-    document.setAttribute('data-advanced-filter-setup', 'true')
-    console.log("Advanced filter listeners setup with robust event delegation")
+  }
+
+  // Method untuk menerapkan filter
+  applyAdvancedFilters() {
+    this.renderPrograms() // Re-render dengan filter yang baru
+    this.closeAdvancedFilter()
   }
 
   debouncedRender() {
@@ -835,7 +948,7 @@ class ProgramCatalog {
                     onclick="window.programCatalog.joinProgram('${id}')">
               Ikut Program
             </button>
-            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all"
+            <button class="px-4 py-2 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition-all" 
                     onclick="window.programCatalog.showProgramInfo('${id}')">
               Info
             </button>
@@ -960,14 +1073,6 @@ class ProgramCatalog {
                 <h4 class="font-semibold text-batu-gray">Tingkat Komitmen</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input type="checkbox" class="commitment-filter mr-3 rounded" value="low">
-                    <span class="text-sm">≤ 2 jam/minggu (Rendah)</span>
-                  </label>
-                  <label class="flex items-center">
-                    <input type="checkbox" class="commitment-filter mr-3 rounded" value="mid">
-                    <span class="text-sm">2-5 jam/minggu (Sedang)</span>
-                  </label>
-                  <label class="flex items-center">
                     <input type="checkbox" class="commitment-filter mr-3 rounded" value="high">
                     <span class="text-sm">≥ 5 jam/minggu (Tinggi)</span>
                   </label>
@@ -1058,24 +1163,72 @@ class ProgramCatalog {
     document.body.insertAdjacentHTML('beforeend', modalHTML)
     console.log("Advanced filter modal created successfully!")
   }
+
+  // Tambahkan method untuk setup listener advanced filter
+  setupAdvancedFilterListeners() {
+    // Idempotent: pastikan modal ada
+    let modal = document.getElementById('advanced-filter-modal')
+    if (!modal) {
+      // create it synchronously so callers can rely on it existing
+      this.createAdvancedFilterModal()
+      modal = document.getElementById('advanced-filter-modal')
+    }
+
+    // Close button inside modal
+    const closeBtn = modal.querySelector('#close-advanced-filter')
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        this.closeAdvancedFilter()
+      })
+    }
+
+    // Apply / Reset buttons
+    const applyBtn = modal.querySelector('#apply-advanced-filter')
+    if (applyBtn) {
+      applyBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        this.applyAdvancedFilters()
+      })
+    }
+
+    const resetBtn = modal.querySelector('#reset-advanced-filter')
+    if (resetBtn) {
+      resetBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        this.resetAdvancedFilters()
+      })
+    }
+
+    // Escape key handler (use stored bound reference)
+    // Remove any existing then add to be safe
+    document.removeEventListener('keydown', this._boundEscHandler)
+    document.addEventListener('keydown', this._boundEscHandler)
+
+    // Provide backwards-compatible names expected elsewhere
+    this.openAdvancedFilterModal = this.openAdvancedFilter.bind(this)
+  }
 }
 
 // Improved Initialization - Handle both DOM ready and already loaded states
 function initializeProgramCatalog() {
-  console.log("Initializing Program Catalog...")
+  console.log("=== INITIALIZING PROGRAM CATALOG ===")
   
-  // Clear any existing setup flags to ensure fresh initialization
-  document.removeAttribute('data-advanced-filter-setup')
+  // Clear any existing setup flags
+  document.documentElement.removeAttribute('data-advanced-filter-setup')
   
+  // Wait for DOM elements to be ready
   setTimeout(() => {
     if (!window.programCatalog) {
+      console.log("Creating new ProgramCatalog instance...")
       window.programCatalog = new ProgramCatalog()
-      console.log("Program Catalog initialized successfully")
+      console.log("✅ Program Catalog initialized successfully")
     } else {
-      console.log("Program Catalog already exists, setting up listeners...")
+      console.log("Program Catalog already exists, refreshing...")
+      window.programCatalog.renderPrograms()
       window.programCatalog.setupAdvancedFilterListeners()
     }
-  }, 100)
+  }, 200)
 }
 
 // Handle different DOM states
@@ -1088,31 +1241,18 @@ if (document.readyState === 'loading') {
   initializeProgramCatalog()
 }
 
-// Fallback initialization after a delay
+// Single fallback initialization
 setTimeout(() => {
   if (!window.programCatalog) {
-    console.log("Fallback initialization triggered...")
+    console.log("⚠️ Fallback initialization triggered...")
     initializeProgramCatalog()
   } else {
-    // Ensure listeners are setup even if catalog exists
-    console.log("Program Catalog exists, ensuring listeners are setup...")
-    if (window.programCatalog.setupAdvancedFilterListeners) {
-      document.removeAttribute('data-advanced-filter-setup')
-      window.programCatalog.setupAdvancedFilterListeners()
-    }
+    console.log("✅ Program Catalog already exists")
   }
-}, 1000)
+}, 1500)
 
-// Fallback initialization after component loads
-setTimeout(() => {
-  if (!window.programCatalog) {
-    console.log("Fallback initialization...")
-    window.programCatalog = new ProgramCatalog()
-  }
-}, 1000)
-
-// Wait for component-loader to finish
-function waitForProgramGrid(callback, maxAttempts = 20) {
+// Component loading helper
+function waitForProgramGrid(callback, maxAttempts = 10) {
   let attempts = 0
   
   function checkGrid() {
@@ -1120,15 +1260,12 @@ function waitForProgramGrid(callback, maxAttempts = 20) {
     const grid = document.getElementById('programs-grid')
     
     if (grid) {
-      console.log(`Grid found after ${attempts} attempts!`)
+      console.log(`✅ Program grid found after ${attempts} attempts`)
       callback()
     } else if (attempts < maxAttempts) {
-      console.log(`Attempt ${attempts}: Grid not found, retrying...`)
       setTimeout(checkGrid, 200)
     } else {
-      console.error(`Grid not found after ${maxAttempts} attempts`)
-      // Force create the grid if it doesn't exist
-      createProgramGrid()
+      console.log("⚠️ Program grid not found, proceeding anyway...")
       callback()
     }
   }
@@ -1366,7 +1503,7 @@ window.forceSetupAdvancedFilter = () => {
   console.log("=== FORCE SETUP ADVANCED FILTER ===")
   
   // Clear existing setup flag
-  document.removeAttribute('data-advanced-filter-setup')
+  document.documentElement.removeAttribute('data-advanced-filter-setup')
   
   if (window.programCatalog && window.programCatalog.setupAdvancedFilterListeners) {
     window.programCatalog.setupAdvancedFilterListeners()
@@ -1502,7 +1639,7 @@ window.createMissingFilterButtons = () => {
       <button class="filter-btn px-6 py-3 ${activeClass} rounded-lg font-semibold transition-all" data-filter="${btnData.filter}">
         <span class="flex items-center">
           <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H5a2 2 0 01-2 2v2M7 7h10"></path>
           </svg>
           ${btnData.text}
         </span>

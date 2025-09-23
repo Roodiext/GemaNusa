@@ -33,25 +33,33 @@ class LumaQuestSystem {
             {
               id: "children_education",
               text: "Anak-anak putus sekolah dan kehilangan masa depan",
-              icon: "👶",
+              icon: `<svg class="w-8 h-8 text-purple-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>`,
               tags: ["education", "social"]
             },
             {
               id: "forest_wildlife",
               text: "Hutan gundul & satwa yang kehilangan rumah",
-              icon: "🌳",
+              icon: `<svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+              </svg>`,
               tags: ["conservation"]
             },
             {
               id: "ocean_pollution",
               text: "Laut tercemar sampah plastik",
-              icon: "🌊",
+              icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>`,
               tags: ["ocean", "conservation"]
             },
             {
               id: "hunger_malnutrition",
               text: "Keluarga yang kelaparan atau kurang gizi",
-              icon: "🍽️",
+              icon: `<svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>`,
               tags: ["social", "food"]
             }
           ]
@@ -65,25 +73,33 @@ class LumaQuestSystem {
             {
               id: "direct_action",
               text: "Terjun langsung di lapangan",
-              icon: "🏃‍♂️",
+              icon: `<svg class="w-8 h-8 text-purple-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>`,
               role: "relawan"
             },
             {
               id: "teaching_mentoring",
               text: "Mengajar, membimbing, berbagi ilmu",
-              icon: "📚",
+              icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>`,
               role: "mentor"
             },
             {
               id: "financial_support",
               text: "Memberi dukungan dana/barang",
-              icon: "💝",
+              icon: `<svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>`,
               role: "donatur"
             },
             {
               id: "tech_solutions",
               text: "Menciptakan solusi kreatif dengan teknologi",
-              icon: "💻",
+              icon: `<svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+              </svg>`,
               role: "mentor"
             }
           ]
@@ -97,19 +113,25 @@ class LumaQuestSystem {
             {
               id: "low_time",
               text: "≤ 2 jam/minggu",
-              icon: "⏰",
+              icon: `<svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>`,
               commitment: "low"
             },
             {
               id: "mid_time",
               text: "2–5 jam/minggu",
-              icon: "📅",
+              icon: `<svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>`,
               commitment: "mid"
             },
             {
               id: "high_time",
               text: "≥ 5 jam/minggu",
-              icon: "🔥",
+              icon: `<svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+              </svg>`,
               commitment: "high"
             }
           ]
@@ -123,25 +145,33 @@ class LumaQuestSystem {
             {
               id: "local_community",
               text: "Lingkungan sekitar / komunitas lokal",
-              icon: "🏘️",
+              icon: `<svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>`,
               scope: "local"
             },
             {
               id: "city_level",
               text: "Skala kota/kabupaten",
-              icon: "🏙️",
+              icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z"></path>
+              </svg>`,
               scope: "city"
             },
             {
               id: "national_level",
               text: "Skala nasional",
-              icon: "🇮🇩",
+              icon: `<svg class="w-8 h-8 text-purple-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>`,
               scope: "national"
             },
             {
               id: "global_level",
               text: "Online / global",
-              icon: "🌍",
+              icon: `<svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+              </svg>`,
               scope: "global"
             }
           ]
@@ -156,25 +186,33 @@ class LumaQuestSystem {
             {
               id: "communication_storytelling",
               text: "Komunikasi & storytelling",
-              icon: "🎤",
+              icon: `<svg class="w-8 h-8 text-purple-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+              </svg>`,
               skill: "communication"
             },
             {
               id: "technical_digital",
               text: "Keterampilan teknis/digital",
-              icon: "💻",
+              icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+              </svg>`,
               skill: "technical"
             },
             {
               id: "leadership_organizing",
               text: "Leadership & organizing",
-              icon: "👑",
+              icon: `<svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>`,
               skill: "leadership"
             },
             {
               id: "creativity_design",
               text: "Kreativitas & desain",
-              icon: "🎨",
+              icon: `<svg class="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+              </svg>`,
               skill: "creative"
             }
           ]
@@ -396,21 +434,28 @@ class LumaQuestSystem {
 
     // Generate question HTML
     questionContent.innerHTML = `
-      <div class="text-center mb-8">
-        <h3 class="text-2xl font-bold text-batu-gray mb-4">${question.title}</h3>
-        <p class="text-gray-600">${question.subtitle}</p>
-        ${question.type === 'multi' ? `<p class="text-sm text-red-600 mt-2 hidden" id="error-message">Pilih maksimal ${question.maxChoices} pilihan</p>` : ''}
+      <div class="text-center mb-12">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-primary to-purple-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="text-white text-2xl font-bold">${stepIndex + 1}</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 leading-tight">${question.title}</h3>
+        <p class="text-gray-600 text-lg">${question.subtitle}</p>
+        ${question.type === 'multi' ? `<p class="text-sm text-red-600 mt-3 hidden" id="error-message">Pilih maksimal ${question.maxChoices} pilihan</p>` : ''}
       </div>
       
-      <div class="grid gap-4">
+      <div class="grid gap-4 max-w-3xl mx-auto">
         ${question.options.map(option => `
-          <div class="option-card p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-nusantara-green hover:bg-green-50 transition-all" data-option-id="${option.id}">
-            <div class="flex items-center gap-4">
-              <div class="text-3xl">${option.icon}</div>
-              <div class="flex-1">
-                <p class="font-medium text-batu-gray">${option.text}</p>
+          <div class="option-card group p-6 border-2 border-gray-200 rounded-2xl cursor-pointer hover:border-purple-primary hover:bg-purple-50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg" data-option-id="${option.id}">
+            <div class="flex items-center gap-6">
+              <div class="flex-shrink-0 p-3 bg-gray-100 rounded-xl group-hover:bg-purple-100 transition-colors duration-300">
+                ${option.icon}
               </div>
-              <div class="w-6 h-6 border-2 border-gray-300 ${question.type === 'multi' ? 'rounded' : 'rounded-full'}"></div>
+              <div class="flex-1">
+                <p class="font-semibold text-gray-800 text-lg leading-relaxed">${option.text}</p>
+              </div>
+              <div class="w-8 h-8 border-3 border-gray-300 ${question.type === 'multi' ? 'rounded-lg' : 'rounded-full'} flex items-center justify-center transition-all duration-300">
+                <div class="w-4 h-4 ${question.type === 'multi' ? 'rounded-sm' : 'rounded-full'} transition-all duration-300"></div>
+              </div>
             </div>
           </div>
         `).join('')}
@@ -444,12 +489,16 @@ class LumaQuestSystem {
     if (question.type === 'single') {
       // Single choice - clear previous selections
       document.querySelectorAll('.option-card').forEach(card => {
-        card.classList.remove('border-nusantara-green', 'bg-green-50')
-        card.querySelector('.w-6').classList.remove('bg-nusantara-green')
+        card.classList.remove('border-purple-primary', 'bg-purple-50', 'shadow-lg', 'scale-[1.02]')
+        const checkbox = card.querySelector('.w-8 > div')
+        checkbox.classList.remove('bg-purple-primary', 'border-purple-primary')
+        checkbox.style.backgroundColor = ''
       })
       
-      selectedCard.classList.add('border-nusantara-green', 'bg-green-50')
-      selectedCard.querySelector('.w-6').classList.add('bg-nusantara-green')
+      selectedCard.classList.add('border-purple-primary', 'bg-purple-50', 'shadow-lg', 'scale-[1.02]')
+      const checkbox = selectedCard.querySelector('.w-8 > div')
+      checkbox.classList.add('bg-purple-primary')
+      checkbox.style.backgroundColor = '#7C3AED'
       
       this.selectedOptions[question.id] = [optionId]
       
@@ -466,19 +515,29 @@ class LumaQuestSystem {
         // Deselect
         const index = currentSelections.indexOf(optionId)
         currentSelections.splice(index, 1)
-        selectedCard.classList.remove('border-nusantara-green', 'bg-green-50')
-        selectedCard.querySelector('.w-6').classList.remove('bg-nusantara-green')
+        selectedCard.classList.remove('border-purple-primary', 'bg-purple-50', 'shadow-lg', 'scale-[1.02]')
+        const checkbox = selectedCard.querySelector('.w-8 > div')
+        checkbox.classList.remove('bg-purple-primary')
+        checkbox.style.backgroundColor = ''
         if (errorMessage) errorMessage.classList.add('hidden')
       } else {
         // Select if under limit
         if (currentSelections.length < question.maxChoices) {
           currentSelections.push(optionId)
-          selectedCard.classList.add('border-nusantara-green', 'bg-green-50')
-          selectedCard.querySelector('.w-6').classList.add('bg-nusantara-green')
+          selectedCard.classList.add('border-purple-primary', 'bg-purple-50', 'shadow-lg', 'scale-[1.02]')
+          const checkbox = selectedCard.querySelector('.w-8 > div')
+          checkbox.classList.add('bg-purple-primary')
+          checkbox.style.backgroundColor = '#7C3AED'
           if (errorMessage) errorMessage.classList.add('hidden')
         } else {
-          // Show error
-          if (errorMessage) errorMessage.classList.remove('hidden')
+          // Show error with animation
+          if (errorMessage) {
+            errorMessage.classList.remove('hidden')
+            errorMessage.classList.add('animate-pulse')
+            setTimeout(() => {
+              errorMessage.classList.remove('animate-pulse')
+            }, 2000)
+          }
         }
       }
     }
@@ -640,44 +699,68 @@ class LumaQuestSystem {
     }
     document.getElementById('main-role').textContent = roleNames[userRole] || 'Relawan'
 
-    // Generate program cards
+    // Generate program cards with modern styling
     const programsContainer = document.getElementById('recommended-programs')
     programsContainer.innerHTML = topPrograms.map(([programId, program], index) => `
-      <div class="bg-white rounded-2xl p-6 border-2 ${index === 0 ? 'border-nusantara-green bg-green-50' : 'border-gray-200'} shadow-lg">
-        <div class="flex justify-between items-start mb-4">
+      <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 border-2 ${index === 0 ? 'border-purple-primary bg-gradient-to-br from-purple-50 to-white' : 'border-gray-200'} shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+        <div class="flex justify-between items-start mb-6">
           <div class="flex-1">
-            <h3 class="text-xl font-bold text-batu-gray mb-2">${program.name}</h3>
-            <p class="text-gray-600 mb-3">${program.description}</p>
+            <div class="flex items-center gap-3 mb-3">
+              ${index === 0 ? '<div class="w-8 h-8 bg-gradient-to-r from-purple-primary to-purple-secondary rounded-full flex items-center justify-center"><span class="text-white text-sm font-bold">★</span></div>' : ''}
+              <h3 class="text-2xl font-bold text-gray-800">${program.name}</h3>
+            </div>
+            <p class="text-gray-600 mb-4 leading-relaxed">${program.description}</p>
           </div>
-          <div class="text-right">
-            <div class="text-2xl font-bold text-nusantara-green">${Math.round(program.matchScore)}%</div>
-            <div class="text-sm text-gray-500">Match</div>
+          <div class="text-right ml-6">
+            <div class="text-3xl font-bold bg-gradient-to-r from-purple-primary to-purple-secondary bg-clip-text text-transparent">${Math.round(program.matchScore)}%</div>
+            <div class="text-sm text-gray-500 font-medium">Match Score</div>
           </div>
         </div>
         
-        <div class="mb-4">
-          <h4 class="font-semibold text-gray-700 mb-2">Aktivitas Utama:</h4>
-          <ul class="text-sm text-gray-600 space-y-1">
-            ${program.activities.slice(0, 3).map(activity => `<li>• ${activity}</li>`).join('')}
+        <div class="mb-6">
+          <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            Aktivitas Utama:
+          </h4>
+          <ul class="text-sm text-gray-600 space-y-2">
+            ${program.activities.slice(0, 3).map(activity => `
+              <li class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-purple-primary rounded-full flex-shrink-0"></div>
+                ${activity}
+              </li>
+            `).join('')}
           </ul>
         </div>
         
-        <div class="mb-4">
-          <h4 class="font-semibold text-gray-700 mb-2">Dampak:</h4>
-          <p class="text-sm text-gray-600">${program.impact}</p>
+        <div class="mb-6 p-4 bg-white/80 rounded-xl border border-gray-200">
+          <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-4-4"></path>
+            </svg>
+            Dampak yang Dicapai:
+          </h4>
+          <p class="text-sm text-gray-700 font-medium">${program.impact}</p>
         </div>
         
-        <div class="flex gap-2 mb-4">
+        <div class="flex flex-wrap gap-2 mb-6">
           ${program.rolesAvailable.map(role => `
-            <span class="px-3 py-1 bg-${role === userRole ? 'nusantara-green' : 'gray-200'} text-${role === userRole ? 'white' : 'gray-700'} text-xs rounded-full">
+            <span class="px-4 py-2 ${role === userRole ? 'bg-gradient-to-r from-purple-primary to-purple-secondary text-white shadow-lg' : 'bg-gray-100 text-gray-700'} text-sm font-medium rounded-full transition-all">
               ${roleNames[role] || role}
             </span>
           `).join('')}
         </div>
         
-        <button class="w-full py-3 bg-gradient-to-r from-nusantara-green to-samudra-blue text-white rounded-xl font-semibold hover:shadow-lg transition-all" 
+        <button class="w-full py-4 bg-gradient-to-r from-purple-primary to-purple-secondary text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-[1.05] transition-all duration-300 transform" 
                 onclick="window.lumaQuest.viewProgram('${programId}')">
-          Lihat Program
+          <span class="flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            Lihat Program
+          </span>
         </button>
       </div>
     `).join('')

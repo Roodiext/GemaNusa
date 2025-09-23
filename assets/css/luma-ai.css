@@ -1,4 +1,4 @@
-/* Luma AI Specific Styles */
+/* Luma AI Specific Styles - Updated with Purple Theme */
 
 /* Chatbot Container */
 .luma-chatbot {
@@ -9,7 +9,7 @@
   max-height: 500px;
   background: white;
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
   z-index: 1000;
   transform: translateY(100%);
   transition: transform 0.3s ease-out;
@@ -25,25 +25,24 @@
   right: 20px;
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #2d5a27, #1b4b73);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(45, 90, 39, 0.3);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
   z-index: 1001;
   transition: all 0.3s ease;
 }
 
 .luma-chatbot-toggle:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 25px rgba(45, 90, 39, 0.4);
+  box-shadow: 0 6px 25px rgba(124, 58, 237, 0.4);
 }
 
 /* Quest System */
 .quest-container {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #f3f4f6 100%);
   border-radius: 20px;
   padding: 2rem;
   margin: 2rem 0;
@@ -51,7 +50,7 @@
 
 .quest-progress {
   height: 8px;
-  background: #e2e8f0;
+  background: #e5e7eb;
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 2rem;
@@ -59,7 +58,7 @@
 
 .quest-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #2d5a27, #d4af37);
+  background: linear-gradient(90deg, #7C3AED, #8B5CF6);
   border-radius: 4px;
   transition: width 0.5s ease-out;
 }
@@ -77,7 +76,7 @@
 
 .quest-option {
   background: white;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #e5e7eb;
   border-radius: 12px;
   padding: 1rem 1.5rem;
   margin: 0.5rem 0;
@@ -88,14 +87,14 @@
 }
 
 .quest-option:hover {
-  border-color: #2d5a27;
+  border-color: #7C3AED;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(45, 90, 39, 0.15);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
 }
 
 .quest-option.selected {
-  border-color: #2d5a27;
-  background: linear-gradient(135deg, #2d5a27, #1b4b73);
+  border-color: #7C3AED;
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
   color: white;
 }
 
@@ -116,7 +115,7 @@
 
 /* Quest Results */
 .quest-result {
-  background: linear-gradient(135deg, #2d5a27, #1b4b73);
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
   color: white;
   border-radius: 20px;
   padding: 2rem;
@@ -147,7 +146,7 @@
 .luma-avatar {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #d4af37, #b8941f);
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -168,7 +167,7 @@
 }
 
 .user-message {
-  background: linear-gradient(135deg, #2d5a27, #1b4b73);
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
   color: white;
   border-radius: 18px 18px 4px 18px;
   margin-left: auto;
@@ -210,6 +209,84 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Additional Quest Styles for Consistency */
+.quest-step-indicator {
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.25);
+}
+
+.quest-navigation-btn {
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(124, 58, 237, 0.2);
+}
+
+.quest-navigation-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+}
+
+.quest-navigation-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.quest-match-score {
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.quest-program-card {
+  background: white;
+  border-radius: 16px;
+  border: 2px solid #e5e7eb;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.quest-program-card:hover {
+  border-color: #7C3AED;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
+}
+
+.quest-program-card.featured {
+  border-color: #7C3AED;
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .luma-chatbot {
@@ -225,5 +302,16 @@
 
   .quest-option {
     padding: 0.75rem 1rem;
+  }
+
+  .quest-step-indicator {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+  }
+
+  .quest-navigation-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 }

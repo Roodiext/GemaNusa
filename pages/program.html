@@ -8,6 +8,8 @@
     
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- panggil navbar helper -->
+<script src="/assets/js/navbar.js"></script>
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/custom.css">
@@ -35,11 +37,12 @@
                 }
             }
         }
+
+        
     </script>
 </head>
 <body class="bg-kapas-white text-batu-gray">
-    <!-- Navigation -->
-    <nav id="navbar"></nav>
+   
     
     <!-- Main Content -->
     <main>
@@ -49,8 +52,7 @@
         <!-- Program Catalog -->
         <section id="program-catalog"></section>
         
-        <!-- Success Stories -->
-        <section id="success-stories"></section>
+        
     </main>
     
     <!-- Footer -->
@@ -61,8 +63,8 @@
     
     <!-- Scripts -->
     <script src="../assets/js/component-loader.js"></script>
-    <script src="../assets/js/map.js"></script>
     <script src="../assets/js/program-catalog.js"></script>
+    <script src="../assets/js/map-safe.js"></script>
     
     <!-- Quest Integration Script -->
     <script>
@@ -75,9 +77,27 @@
             
             // Debug: Check if components are loading
             setTimeout(() => {
+                console.log("=== DEBUG INFO ===")
                 console.log("Map container exists:", !!document.getElementById('map-container'))
                 console.log("Map system exists:", !!window.mapSystem)
                 console.log("Program catalog exists:", !!window.programCatalog)
+                
+                // Force map initialization if needed
+                if (document.getElementById('map-container') && !window.mapSystem) {
+                    console.log("Forcing map system initialization...")
+                    if (typeof MapSystem !== 'undefined') {
+                        window.mapSystem = new MapSystem()
+                    }
+                }
+                
+                // Test file access
+                fetch('../assets/map/indonesia-map.json')
+                    .then(r => console.log('Indonesia JSON accessible:', r.ok))
+                    .catch(e => console.error('Indonesia JSON error:', e))
+                    
+                fetch('../assets/map/world-map.json')
+                    .then(r => console.log('World JSON accessible:', r.ok))
+                    .catch(e => console.error('World JSON error:', e))
             }, 2000)
             
             // Check for quest results from localStorage
@@ -151,6 +171,18 @@
                 }
             }, 3000)
         })
+        
+        // After inserting the advanced button, attach handler immediately
+        setTimeout(() => {
+          const adv = document.getElementById('advanced-filter-btn')
+          if (adv) {
+            adv.addEventListener('click', (e) => {
+              e.stopPropagation()
+              e.preventDefault()
+              this.openAdvancedFilter()
+            })
+          }
+        }, 50)
     </script>
     <script src="../assets/js/luma-chatbot.js"></script>
     <script src="../assets/js/main.js"></script>

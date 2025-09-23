@@ -1,5 +1,6 @@
 class EnhancedLumaAI {
   constructor() {
+    // Existing constructor properties
     this.isInitialized = false
     this.conversationHistory = []
     this.userProfile = {
@@ -8,6 +9,23 @@ class EnhancedLumaAI {
       preferredPrograms: [],
       engagementLevel: "beginner",
     }
+    
+    // Enhanced conversation handling
+    this.topicCategories = {
+      environment: ["lingkungan", "alam", "bumi", "ekosistem", "polusi", "konservasi"],
+      programs: ["program", "kegiatan", "acara", "aktivitas", "proyek"],
+      quest: ["quest", "kuis", "tes", "rekomendasi", "cocok", "sesuai"],
+      impact: ["dampak", "hasil", "pencapaian", "perubahan", "statistik"],
+      community: ["komunitas", "relawan", "volunteer", "bergabung", "kolaborasi"],
+      help: ["bantuan", "tanya", "info", "informasi", "cara"]
+    }
+
+    this.fallbackResponses = [
+      "Maaf, saya kurang memahami maksud Anda. Bagaimana kalau kita membahas program-program lingkungan kami? Atau mungkin Anda tertarik untuk mencoba Quest Luma?",
+      "Hmm, saya masih belajar untuk topik itu. Tapi saya bisa membantu Anda menemukan program lingkungan yang sesuai dengan minat Anda. Mau coba?",
+      "Wah, itu topik yang menarik! Tapi maaf, saya belum bisa membahas itu secara detail. Bagaimana kalau kita eksplorasi program-program unggulan Gema Nusa?"
+    ]
+
     this.contextualResponses = this.initializeAdvancedResponses()
     this.emotionalStates = ["curious", "encouraging", "informative", "playful", "supportive"]
     this.currentMood = "encouraging"
@@ -35,79 +53,82 @@ class EnhancedLumaAI {
     const chatContainer = document.createElement("div")
     chatContainer.id = "luma-ai-container"
     chatContainer.className = `
-            fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-2rem)] 
-            bg-card/95 backdrop-blur-xl border border-border/50 
-            rounded-2xl shadow-2xl transform transition-all duration-500 ease-out
-            translate-y-full opacity-0
-        `
+        fixed bottom-24 right-6 w-96 max-w-[calc(100vw-2rem)] 
+        bg-white rounded-2xl shadow-xl z-40 
+        transform transition-all duration-300 opacity-0 scale-95 
+        border border-purple-100 hidden
+    `
 
     chatContainer.innerHTML = `
-            <div class="flex items-center justify-between p-4 border-b border-border/30">
-                <div class="flex items-center gap-3">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-full gradient-nusantara flex items-center justify-center animate-glow">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                            </svg>
-                        </div>
-                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
-                    </div>
-                    <div>
-                        <h3 class="font-heading font-bold text-foreground">Luma AI</h3>
-                        <p class="text-xs text-muted-foreground" id="luma-status">Siap membantu Anda</p>
-                    </div>
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <img src="/assets/img/luma-ai-bot/robotluma.svg" alt="Luma AI" class="w-10 h-10">
+                    <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></div>
                 </div>
-                <button id="luma-close" class="p-2 hover:bg-muted rounded-lg transition-colors">
+                <div>
+                    <h3 class="font-semibold text-lg">Luma AI</h3>
+                    <p class="text-xs text-purple-100" id="luma-status">Siap membantu Anda</p>
+                </div>
+            </div>
+            <button id="luma-close" class="text-white hover:text-purple-200 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Chat Body -->
+        <div id="luma-messages" class="h-[400px] overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-purple-50 to-white">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full gradient-purple flex items-center justify-center flex-shrink-0">
+                    <img src="/assets/img/luma-ai-bot/robotluma.svg" alt="Luma AI" class="w-5 h-5">
+                </div>
+                <div class="bg-white rounded-2xl rounded-tl-md p-3 max-w-[80%] shadow-sm border border-purple-100">
+                    <p class="text-sm text-gray-800">Halo! Saya Luma, asisten AI Gema Nusa. Saya siap membantu Anda menemukan program lingkungan yang tepat dan menjawab pertanyaan tentang gerakan kita. Apa yang ingin Anda ketahui?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="px-4 py-2 border-t border-purple-100 bg-white">
+            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-purple-200">
+                <button class="luma-quick-btn whitespace-nowrap px-4 py-1.5 text-sm bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors">
+                    Mulai Quest 🎯
+                </button>
+                <button class="luma-quick-btn whitespace-nowrap px-4 py-1.5 text-sm bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors">
+                    Program 🌱
+                </button>
+                <button class="luma-quick-btn whitespace-nowrap px-4 py-1.5 text-sm bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors">
+                    Dampak 📊
+                </button>
+                <button class="luma-quick-btn whitespace-nowrap px-4 py-1.5 text-sm bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors">
+                    Komunitas 👥
+                </button>
+            </div>
+        </div>
+        
+        <!-- Input Area -->
+        <div class="p-4 border-t border-purple-100 bg-white rounded-b-2xl">
+            <div class="flex gap-2">
+                <input 
+                    type="text" 
+                    id="luma-input" 
+                    placeholder="Ketik pesan Anda..." 
+                    class="flex-1 px-4 py-2 border border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white text-gray-800 placeholder-gray-400"
+                >
+                <button 
+                    id="luma-send" 
+                    class="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl hover:opacity-90 transition-all flex items-center justify-center"
+                >
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                     </svg>
                 </button>
             </div>
-            
-            <div id="luma-messages" class="h-80 overflow-y-auto p-4 space-y-4 scroll-smooth">
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-full gradient-nusantara flex items-center justify-center flex-shrink-0">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                        </svg>
-                    </div>
-                    <div class="bg-muted/50 rounded-2xl rounded-tl-md p-3 max-w-[80%]">
-                        <p class="text-sm text-balance">Halo! Saya Luma, asisten AI Gema Nusa. Saya siap membantu Anda menemukan program lingkungan yang tepat dan menjawab pertanyaan tentang gerakan kita. Apa yang ingin Anda ketahui?</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="p-4 border-t border-border/30">
-                <div class="flex gap-2 mb-3" id="luma-quick-actions">
-                    <button class="luma-quick-btn px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
-                        Mulai Quest
-                    </button>
-                    <button class="luma-quick-btn px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
-                        Program Terbaru
-                    </button>
-                    <button class="luma-quick-btn px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
-                        Dampak Saya
-                    </button>
-                </div>
-                
-                <div class="flex gap-2">
-                    <input 
-                        type="text" 
-                        id="luma-input" 
-                        placeholder="Ketik pesan Anda..." 
-                        class="flex-1 px-4 py-2 bg-input border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring text-sm"
-                    >
-                    <button 
-                        id="luma-send" 
-                        class="px-4 py-2 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center"
-                    >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        `
+        </div>
+    `
 
     document.body.appendChild(chatContainer)
 
@@ -115,19 +136,18 @@ class EnhancedLumaAI {
     const triggerButton = document.createElement("button")
     triggerButton.id = "luma-trigger"
     triggerButton.className = `
-            fixed bottom-6 right-6 z-40 w-14 h-14 
-            gradient-nusantara rounded-full shadow-lg 
-            flex items-center justify-center
-            hover:scale-110 transition-all duration-300 animate-glow
-        `
+        fixed bottom-6 right-6 z-50 w-14 h-14 
+        bg-gradient-to-r from-purple-500 to-indigo-600 
+        rounded-full shadow-lg 
+        flex items-center justify-center
+        hover:scale-110 transition-all duration-300
+    `
     triggerButton.innerHTML = `
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-            </svg>
-        `
+        <img src="/assets/img/luma-ai-bot/robotluma.svg" alt="Luma AI" class="w-8 h-8">
+    `
 
     document.body.appendChild(triggerButton)
-  }
+}
 
   setupEventListeners() {
     const trigger = document.getElementById("luma-trigger")
@@ -156,14 +176,16 @@ class EnhancedLumaAI {
     const container = document.getElementById("luma-ai-container")
     const trigger = document.getElementById("luma-trigger")
 
-    if (container.classList.contains("translate-y-full")) {
-      container.classList.remove("translate-y-full", "opacity-0")
-      container.classList.add("translate-y-0", "opacity-100")
-      trigger.style.display = "none"
+    if (container.classList.contains("hidden")) {
+        container.classList.remove("hidden", "opacity-0", "scale-95")
+        container.classList.add("opacity-100", "scale-100")
+        trigger.classList.add("opacity-0")
     } else {
-      container.classList.add("translate-y-full", "opacity-0")
-      container.classList.remove("translate-y-0", "opacity-100")
-      trigger.style.display = "flex"
+        container.classList.add("opacity-0", "scale-95")
+        trigger.classList.remove("opacity-0")
+        setTimeout(() => {
+            container.classList.add("hidden")
+        }, 300)
     }
   }
 
@@ -189,26 +211,23 @@ class EnhancedLumaAI {
   addMessage(content, sender) {
     const messagesContainer = document.getElementById("luma-messages")
     const messageDiv = document.createElement("div")
+    messageDiv.className = "flex items-start gap-3"
 
     if (sender === "user") {
-      messageDiv.className = "flex justify-end"
-      messageDiv.innerHTML = `
-                <div class="bg-primary text-primary-foreground rounded-2xl rounded-tr-md p-3 max-w-[80%]">
-                    <p class="text-sm">${content}</p>
-                </div>
-            `
+        messageDiv.innerHTML = `
+            <div class="ml-auto message-bubble user-message">
+                <p class="text-sm">${content}</p>
+            </div>
+        `
     } else {
-      messageDiv.className = "flex items-start gap-3"
-      messageDiv.innerHTML = `
-                <div class="w-8 h-8 rounded-full gradient-nusantara flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                    </svg>
-                </div>
-                <div class="bg-muted/50 rounded-2xl rounded-tl-md p-3 max-w-[80%]">
-                    <p class="text-sm text-balance">${content}</p>
-                </div>
-            `
+        messageDiv.innerHTML = `
+            <div class="w-8 h-8 rounded-full gradient-purple flex items-center justify-center flex-shrink-0">
+                <img src="/assets/img/luma-ai-bot/robotluma.svg" alt="Luma AI" class="w-5 h-5">
+            </div>
+            <div class="message-bubble bot-message">
+                <p class="text-sm">${content}</p>
+            </div>
+        `
     }
 
     messagesContainer.appendChild(messageDiv)
@@ -251,57 +270,157 @@ class EnhancedLumaAI {
     document.getElementById("luma-status").textContent = "Online"
   }
 
-  generateAdvancedResponse(message) {
-    const lowerMessage = message.toLowerCase()
-    const context = this.analyzeContext(lowerMessage)
-
-    // Advanced intent recognition
-    if (context.intent === "quest") {
-      return this.generateQuestResponse(context)
-    } else if (context.intent === "program") {
-      return this.generateProgramResponse(context)
-    } else if (context.intent === "impact") {
-      return this.generateImpactResponse(context)
-    } else if (context.intent === "collaboration") {
-      return this.generateCollaborationResponse(context)
-    } else if (context.intent === "greeting") {
-      return this.generatePersonalizedGreeting(context)
-    }
-
-    return this.generateContextualResponse(context)
-  }
-
+  // Enhanced context analysis
   analyzeContext(message) {
     const context = {
       intent: "general",
       entities: [],
-      sentiment: "neutral",
-      topics: [],
+      sentiment: this.analyzeSentiment(message),
+      topics: this.identifyTopics(message),
+      confidence: 0
     }
 
-    // Intent detection
-    if (message.includes("quest") || message.includes("rekomendasi") || message.includes("cocok")) {
+    // Enhanced intent detection
+    if (this.matchesTopics(message, this.topicCategories.quest)) {
       context.intent = "quest"
-    } else if (message.includes("program") || message.includes("kegiatan") || message.includes("aktivitas")) {
+      context.confidence = 0.9
+    } else if (this.matchesTopics(message, this.topicCategories.programs)) {
       context.intent = "program"
-    } else if (message.includes("dampak") || message.includes("hasil") || message.includes("pencapaian")) {
+      context.confidence = 0.8
+    } else if (this.matchesTopics(message, this.topicCategories.impact)) {
       context.intent = "impact"
-    } else if (message.includes("kolaborasi") || message.includes("kerjasama") || message.includes("bergabung")) {
-      context.intent = "collaboration"
-    } else if (message.includes("halo") || message.includes("hai") || message.includes("hello")) {
-      context.intent = "greeting"
+      context.confidence = 0.8
+    } else if (this.matchesTopics(message, this.topicCategories.community)) {
+      context.intent = "community"
+      context.confidence = 0.8
     }
 
     // Entity extraction
     const environmentalTerms = ["hutan", "laut", "sampah", "plastik", "pohon", "air", "udara", "energi"]
-    environmentalTerms.forEach((term) => {
+    environmentalTerms.forEach(term => {
       if (message.includes(term)) {
         context.entities.push(term)
-        context.topics.push("environment")
+        context.confidence += 0.1
       }
     })
 
     return context
+  }
+
+  // New method to analyze sentiment
+  analyzeSentiment(message) {
+    const positiveWords = ["bagus", "suka", "hebat", "keren", "mantap", "wow", "amazing", "tertarik"]
+    const negativeWords = ["buruk", "jelek", "gagal", "kecewa", "susah", "sulit", "bingung"]
+    
+    let sentiment = "neutral"
+    let positiveCount = 0
+    let negativeCount = 0
+
+    positiveWords.forEach(word => {
+      if (message.includes(word)) positiveCount++
+    })
+
+    negativeWords.forEach(word => {
+      if (message.includes(word)) negativeCount++
+    })
+
+    if (positiveCount > negativeCount) sentiment = "positive"
+    else if (negativeCount > positiveCount) sentiment = "negative"
+
+    return sentiment
+  }
+
+  // New method to identify topics
+  identifyTopics(message) {
+    const topics = []
+    
+    Object.entries(this.topicCategories).forEach(([category, keywords]) => {
+      if (this.matchesTopics(message, keywords)) {
+        topics.push(category)
+      }
+    })
+
+    return topics
+  }
+
+  // New method to match topics
+  matchesTopics(message, keywords) {
+    return keywords.some(keyword => message.toLowerCase().includes(keyword))
+  }
+
+  // Enhanced response generation
+  generateAdvancedResponse(message) {
+    const context = this.analyzeContext(message.toLowerCase())
+    
+    // Handle low confidence responses
+    if (context.confidence < 0.5) {
+      return this.generateFallbackResponse(context)
+    }
+
+    // Enhanced intent-based responses
+    switch (context.intent) {
+      case "quest":
+        return this.generateQuestResponse(context)
+      case "program":
+        return this.generateProgramResponse(context)
+      case "impact":
+        return this.generateImpactResponse(context)
+      case "community":
+        return this.generateCommunityResponse(context)
+      default:
+        return this.generateContextualResponse(context)
+    }
+  }
+
+  // New method for fallback responses
+  generateFallbackResponse(context) {
+    const response = this.fallbackResponses[Math.floor(Math.random() * this.fallbackResponses.length)]
+    
+    // Add personalized suggestions based on user profile
+    if (this.userProfile.interests.length > 0) {
+      return `${response}\n\nBerdasarkan minat Anda di bidang ${this.userProfile.interests.join(', ')}, mungkin Anda tertarik dengan program-program kami di area tersebut?`
+    }
+    
+    return response
+  }
+
+  // Enhanced program response
+  generateProgramResponse(context) {
+    let response = ""
+    
+    if (context.entities.length > 0) {
+      const programs = {
+        hutan: "Program Konservasi Hutan kami melibatkan penanaman pohon dan edukasi masyarakat lokal",
+        laut: "Program Bersih Laut fokus pada pembersihan pantai dan pelestarian ekosistem laut",
+        sampah: "Program Zero Waste Community mengajarkan pengolahan sampah dan ekonomi sirkular",
+        energi: "Program Smart Energy Initiative mendorong penggunaan energi terbarukan"
+      }
+
+      const relevantPrograms = context.entities
+        .filter(entity => programs[entity])
+        .map(entity => programs[entity])
+
+      if (relevantPrograms.length > 0) {
+        response = `Wah, Anda tertarik dengan ${context.entities.join(' dan ')}? ${relevantPrograms.join('. ')}!`
+      }
+    }
+
+    if (!response) {
+      response = "Kami punya 8+ program unggulan yang bisa Anda pilih! Mulai dari konservasi hutan, pembersihan laut, hingga smart city green. Mau saya bantu menemukan yang paling cocok untuk Anda?"
+    }
+
+    return response + "\n\nMau coba Quest Luma untuk rekomendasi yang lebih personal? 😊"
+  }
+
+  // New method for community response
+  generateCommunityResponse(context) {
+    const responses = [
+      "Di Gema Nusa, kita punya komunitas yang luar biasa! Sudah ada 5000+ changemaker yang bergabung. Mau jadi bagian dari gerakan ini?",
+      "Komunitas kami tersebar di 34 provinsi Indonesia, dengan berbagai latar belakang tapi satu tujuan: menjaga lingkungan! Siap bergabung?",
+      "Setiap minggu ada kegiatan seru di komunitas kami, dari workshop lingkungan sampai aksi lapangan. Mau tau lebih lanjut?"
+    ]
+
+    return responses[Math.floor(Math.random() * responses.length)]
   }
 
   generateQuestResponse(context) {
@@ -312,102 +431,6 @@ class EnhancedLumaAI {
     ]
 
     return responses[Math.floor(Math.random() * responses.length)]
-  }
-
-  generateProgramResponse(context) {
-    if (context.entities.includes("hutan")) {
-      return "Program hutan kami keren banget! Ada 'Penjaga Hutan Nusantara' untuk yang suka petualangan, dan 'Smart Forest Guardian' yang menggabungkan teknologi dengan konservasi. Mana yang lebih menarik buat Anda?"
-    } else if (context.entities.includes("laut")) {
-      return "Untuk pecinta laut, kami punya 'Bersih Laut Nusantara' dan 'Kampanye Laut Bersih'. Keduanya fokus pada pelestarian ekosistem laut Indonesia. Mau tahu lebih detail tentang aktivitas dan dampaknya?"
-    }
-
-    return "Kami punya 8 program unggulan yang bisa Anda pilih! Mulai dari konservasi hutan, pembersihan laut, hingga smart city green. Setiap program punya pendekatan unik. Mau saya rekomendasikan yang paling cocok lewat Quest?"
-  }
-
-  generateImpactResponse(context) {
-    return "Dampak Gema Nusa sudah luar biasa! Lebih dari 50,000 pohon ditanam, 25 ton sampah plastik dikumpulkan, dan 150+ komunitas lokal terlibat aktif. Yang paling membanggakan? 85% peserta melanjutkan aksi lingkungan setelah program selesai!"
-  }
-
-  generateCollaborationResponse(context) {
-    return "Kolaborasi adalah jantung Gema Nusa! Kami bermitra dengan 50+ organisasi, dari startup teknologi hingga komunitas adat. Platform kami menghubungkan Anda dengan ribuan changemaker muda Indonesia. Mau bergabung dengan gerakan ini?"
-  }
-
-  generatePersonalizedGreeting(context) {
-    const greetings = [
-      `Halo, eco-warrior! 🌱 Senang bertemu dengan Anda di Gema Nusa. Saya Luma, siap membantu Anda menemukan cara terbaik berkontribusi untuk lingkungan Indonesia!`,
-      `Hai there! Saya Luma, AI companion Anda di perjalanan menyelamatkan bumi. Ada yang ingin Anda ketahui tentang program-program keren kami?`,
-      `Selamat datang di Gema Nusa! Saya Luma, dan saya excited banget bisa membantu Anda menemukan passion lingkungan Anda. Dari mana kita mulai?`,
-    ]
-
-    return greetings[Math.floor(Math.random() * greetings.length)]
-  }
-
-  generateContextualResponse(context) {
-    const responses = [
-      "Pertanyaan menarik! Sebagai AI yang peduli lingkungan, saya selalu excited membahas topik ini. Bisa Anda ceritakan lebih spesifik apa yang ingin Anda ketahui?",
-      "Hmm, saya ingin memahami lebih dalam apa yang Anda maksud. Mungkin bisa dijelaskan dengan contoh? Saya siap membantu dengan informasi yang lebih tepat!",
-      "Saya menangkap ada ketertarikan pada topik lingkungan dari pertanyaan Anda. Mari kita explore lebih dalam! Apa aspek yang paling menarik buat Anda?",
-    ]
-
-    return responses[Math.floor(Math.random() * responses.length)]
-  }
-
-  handleQuickAction(action) {
-    switch (action) {
-      case "Mulai Quest":
-        this.addMessage("Saya ingin memulai Quest untuk menemukan program yang cocok!", "user")
-        setTimeout(() => {
-          this.addMessage(
-            "Fantastic! Mari kita mulai Quest Luma. Saya akan menanyakan 5 pertanyaan untuk memahami kepribadian dan preferensi Anda. Siap? Pertanyaan pertama: Apa yang paling memotivasi Anda untuk peduli lingkungan?",
-            "ai",
-          )
-        }, 1000)
-        break
-      case "Program Terbaru":
-        this.addMessage("Apa saja program terbaru yang tersedia?", "user")
-        setTimeout(() => {
-          this.addMessage(
-            'Program terbaru kami super exciting! Ada "Smart Forest Guardian" yang menggunakan IoT untuk monitoring hutan, dan "Ocean Plastic Innovation" yang mengubah sampah plastik jadi produk berguna. Mau tahu lebih detail?',
-            "ai",
-          )
-        }, 1000)
-        break
-      case "Dampak Saya":
-        this.addMessage("Bagaimana cara melihat dampak kontribusi saya?", "user")
-        setTimeout(() => {
-          this.addMessage(
-            "Great question! Setiap aksi Anda di Gema Nusa terekam dalam dashboard personal. Anda bisa lihat pohon yang ditanam, sampah yang dikumpulkan, dan komunitas yang terbantu. Plus ada badge achievement yang keren!",
-            "ai",
-          )
-        }, 1000)
-        break
-    }
-  }
-
-  updateUserProfile(message) {
-    // Simple learning mechanism
-    const lowerMessage = message.toLowerCase()
-
-    if (lowerMessage.includes("hutan")) {
-      this.userProfile.interests.push("forest_conservation")
-    } else if (lowerMessage.includes("laut")) {
-      this.userProfile.interests.push("ocean_cleanup")
-    } else if (lowerMessage.includes("teknologi")) {
-      this.userProfile.interests.push("green_technology")
-    }
-
-    // Remove duplicates
-    this.userProfile.interests = [...new Set(this.userProfile.interests)]
-
-    // Save to localStorage
-    localStorage.setItem("luma_user_profile", JSON.stringify(this.userProfile))
-  }
-
-  loadUserProfile() {
-    const saved = localStorage.getItem("luma_user_profile")
-    if (saved) {
-      this.userProfile = { ...this.userProfile, ...JSON.parse(saved) }
-    }
   }
 
   initializeAdvancedResponses() {

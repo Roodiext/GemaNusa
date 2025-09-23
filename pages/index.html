@@ -1,140 +1,228 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gema Nusa - Platform Kolaborasi Generasi Muda Indonesia</title>
-    <meta name="description" content="Gema Nusa adalah gerakan sosial dan kreatif yang menyatukan generasi muda Indonesia dalam aksi nyata untuk lingkungan dan keberlanjutan.">
-    
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fixed CSS file paths to be relative from pages folder -->
-    <link rel="stylesheet" href="../assets/css/custom.css">
-    <link rel="stylesheet" href="../assets/css/luma-ai.css">
-    <link rel="icon" href="../assets/img/logo/Logo-Light-Solid.png" type="image/x-icon">
-    
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    
-    <!-- Custom TailwindCSS Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'nusantara-green': '#2D5A27',
-                        'tradisi-gold': '#D4AF37',
-                        'samudra-blue': '#1B4B73',
-                        'kapas-white': '#FEFEFE',
-                        'batu-gray': '#4A5568',
-                        'sabang' : '#B0E638',
-                        'merauke': '#5E1EE6',
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'system-ui', 'sans-serif'],
-                        'display': ['Poppins', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gema Nusa - Platform Kolaborasi Generasi Muda Indonesia</title>
+  <meta name="description" content="Gema Nusa adalah gerakan sosial dan kreatif yang menyatukan generasi muda Indonesia dalam aksi nyata untuk lingkungan dan keberlanjutan.">
 
-     <style>
-    /* Fade-out animasi preloader */
-    .fade-out {
-      opacity: 0;
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: { 
+          colors: {
+            'nusantara-green': '#2D5A27',
+            'tradisi-gold': '#D4AF37',
+            'samudra-blue': '#1B4B73',
+            'kapas-white': '#FEFEFE',
+            'batu-gray': '#4A5568',
+            'sabang': '#B0E638',
+            'merauke': '#5E1EE6',
+          },
+          fontFamily: {
+            'sans': ['Inter', 'system-ui', 'sans-serif'],
+            'display': ['Poppins', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/custom.css">
+  <link rel="stylesheet" href="/assets/css/luma-ai.css">
+  <link rel="icon" href="/assets/img/logo/Logo-Light-Solid.png" type="image/x-icon">
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    /* ================= Preloader ================= */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
       transition: opacity 0.8s ease-out, visibility 0.8s;
+    }
+    #preloader.fade-out {
+      opacity: 0;
       visibility: hidden;
     }
+    .preloader-content {
+      text-align: center;
+    }
+    .preloader-content .logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 16px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    .preloader-content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+      animation: fadeIn 1.6s ease-in-out;
+    }
+    .loader {
+      border: 3px solid #e0e0e0;
+      border-top: 3px solid #5E1EE6;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      margin: 0 auto;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
-
 </head>
+
 <body class="bg-kapas-white text-batu-gray">
-
-   <!-- PRELOADER -->
-  <div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
-    <!-- Logo -->
-    <img src="../assets/img/logo/Logo-Light-Solid.png" alt="Logo Gema Nusa" class="w-24 h-24 mb-6">
-
-    <!-- Lingkaran Spinner -->
-    <div class="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
-  </div>
-    <!-- Navigation -->
-    <nav id="navbar"></nav>
-    
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section id="hero"></section>
-
-
-        
-        <!-- Tentang Section -->
-        <section id="tentang"></section>
-
-        
-  <!-- Stats Box floating di bawah Hero -->
-  <div class="absolute -bottom-36 left-1/2 -translate-x-1/2 
-              z-20 grid grid-cols-2 md:grid-cols-4 gap-6 
-              bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg">
-    <div class="text-center">
-      <h3 class="text-2xl font-bold text-purple-600">500+</h3>
-      <p class="text-sm text-gray-600">Komunitas</p>
-    </div>
-    <div class="text-center">
-      <h3 class="text-2xl font-bold text-purple-600">1200+</h3>
-      <p class="text-sm text-gray-600">Relawan</p>
-    </div>
-    <div class="text-center">
-      <h3 class="text-2xl font-bold text-purple-600">30+</h3>
-      <p class="text-sm text-gray-600">Provinsi</p>
-    </div>
-    <div class="text-center">
-      <h3 class="text-2xl font-bold text-purple-600">99K</h3>
-      <p class="text-sm text-gray-600">Partisipan</p>
+  <!-- ================= Preloader ================= -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <img src="/assets/img/logo/Logo-Light-Solid.png" alt="Logo Gema Nusa" class="logo">
+      <h1>Gema Nusa</h1>
+      <div class="loader"></div>
     </div>
   </div>
 
-        
-        <!-- Featured Programs -->
-        <section id="featured-programs"></section>
-        
-        <!-- Luma Quest Intro -->
-        <section id="luma-quest-intro"></section>
-        
-        <!-- Impact Stats -->
-        <section id="dampak-stats"></section>
-        
-        <!-- Testimonials -->
-        <section id="testimonials"></section>
-        
-        <!-- Call to Action -->
-        <section id="ajakan"></section>
-    </main>
-    
-    <!-- Footer -->
-    <footer id="footer"></footer>
-    
-    <!-- Luma Chatbot -->
-    <div id="luma-chatbot"></div>
-    
-   
-    
-    <!-- Fixed JavaScript file paths to be relative from pages folder -->
-    <script src="../assets/js/component-loader.js"></script>
-    <script src="../assets/js/luma-chatbot.js"></script>
-    <script src="../assets/js/luma-quest.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script>
+  <!-- ================= Navbar Loader ================= -->
+  <div id="navbar"></div>
+  <!-- Spacer supaya konten tidak ketiban navbar fixed -->
+  <div class="h-24"></div>
+
+  <!-- ================= Main Content ================= -->
+  <main id="main-content" class="opacity-0 transition-opacity duration-1000">
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative w-full h-screen flex items-center justify-center text-center text-white">
+      <div class="absolute inset-0">
+        <img src="/assets/img/bg-hero.svg" alt="Background" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/60"></div>
+      </div>
+      <div class="relative z-10 max-w-3xl px-6">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Selamat Datang di <span class="text-purple-400">Gema Nusa</span>
+        </h1>
+        <p class="text-lg md:text-xl mb-8">Gerakan anak muda untuk kolaborasi sosial dan keberlanjutan Indonesia.</p>
+        <a href="#program" class="px-6 py-3 rounded-full bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">
+          Lihat Program
+        </a>
+      </div>
+    </section>
+
+    <!-- Tentang Section -->
+    <section id="tentang"></section>
+
+  
+
+    <!-- Featured Programs -->
+    <section id="featured-programs"></section>
+
+    <!-- Luma Quest Intro -->
+    <section id="luma-quest-intro"></section>
+
+    <!-- Impact Stats -->
+    <section id="dampak-stats"></section>
+
+    <!-- Testimonials -->
+    <section id="testimonials"></section>
+
+    <!-- Call to Action -->
+    <section id="ajakan"></section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer id="footer"></footer>
+
+  <!-- Luma Chatbot -->
+  <div id="luma-chatbot"></div>
+
+  <!-- ================= Scripts ================= -->
+  <script src="/assets/js/component-loader.js"></script>
+  <script src="/assets/js/luma-chatbot.js"></script>
+  <script src="/assets/js/luma-quest.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/morph-text.js"></script>
+
+  <script>
     window.addEventListener("load", () => {
       const preloader = document.getElementById("preloader");
       const mainContent = document.getElementById("main-content");
+
       setTimeout(() => {
         preloader.classList.add("fade-out");
         mainContent.classList.remove("opacity-0");
-      }, 800); // delay biar smooth
+      }, 900);
     });
   </script>
+  <!-- Tambahkan CSS (bisa di file CSS utama) -->
+<style>
+  /* kursor blink */
+  #cursor {
+    animation: blink 1s steps(2, end) infinite;
+    margin-left: 6px;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const texts = ["Hai, saya Luma", "Teman ngobrolmu", "Siap bantu kapan saja"]; // bisa lebih dari 1
+  const typedText = document.getElementById("typed-text");
+  const cursor = document.getElementById("cursor");
+
+  let textIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function type() {
+    const currentText = texts[textIndex];
+
+    if (!isDeleting) {
+      typedText.textContent = currentText.substring(0, charIndex + 1);
+      charIndex++;
+
+      if (charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(type, 1500);
+        return;
+      }
+    } else {
+      typedText.textContent = currentText.substring(0, charIndex - 1);
+      charIndex--;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length; 
+      }
+    }
+
+    setTimeout(type, isDeleting ? 60 : 120);
+  }
+
+  type();
+});
+</script>
+
 </body>
 </html>
