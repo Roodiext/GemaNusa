@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luma Green Mission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50">
+    <!-- Include the game component -->
+    <div id="luma-green-game-container">
+        <!-- The game will be loaded here -->
+    </div>
+
+    <script>
+        // Load the Luma Green game component
+        fetch('../components/game/lumaGreenGames/luma-green.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('luma-green-game-container').innerHTML = html;
+                
+                // Load the game script after HTML is loaded
+                const script = document.createElement('script');
+                script.src = 'components/game/lumaGreenGames/luma-green.js';
+                document.head.appendChild(script);
+            })
+            .catch(error => {
+                console.error('Error loading game:', error);
+                document.getElementById('luma-green-game-container').innerHTML = 
+                    '<div class="flex items-center justify-center min-h-screen"><p class="text-red-500">Error loading game. Please try again.</p></div>';
+            });
+    </script>
+
+    <script src="../assets/js/core/component-loader.js"></script>
+    <script src="../assets/js/gameJS/luma-green.js"></script>   
+</body>
+</html>

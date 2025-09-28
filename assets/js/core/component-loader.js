@@ -41,13 +41,21 @@ class ComponentLoader {
       ],
       "luma-ocean-rescue": [
         { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
-        { id: "game-hero", file: "components/game/game-hero.html", priority: 1 },
-        { id: "ocean-rescue-game", file: "components/game/clicker-sea.html", priority: 2 },
-        { id: "game-instructions", file: "components/game/game-instructions.html", priority: 3 },
-        { id: "environmental-impact", file: "components/game/environmental-impact.html", priority: 4 },
+        { id: "game-hero", file: "components/game/lumaOceanGames/game-hero.html", priority: 1 },
+        { id: "ocean-rescue-game", file: "components/game/lumaOceanGames/clicker-sea.html", priority: 2 },
+        { id: "game-instructions", file: "components/game/lumaOceanGames/game-instructions.html", priority: 3 },
+        { id: "environmental-impact", file: "components/game/lumaOceanGames/environmental-impact.html", priority: 4 },
         { id: "footer", file: "components/shared/footer.html", priority: 5 },
         { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 5 },
       ],
+      "luma-green-mission": [
+        { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
+        { id: "green-mission-game", file: "components/game/lumaGreenGames/luma-green.html", priority: 1 },
+        { id: "game-instructions", file: "components/game/lumaGreenGames/game-instructions.html", priority: 2 },
+        { id: "environmental-tips", file: "components/game/lumaGreenGames/environmental-tips.html", priority: 3 },
+        { id: "footer", file: "components/shared/footer.html", priority: 4 },
+        { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 4 },
+],
     }
 
     return components[page] || []
