@@ -1,35 +1,67 @@
-<!-- components/navbar.html -->
-<nav id="navbar-wrapper" 
-     class="fixed top-0 left-0 right-0 z-50 
-            bg-white/30 backdrop-blur-md shadow-sm  flex items-center justify-center    ">
-  <div class="flex items-center justify-between w-[90%] max-w-7xl mx-auto py-3">
+<!-- Navbar Component -->
+<nav id="main-navbar" class="fixed top-0 left-0 w-full z-50 bg-white shadow-md transition-transform duration-300 ease-in-out">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Left: Logo -->
+      
 
-    <!-- Logo -->
-    <a href="index.html#beranda" 
-       class="flex items-center px-4 py-2 rounded-full bg-merauke">
-      <img src="/assets/img/Logo-Dark-Text.svg" 
-           alt="Logo Gema Nusa" 
-           class="h-6 w-auto">
-    </a>
+      <!-- Center: Links (desktop) -->
+      <div class="hidden md:flex md:items-center md:space-x-6">
+        <a href="index.html#beranda" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium">
+          Beranda
+        </a>
+        <a href="pages/program.html" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium">
+          Program
+        </a>
+        <a href="pages/luma-quest.html" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium">
+          Quest
+        </a>
+        <a href="index.html#tentang" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium">
+          Tentang
+        </a>
+      </div>
 
-    <!-- Menu (Desktop) -->
-    <div id="navbar-menu" 
-         class="hidden md:flex items-center gap-6 
-                px-6 py-2 rounded-full bg-merauke 
-                text-white font-medium">
-      <a href="index.html#beranda" class="hover:opacity-80 transition">Beranda</a>
-      <a href="index.html#tentang" class="hover:opacity-80 transition">Tentang Kami</a>
-      <a href="index.html#program" class="hover:opacity-80 transition">Program</a>
-      <a href="index.html#lumaai" class="hover:opacity-80 transition">Luma AI</a>
-      <a href="index.html#contact" class="hover:opacity-80 transition">Contact</a>
+      <!-- Right: CTA (desktop) + mobile button -->
+      <div class="flex items-center space-x-3">
+        <div class="hidden md:block">
+          <a href="pages/kolaborasi.html" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-200">
+            Gabung Sekarang
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <div class="md:hidden">
+          <button id="mobile-menu-toggle" aria-controls="mobile-menu" aria-expanded="false" class="p-2 rounded-md text-gray-700 hover:text-purple-600 focus:outline-none">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- CTA Button -->
-    <a href="index.html#mulai" 
-       class="hidden sm:inline-block px-6 py-3 rounded-full bg-merauke 
-              text-white font-semibold shadow-md hover:opacity-90 transition">
-      Mulai Quest
-    </a>
-
+  <!-- Mobile menu -->
+  <!-- Initial state: hidden; we will toggle 'hidden' + animate with scale/opacity -->
+  <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg origin-top transform transition-all duration-200 ease-in-out scale-y-95 opacity-0">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <a href="index.html#beranda" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-purple-600">
+        Beranda
+      </a>
+      <a href="pages/program.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-purple-600">
+        Program
+      </a>
+      <a href="pages/luma-quest.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-purple-600">
+        Quest
+      </a>
+      <a href="index.html#tentang" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-purple-600">
+        Tentang
+      </a>
+      <div class="px-3 py-2">
+        <a href="pages/kolaborasi.html" class="block text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-medium">
+          Gabung Sekarang
+        </a>
+      </div>
+    </div>
   </div>
 </nav>

@@ -91,23 +91,6 @@
   font-weight: 700;
 }
 
-/* Custom Scrollbar - Updated to Purple */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #7C3AED;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #6D28D9;
-}
 
 /* Smooth Scroll */
 html {
@@ -371,3 +354,49 @@ html {
   border-radius: 9999px;
   transition: width 0.5s ease;
 }
+
+/* Navbar Styles */
+#main-navbar {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+#main-navbar.navbar-hidden {
+  transform: translateY(-100%);
+}
+
+#main-navbar.navbar-visible {
+  transform: translateY(0);
+}
+
+/* Ensure navbar is visible during component loading */
+#navbar:not(:empty) #main-navbar {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Mobile Menu Transitions */
+#mobile-menu {
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+#mobile-menu.menu-hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+#mobile-menu.menu-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* --- fallback helpers for mobile menu animation --- */
+.scale-y-95 { transform-origin: top; transform: scaleY(.95); }
+.scale-y-100 { transform-origin: top; transform: scaleY(1); }
+.opacity-0 { opacity: 0; }
+.opacity-100 { opacity: 1; }
+#mobile-menu { transition: transform 200ms ease, opacity 200ms ease; }

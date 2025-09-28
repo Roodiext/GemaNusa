@@ -1,0 +1,8 @@
+  /* ================= Cursor Blink ================= */
+    #cursor {
+      animation: blink 1s steps(2, end) infinite;
+      margin-left: 6px;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }

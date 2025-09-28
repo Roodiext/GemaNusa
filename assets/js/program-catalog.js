@@ -1,4 +1,4 @@
-// Program Catalog JavaScript
+// Program Catalog JavaScript - Clean Design
 console.log("=== PROGRAM CATALOG JS LOADED ===")
 
 class ProgramCatalog {
@@ -17,8 +17,8 @@ class ProgramCatalog {
     this._boundEscHandler = (e) => {
       if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
         this.closeAdvancedFilter()
-  }
-}
+      }
+    }
     
     // Performance optimization
     this.filteredCache = new Map()
@@ -28,23 +28,14 @@ class ProgramCatalog {
     console.log("Program database loaded:", Object.keys(this.programDatabase).length, "programs")
     this.init()
 
-    // Tambahkan state untuk modal filter
+    // State untuk modal filter
     this.isAdvancedFilterOpen = false
-
-    // Tambahkan reference untuk event handler yang dipakai ulang
-    this._boundHandleOutsideClick = this.handleOutsideClick.bind(this)
-    this._boundEscHandler = (e) => {
-      if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
-        this.closeAdvancedFilter()
-      }
-    }
   }
 
   init() {
     console.log("ProgramCatalog init() called")
     this.setupEventListeners()
     
-    // Multiple attempts to render with increasing delays
     setTimeout(() => {
       console.log("First render attempt...")
       this.renderPrograms()
@@ -53,13 +44,8 @@ class ProgramCatalog {
     setTimeout(() => {
       console.log("Second render attempt...")
       this.renderPrograms()
-    }, 500)
-    
-    setTimeout(() => {
-      console.log("Third render attempt...")
-      this.renderPrograms()
       this.checkForHighlight()
-    }, 1000)
+    }, 500)
   }
 
   initializeProgramDatabase() {
@@ -79,7 +65,7 @@ class ProgramCatalog {
           "Workshop keterampilan hidup"
         ],
         impact: "1,200+ anak terbimbing, 85% naik kelas dengan nilai baik",
-        gradient: "from-blue-500 to-purple-600"
+        color: "#B0E638" // Sabang Green
       },
       perpustakaan_hidup: {
         name: "Perpustakaan Hidup",
@@ -96,7 +82,7 @@ class ProgramCatalog {
           "Storytelling untuk anak"
         ],
         impact: "50+ perpustakaan mini, 3,000+ buku terdistribusi",
-        gradient: "from-indigo-500 to-blue-600"
+        color: "#7b00ff" // Merauke Purple
       },
       sahabat_hutan: {
         name: "Sahabat Hutan",
@@ -113,7 +99,7 @@ class ProgramCatalog {
           "Edukasi masyarakat sekitar hutan"
         ],
         impact: "25,000+ pohon ditanam, 1,200 hektar hutan terlindungi",
-        gradient: "from-green-500 to-emerald-600"
+        color: "#B0E638" // Sabang Green
       },
       laut_bersih_bersinar: {
         name: "Laut Bersih Bersinar",
@@ -130,8 +116,7 @@ class ProgramCatalog {
           "Kampanye reduce plastic usage"
         ],
         impact: "50+ pantai dibersihkan, 25 ton sampah plastik terangkut",
-        gradient: "from-cyan-500 to-blue-600",
-        
+        color: "#7b00ff" // Merauke Purple
       },
       dapur_peduli: {
         name: "Dapur Peduli",
@@ -148,8 +133,7 @@ class ProgramCatalog {
           "Edukasi gizi seimbang"
         ],
         impact: "15,000+ porsi makanan terdistribusi, 800+ keluarga terbantu",
-        gradient: "from-orange-500 to-red-600",
-        
+        color: "#B0E638" // Sabang Green
       },
       gerakan_sembako_harapan: {
         name: "Gerakan Sembako Harapan",
@@ -166,8 +150,7 @@ class ProgramCatalog {
           "Koordinasi dengan pemerintah daerah"
         ],
         impact: "2,500+ paket sembako, 1,200+ keluarga terbantu",
-        gradient: "from-yellow-500 to-orange-600",
-        
+        color: "#7b00ff" // Merauke Purple
       },
       tech_for_good: {
         name: "Tech for Good",
@@ -184,8 +167,7 @@ class ProgramCatalog {
           "Platform edukasi digital"
         ],
         impact: "15+ aplikasi diluncurkan, 50+ NGO terbantu teknologi",
-        gradient: "from-purple-500 to-pink-600",
-        
+        color: "#B0E638" // Sabang Green
       },
       smart_village_project: {
         name: "Smart Village Project",
@@ -196,14 +178,14 @@ class ProgramCatalog {
         scope: "local",
         skills: ["technical", "leadership"],
         rolesAvailable: ["mentor", "relawan"],
-        gradient: "from-purple-500 to-pink-500",
         activities: [
           "Deploy sensor IoT untuk pertanian",
           "Aplikasi marketplace produk desa",
           "Training digital literacy",
           "Sistem informasi desa"
         ],
-        impact: "20+ desa ter-digitalisasi, 500+ petani terbantu teknologi"
+        impact: "20+ desa ter-digitalisasi, 500+ petani terbantu teknologi",
+        color: "#7b00ff" // Merauke Purple
       },
       global_climate_action: {
         name: "Global Climate Action",
@@ -213,14 +195,14 @@ class ProgramCatalog {
         scope: "global",
         skills: ["leadership", "communication"],
         rolesAvailable: ["mentor", "relawan"],
-        gradient: "from-green-600 to-blue-600",
         activities: [
           "Kampanye kesadaran perubahan iklim",
           "Proyek energi terbarukan regional",
           "Workshop sustainability lintas negara",
           "Research kolaboratif dampak iklim"
         ],
-        impact: "4 negara terlibat, 50+ proyek energi hijau"
+        impact: "4 negara terlibat, 50+ proyek energi hijau",
+        color: "#B0E638" // Sabang Green
       },
       asean_youth_exchange: {
         name: "ASEAN Youth Exchange",
@@ -230,14 +212,14 @@ class ProgramCatalog {
         scope: "global",
         skills: ["communication", "leadership"],
         rolesAvailable: ["mentor", "relawan"],
-        gradient: "from-blue-500 to-purple-500",
         activities: [
           "Program pertukaran mahasiswa",
           "Cultural immersion workshops",
           "Leadership training internasional",
           "Collaborative social projects"
         ],
-        impact: "500+ youth participants, 5 negara ASEAN terlibat"
+        impact: "500+ youth participants, 5 negara ASEAN terlibat",
+        color: "#7b00ff" // Merauke Purple
       },
       ocean_guardian_network: {
         name: "Ocean Guardian Network",
@@ -247,14 +229,14 @@ class ProgramCatalog {
         scope: "global",
         skills: ["technical", "leadership"],
         rolesAvailable: ["mentor", "relawan"],
-        gradient: "from-blue-400 to-teal-500",
         activities: [
           "Marine protected area establishment",
           "Coral reef restoration projects",
           "Sustainable fishing practices",
           "Ocean pollution monitoring"
         ],
-        impact: "3 negara, 15 marine reserves, 200+ fishermen trained"
+        impact: "3 negara, 15 marine reserves, 200+ fishermen trained",
+        color: "#B0E638" // Sabang Green
       },
       digital_literacy_asia: {
         name: "Digital Literacy Asia",
@@ -264,14 +246,14 @@ class ProgramCatalog {
         scope: "global",
         skills: ["technical", "communication"],
         rolesAvailable: ["mentor", "relawan"],
-        gradient: "from-indigo-500 to-cyan-500",
         activities: [
           "Basic computer skills training",
           "Internet safety workshops",
           "Digital entrepreneurship programs",
           "Online learning platform development"
         ],
-        impact: "4 negara, 2000+ people trained, 50+ digital centers"
+        impact: "4 negara, 2000+ people trained, 50+ digital centers",
+        color: "#7b00ff" // Merauke Purple
       },
       sustainable_cities_initiative: {
         name: "Sustainable Cities Initiative",
@@ -281,14 +263,14 @@ class ProgramCatalog {
         scope: "global",
         skills: ["technical", "leadership"],
         rolesAvailable: ["mentor", "relawan"],
-        gradient: "from-gray-600 to-green-500",
         activities: [
           "Smart traffic management systems",
           "Waste management optimization",
           "Green building certifications",
           "Urban farming initiatives"
         ],
-        impact: "6 cities, 1M+ residents benefited, 30% waste reduction"
+        impact: "6 cities, 1M+ residents benefited, 30% waste reduction",
+        color: "#B0E638" // Sabang Green
       }
     }
   }
@@ -296,7 +278,6 @@ class ProgramCatalog {
   setupEventListeners() {
     console.log("Setting up program catalog event listeners...")
     
-    // Multiple attempts to setup filter buttons
     const setupFilters = () => {
       const filterBtns = document.querySelectorAll('.filter-btn')
       console.log("Found filter buttons:", filterBtns.length)
@@ -310,10 +291,8 @@ class ProgramCatalog {
       filterBtns.forEach((btn, index) => {
         console.log(`Setting up button ${index}:`, btn.dataset.filter, btn.textContent.trim())
         
-        // Remove existing listeners to avoid duplicates
         btn.removeEventListener('click', this.handleFilterClick)
         
-        // Add new listener with debouncing
         btn.addEventListener('click', (e) => {
           console.log("Filter button clicked:", e.currentTarget.dataset.filter)
           this.currentCategory = e.currentTarget.dataset.filter
@@ -321,19 +300,14 @@ class ProgramCatalog {
           this.debouncedRender()
         })
       })
-
-      
       
       console.log("Filter buttons setup completed!")
     }
     
-    
-    // Try immediately and with delays
     setupFilters()
     setTimeout(setupFilters, 500)
-    setTimeout(setupFilters, 1000)
 
-    // Search input with debouncing
+    // Search input
     setTimeout(() => {
       const searchInput = document.getElementById('program-search')
       if (searchInput) {
@@ -342,7 +316,7 @@ class ProgramCatalog {
           this.searchTimeout = setTimeout(() => {
             this.currentSearch = e.target.value.toLowerCase()
             this.debouncedRender()
-          }, 300) // 300ms debounce
+          }, 300)
         })
       }
     }, 100)
@@ -360,19 +334,16 @@ class ProgramCatalog {
         })
       }
       
-      // Advanced filter modal setup with retry mechanism
       this.setupAdvancedFilterListeners()
     }, 200)
 
-    // Tambahkan event listener untuk advanced filter
+    // Advanced filter button
     let advancedFilterBtn = document.getElementById('advanced-filter-btn')
     if (advancedFilterBtn) {
-      // remove previous possible listeners safely by cloning node
       const btnClone = advancedFilterBtn.cloneNode(true)
       advancedFilterBtn.parentNode.replaceChild(btnClone, advancedFilterBtn)
       advancedFilterBtn = document.getElementById('advanced-filter-btn')
 
-      // Attach robust click handler that always opens modal (creates if necessary)
       advancedFilterBtn.addEventListener('click', (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -380,7 +351,7 @@ class ProgramCatalog {
       })
     }
 
-    // Event listener untuk menutup modal dengan escape key
+    // Escape key handler
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
         this.closeAdvancedFilter()
@@ -388,24 +359,6 @@ class ProgramCatalog {
     })
   }
 
-  // Tambahkan method untuk toggle advanced filter
-  toggleAdvancedFilter() {
-    const modal = document.getElementById('advanced-filter-modal')
-    if (!modal) return
-    
-    this.isAdvancedFilterOpen = !this.isAdvancedFilterOpen
-    
-    if (this.isAdvancedFilterOpen) {
-      modal.classList.remove('hidden')
-      // Tambahkan event listener untuk close ketika klik di luar modal
-      document.addEventListener('click', this.handleOutsideClick.bind(this))
-    } else {
-      modal.classList.add('hidden')
-      document.removeEventListener('click', this.handleOutsideClick.bind(this))
-    }
-  }
-
-  // Tambahkan method untuk handle click di luar modal
   handleOutsideClick(event) {
     const modal = document.getElementById('advanced-filter-modal')
     const advancedFilterBtn = document.getElementById('advanced-filter-btn')
@@ -416,48 +369,38 @@ class ProgramCatalog {
     }
   }
 
-  // Method untuk membuka advanced filter
   openAdvancedFilter() {
-  // Ensure modal exists
-  let modal = document.getElementById('advanced-filter-modal');
-  if (!modal) {
-    this.createAdvancedFilterModal()
-    modal = document.getElementById('advanced-filter-modal')
+    let modal = document.getElementById('advanced-filter-modal');
+    if (!modal) {
+      this.createAdvancedFilterModal()
+      modal = document.getElementById('advanced-filter-modal')
+    }
+
+    if (!modal) {
+      console.error("Could not create advanced filter modal")
+      return
+    }
+
+    modal.classList.remove('hidden')
+    this.isAdvancedFilterOpen = true
+
+    this.setupAdvancedFilterListeners()
+
+    setTimeout(() => {
+      document.removeEventListener('click', this._boundHandleOutsideClick)
+      document.addEventListener('click', this._boundHandleOutsideClick)
+    }, 0)
   }
 
-  if (!modal) {
-    console.error("Could not create advanced filter modal")
-    return
-  }
-
-  // Show modal
-  modal.classList.remove('hidden')
-  this.isAdvancedFilterOpen = true
-
-  // Setup listeners for modal elements (idempotent)
-  this.setupAdvancedFilterListeners()
-
-  // Add click-outside handler on the next tick so the click that opened modal
-  // doesn't immediately trigger the handler.
-  setTimeout(() => {
-    // Remove first to avoid duplicates, then add (use stored bound reference)
-    document.removeEventListener('click', this._boundHandleOutsideClick)
-    document.addEventListener('click', this._boundHandleOutsideClick)
-  }, 0)
-}
-
-  // Method untuk menutup advanced filter
   closeAdvancedFilter() {
     const modal = document.getElementById('advanced-filter-modal');
     if (modal) {
       modal.classList.add('hidden');
       this.isAdvancedFilterOpen = false;
-      // Remove event listener ketika modal ditutup
-      document.removeEventListener('click', this.handleOutsideClick.bind(this));
+      document.removeEventListener('click', this._boundHandleOutsideClick);
     }
   }
 
-  // Method untuk reset filter
   resetAdvancedFilters() {
     this.advancedFilters = {
       commitment: [],
@@ -466,17 +409,10 @@ class ProgramCatalog {
       roles: []
     }
     
-    // Reset semua checkbox
     const checkboxes = document.querySelectorAll('#advanced-filter-modal input[type="checkbox"]')
     checkboxes.forEach(checkbox => {
       checkbox.checked = false
     })
-  }
-
-  // Method untuk menerapkan filter
-  applyAdvancedFilters() {
-    this.renderPrograms() // Re-render dengan filter yang baru
-    this.closeAdvancedFilter()
   }
 
   debouncedRender() {
@@ -493,40 +429,35 @@ class ProgramCatalog {
       const btnFilter = btn.dataset.filter
       
       if (btnFilter === this.currentCategory) {
-        btn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300')
-        btn.classList.add('bg-nusantara-green', 'text-white', 'shadow-lg')
+        btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200', 'hover:bg-gray-50')
+        btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm')
       } else {
-        btn.classList.remove('bg-nusantara-green', 'text-white', 'shadow-lg')
-        btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300')
+        btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-sm')
+        btn.classList.add('bg-white', 'text-gray-700', 'border-gray-200', 'hover:bg-gray-50')
       }
     })
   }
 
   filterPrograms() {
-    // Create cache key
     const cacheKey = JSON.stringify({
       category: this.currentCategory,
       search: this.currentSearch,
       advanced: this.advancedFilters
     })
     
-    // Check cache first
     if (this.filteredCache.has(cacheKey)) {
       return this.filteredCache.get(cacheKey)
     }
     
     const filtered = Object.entries(this.programDatabase).filter(([id, program]) => {
-      // Filter by category
       const categoryMatch = this.currentCategory === 'all' || program.category === this.currentCategory
       
-      // Filter by search
       const searchMatch = !this.currentSearch || 
         program.name.toLowerCase().includes(this.currentSearch) ||
         program.description.toLowerCase().includes(this.currentSearch) ||
         program.skills.some(skill => skill.toLowerCase().includes(this.currentSearch)) ||
         program.tags.some(tag => tag.toLowerCase().includes(this.currentSearch))
       
-      // Advanced filters
       const commitmentMatch = this.advancedFilters.commitment.length === 0 || 
         this.advancedFilters.commitment.includes(program.commitment)
       
@@ -542,7 +473,6 @@ class ProgramCatalog {
       return categoryMatch && searchMatch && commitmentMatch && scopeMatch && skillsMatch && rolesMatch
     })
     
-    // Cache result (limit cache size)
     if (this.filteredCache.size > 50) {
       const firstKey = this.filteredCache.keys().next().value
       this.filteredCache.delete(firstKey)
@@ -555,50 +485,21 @@ class ProgramCatalog {
   applyAdvancedFilters() {
     console.log("Applying advanced filters...")
     
-    // Get commitment filters
     this.advancedFilters.commitment = Array.from(document.querySelectorAll('.commitment-filter:checked'))
       .map(cb => cb.value)
     
-    // Get scope filters
     this.advancedFilters.scope = Array.from(document.querySelectorAll('.scope-filter:checked'))
       .map(cb => cb.value)
     
-    // Get skills filters
     this.advancedFilters.skills = Array.from(document.querySelectorAll('.skills-filter:checked'))
       .map(cb => cb.value)
     
-    // Get roles filters
     this.advancedFilters.roles = Array.from(document.querySelectorAll('.roles-filter:checked'))
       .map(cb => cb.value)
     
     console.log("Advanced filters applied:", this.advancedFilters)
     
-    // Update advanced filter button to show active state
     this.updateAdvancedFilterButton()
-    
-    // Re-render programs with new filters
-    this.renderPrograms()
-  }
-
-  resetAdvancedFilters() {
-    console.log("Resetting advanced filters...")
-    
-    // Clear all checkboxes
-    document.querySelectorAll('.commitment-filter, .scope-filter, .skills-filter, .roles-filter')
-      .forEach(cb => cb.checked = false)
-    
-    // Reset filter arrays
-    this.advancedFilters = {
-      commitment: [],
-      scope: [],
-      skills: [],
-      roles: []
-    }
-    
-    // Update button state
-    this.updateAdvancedFilterButton()
-    
-    // Re-render programs
     this.renderPrograms()
   }
 
@@ -609,21 +510,19 @@ class ProgramCatalog {
     const hasActiveFilters = Object.values(this.advancedFilters).some(arr => arr.length > 0)
     
     if (hasActiveFilters) {
-      advancedBtn.classList.remove('bg-samudra-blue', 'hover:bg-blue-700')
-      advancedBtn.classList.add('bg-tradisi-gold', 'hover:bg-yellow-600')
+      advancedBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200')
+      advancedBtn.classList.add('bg-orange-500', 'text-white', 'border-orange-500')
       
-      // Add active indicator
       if (!advancedBtn.querySelector('.active-indicator')) {
         const indicator = document.createElement('span')
-        indicator.className = 'active-indicator ml-2 bg-white text-tradisi-gold px-2 py-1 rounded-full text-xs font-bold'
+        indicator.className = 'active-indicator ml-2 bg-white text-orange-500 px-2 py-1 rounded-full text-xs font-medium'
         indicator.textContent = 'Aktif'
         advancedBtn.appendChild(indicator)
       }
     } else {
-      advancedBtn.classList.remove('bg-tradisi-gold', 'hover:bg-yellow-600')
-      advancedBtn.classList.add('bg-samudra-blue', 'hover:bg-blue-700')
+      advancedBtn.classList.remove('bg-orange-500', 'text-white', 'border-orange-500')
+      advancedBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-200')
       
-      // Remove active indicator
       const indicator = advancedBtn.querySelector('.active-indicator')
       if (indicator) {
         indicator.remove()
@@ -637,43 +536,19 @@ class ProgramCatalog {
     const noResults = document.getElementById('no-results')
     
     console.log("Grid element:", grid)
-    console.log("No results element:", noResults)
-    console.log("Document ready state:", document.readyState)
-    console.log("Program catalog section exists:", !!document.getElementById('program-catalog'))
     
     if (!grid) {
-      console.error("Programs grid not found! Available elements:")
-      const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id)
-      console.log("All element IDs:", allIds)
-      console.log("Looking for 'programs-grid' in:", allIds.includes('programs-grid'))
-      
-      // Try to find the grid in different ways
-      const gridByClass = document.querySelector('.grid.grid-cols-1')
-      console.log("Grid by class:", gridByClass)
-      
-      // Check if component is loaded
-      const catalogSection = document.getElementById('program-catalog')
-      if (catalogSection) {
-        console.log("Catalog section innerHTML length:", catalogSection.innerHTML.length)
-        console.log("Catalog section contains grid:", catalogSection.innerHTML.includes('programs-grid'))
-      }
-      
-      console.error("Retrying in 300ms...")
+      console.error("Programs grid not found!")
       setTimeout(() => this.renderPrograms(), 300)
       return
     }
     
-    console.log("Database keys:", Object.keys(this.programDatabase))
-    console.log("Current category:", this.currentCategory)
-    console.log("Current search:", this.currentSearch)
-    
     const filteredPrograms = this.filterPrograms()
-    console.log("Filtered programs:", filteredPrograms)
     console.log("Filtered programs count:", filteredPrograms.length)
 
     if (filteredPrograms.length === 0) {
       console.log("No programs found, showing empty message")
-      grid.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-gray-500 text-xl">Tidak ada program yang ditemukan</p><p class="text-gray-400">Coba ubah filter atau kata kunci pencarian</p></div>'
+      grid.innerHTML = '<div class="col-span-full text-center py-16"><div class="text-gray-400 mb-4"><svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.562M15 6.5a7.966 7.966 0 00-6-2.5c-1.035 0-2.024.174-2.947.5M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg></div><h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada program yang ditemukan</h3><p class="text-gray-500">Coba ubah kata kunci pencarian atau filter kategori</p></div>'
       if (noResults) noResults.classList.remove('hidden')
       return
     }
@@ -681,61 +556,61 @@ class ProgramCatalog {
     if (noResults) noResults.classList.add('hidden')
     
     grid.innerHTML = filteredPrograms.map(([id, program]) => `
-      <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2 duration-300" 
+      <div class="program-card bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200" 
            data-program-id="${id}" data-category="${program.category}">
-        <div class="h-48 bg-gradient-to-br ${program.gradient} relative overflow-hidden">
-          <div class="absolute inset-0 bg-black/20"></div>
-          <div class="absolute top-4 left-4">
-            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
-              ${this.getCategoryLabel(program.category)}
+        
+        <!-- Header dengan warna solid -->
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-3 h-3 rounded-full" style="background-color: ${program.color}"></div>
+              <span class="text-sm font-medium text-gray-600 px-2 py-1 bg-gray-100 rounded">
+                ${this.getCategoryLabel(program.category)}
+              </span>
+            </div>
+            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              ${this.getCommitmentLabel(program.commitment)}
             </span>
           </div>
-          <div class="absolute bottom-4 right-4">
-            <div class="bg-white/20 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-medium">
-              ${this.getCommitmentLabel(program.commitment)}
-            </div>
-          </div>
+          
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">${program.name}</h3>
+          <p class="text-gray-600 text-sm line-clamp-2">${program.description}</p>
         </div>
         
+        <!-- Content -->
         <div class="p-6">
-          <div class="mb-3">
-            <h3 class="text-xl font-bold text-batu-gray">${program.name}</h3>
-          </div>
-          
-          <p class="text-gray-600 mb-4 leading-relaxed">${program.description}</p>
-          
-          <div class="space-y-2 mb-4 text-sm">
-            <div class="flex items-center text-gray-500">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <!-- Info ringkas -->
+          <div class="space-y-2 mb-4">
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
               ${this.getScopeLabel(program.scope)}
             </div>
-            <div class="flex items-center text-gray-500">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
-              ${this.getCommitmentLabel(program.commitment)}
+              ${program.rolesAvailable.map(role => this.getRoleLabel(role)).join(', ')}
             </div>
           </div>
           
-          <div class="flex flex-wrap gap-2 mb-4">
-            ${program.rolesAvailable.map(role => `
-              <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
-                ${this.getRoleLabel(role)}
-              </span>
-            `).join('')}
+          <!-- Impact -->
+          <div class="mb-6">
+            <p class="text-xs text-gray-500 font-medium mb-1">DAMPAK</p>
+            <p class="text-sm text-gray-700">${program.impact}</p>
           </div>
           
-          <div class="flex gap-2">
-            <button class="flex-1 py-2 bg-gradient-to-r from-nusantara-green to-samudra-blue text-white rounded-lg font-semibold hover:shadow-lg transition-all" 
+          <!-- Action buttons -->
+          <div class="flex space-x-3">
+            <button class="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200" 
                     onclick="window.programCatalog.joinProgram('${id}')">
-              Ikut Program
+              Bergabung
             </button>
-            <button class="px-4 py-2 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition-all" 
+            <button class="px-4 py-2.5 border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200" 
                     onclick="window.programCatalog.showProgramInfo('${id}')">
-              Info
+              Detail
             </button>
           </div>
         </div>
@@ -744,29 +619,8 @@ class ProgramCatalog {
 
     console.log("Programs rendered successfully!")
     
-    // Setup filter buttons after successful render
     setTimeout(() => {
       this.setupEventListeners()
-      
-      // Check if all filter buttons are present
-      const filterBtns = document.querySelectorAll('.filter-btn')
-      console.log("Filter buttons after render:", filterBtns.length)
-      
-      if (filterBtns.length < 5) {
-        console.log("Missing filter buttons detected, creating them...")
-        if (window.createMissingFilterButtons) {
-          window.createMissingFilterButtons()
-        }
-      }
-      
-      // Check if advanced filter button exists
-      const advancedBtn = document.getElementById('advanced-filter-btn')
-      console.log("Advanced filter button exists:", !!advancedBtn)
-      
-      if (!advancedBtn) {
-        console.log("Advanced filter button missing, creating it...")
-        this.createAdvancedFilterButton()
-      }
     }, 100)
   }
 
@@ -774,10 +628,10 @@ class ProgramCatalog {
     const targetCard = document.querySelector(`[data-program-id="${programId}"]`)
     if (targetCard) {
       targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      targetCard.classList.add('ring-4', 'ring-indigo-500', 'ring-opacity-50')
+      targetCard.classList.add('ring-2', 'ring-blue-500', 'ring-opacity-50')
       
       setTimeout(() => {
-        targetCard.classList.remove('ring-4', 'ring-indigo-500', 'ring-opacity-50')
+        targetCard.classList.remove('ring-2', 'ring-blue-500', 'ring-opacity-50')
       }, 4000)
     }
   }
@@ -840,306 +694,108 @@ class ProgramCatalog {
     alert(`Info program: ${this.programDatabase[programId]?.name}`)
   }
 
-  filterByRegion(regionName) {
-    console.log("Filtering programs by region:", regionName)
-    
-    // Clear current search and category
-    this.currentSearch = ''
-    this.currentCategory = 'all'
-    
-    // Update search input
-    const searchInput = document.getElementById('program-search')
-    if (searchInput) {
-      searchInput.value = `Wilayah: ${regionName}`
-    }
-    
-    // Filter programs that are available in this region
-    const regionPrograms = Object.entries(this.programDatabase).filter(([id, program]) => {
-      // Check if program has locations in this region
-      if (window.mapSystem && window.mapSystem.programLocations[id]) {
-        const programLocation = window.mapSystem.programLocations[id]
-        return programLocation.provinces.includes(regionName) || 
-               programLocation.regions.includes(regionName)
-      }
-      return false
-    })
-    
-    // Update filter buttons to show "all" as active
-    this.updateFilterButtons()
-    
-    // Render filtered programs
-    this.renderFilteredPrograms(regionPrograms)
-    
-    // Show region filter indicator
-    this.showRegionFilterIndicator(regionName, regionPrograms.length)
-  }
-
-  renderFilteredPrograms(programs) {
-    const grid = document.getElementById('programs-grid')
-    const noResults = document.getElementById('no-results')
-    
-    if (!grid) {
-      console.error("Programs grid not found")
-      return
-    }
-    
-    if (programs.length === 0) {
-      grid.innerHTML = ''
-      if (noResults) {
-        noResults.classList.remove('hidden')
-      }
-      return
-    }
-    
-    if (noResults) {
-      noResults.classList.add('hidden')
-    }
-    
-    grid.innerHTML = programs.map(([id, program]) => `
-      <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2 duration-300" 
-           data-program-id="${id}" data-category="${program.category}">
-        <div class="h-48 bg-gradient-to-br ${program.gradient} relative overflow-hidden">
-          <div class="absolute inset-0 bg-black/20"></div>
-          <div class="absolute top-4 left-4">
-            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
-              ${this.getCategoryLabel(program.category)}
-            </span>
-          </div>
-          <div class="absolute bottom-4 right-4">
-            <div class="bg-white/20 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-medium">
-              ${this.getCommitmentLabel(program.commitment)}
-            </div>
-          </div>
-        </div>
-        
-        <div class="p-6">
-          <div class="mb-3">
-            <h3 class="text-xl font-bold text-batu-gray">${program.name}</h3>
-          </div>
-          
-          <p class="text-gray-600 mb-4 leading-relaxed">${program.description}</p>
-          
-          <div class="space-y-2 mb-4 text-sm">
-            <div class="flex items-center text-gray-500">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              </svg>
-              ${this.getScopeLabel(program.scope)}
-            </div>
-            <div class="flex items-center text-gray-500">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              ${this.getCommitmentLabel(program.commitment)}
-            </div>
-          </div>
-          
-          <div class="flex flex-wrap gap-2 mb-4">
-            ${program.rolesAvailable.map(role => `
-              <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
-                ${this.getRoleLabel(role)}
-              </span>
-            `).join('')}
-          </div>
-          
-          <div class="flex gap-2">
-            <button class="flex-1 py-2 bg-gradient-to-r from-nusantara-green to-samudra-blue text-white rounded-lg font-semibold hover:shadow-lg transition-all" 
-                    onclick="window.programCatalog.joinProgram('${id}')">
-              Ikut Program
-            </button>
-            <button class="px-4 py-2 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition-all" 
-                    onclick="window.programCatalog.showProgramInfo('${id}')">
-              Info
-            </button>
-          </div>
-        </div>
-      </div>
-    `).join('')
-  }
-
-  showRegionFilterIndicator(regionName, programCount) {
-    // Create or update region filter indicator
-    let indicator = document.getElementById('region-filter-indicator')
-    
-    if (!indicator) {
-      indicator = document.createElement('div')
-      indicator.id = 'region-filter-indicator'
-      indicator.className = 'mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl'
-      
-      // Insert after search bar
-      const searchContainer = document.querySelector('.max-w-2xl.mx-auto.mb-8')
-      if (searchContainer) {
-        searchContainer.insertAdjacentElement('afterend', indicator)
-      }
-    }
-    
-    indicator.innerHTML = `
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
-          <span class="font-semibold text-blue-800">Filter Wilayah: ${regionName}</span>
-          <span class="ml-2 px-2 py-1 bg-blue-200 text-blue-800 text-sm rounded-full">${programCount} Program</span>
-        </div>
-        <button onclick="window.programCatalog.clearRegionFilter()" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-          Hapus Filter
-        </button>
-      </div>
-    `
-  }
-
-  clearRegionFilter() {
-    // Remove region filter indicator
-    const indicator = document.getElementById('region-filter-indicator')
-    if (indicator) {
-      indicator.remove()
-    }
-    
-    // Clear search
-    const searchInput = document.getElementById('program-search')
-    if (searchInput) {
-      searchInput.value = ''
-    }
-    
-    // Reset filters
-    this.currentSearch = ''
-    this.currentCategory = 'all'
-    
-    // Re-render all programs
-    this.renderPrograms()
-  }
-
-  createAdvancedFilterButton() {
-    console.log("Creating advanced filter button...")
-    
-    // Find search bar container (new position)
-    const searchContainer = document.querySelector('.max-w-2xl .flex.gap-4')
-    if (searchContainer && !document.getElementById('advanced-filter-btn')) {
-      console.log("Adding advanced filter button to search bar area...")
-      
-      // Create advanced filter button
-      const advancedBtnHTML = `
-        <button id="advanced-filter-btn" class="px-6 py-3 bg-samudra-blue text-white rounded-xl font-semibold hover:bg-blue-700 transition-all flex items-center whitespace-nowrap">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
-          </svg>
-          Filter Lanjutan
-        </button>
-      `
-      
-      searchContainer.insertAdjacentHTML('beforeend', advancedBtnHTML)
-    } else {
-      console.log("Search container not found or button already exists")
-    }
-    
-    // Create modal if it doesn't exist
-    if (!document.getElementById('advanced-filter-modal')) {
-      this.createAdvancedFilterModal()
-    }
-    
-    // Setup event listeners
-    setTimeout(() => {
-      this.setupEventListeners()
-    }, 100)
-    
-    console.log("Advanced filter button created successfully!")
-  }
-
   createAdvancedFilterModal() {
     console.log("Creating advanced filter modal...")
     
     const modalHTML = `
       <div id="advanced-filter-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          <div class="p-6 border-b border-gray-200">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <!-- Header -->
+          <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
-              <h3 class="text-2xl font-bold text-batu-gray">Filter Lanjutan Program</h3>
+              <h3 class="text-lg font-semibold text-gray-900">Filter Lanjutan</h3>
               <button id="close-advanced-filter" class="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
               </button>
             </div>
           </div>
           
+          <!-- Content -->
           <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               <!-- Commitment Level Filter -->
               <div class="space-y-3">
-                <h4 class="font-semibold text-batu-gray">Tingkat Komitmen</h4>
+                <h4 class="text-sm font-medium text-gray-900">Tingkat Komitmen</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input type="checkbox" class="commitment-filter mr-3 rounded" value="high">
-                    <span class="text-sm">≥ 5 jam/minggu (Tinggi)</span>
+                    <input type="checkbox" class="commitment-filter mr-3 rounded border-gray-300" value="low">
+                    <span class="text-sm text-gray-700">≤ 2 jam/minggu</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" class="commitment-filter mr-3 rounded border-gray-300" value="mid">
+                    <span class="text-sm text-gray-700">2-5 jam/minggu</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" class="commitment-filter mr-3 rounded border-gray-300" value="high">
+                    <span class="text-sm text-gray-700">≥ 5 jam/minggu</span>
                   </label>
                 </div>
               </div>
 
               <!-- Scope Filter -->
               <div class="space-y-3">
-                <h4 class="font-semibold text-batu-gray">Cakupan Program</h4>
+                <h4 class="text-sm font-medium text-gray-900">Cakupan Program</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input type="checkbox" class="scope-filter mr-3 rounded" value="local">
-                    <span class="text-sm">Komunitas Lokal</span>
+                    <input type="checkbox" class="scope-filter mr-3 rounded border-gray-300" value="local">
+                    <span class="text-sm text-gray-700">Komunitas Lokal</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="scope-filter mr-3 rounded" value="city">
-                    <span class="text-sm">Kota/Kabupaten</span>
+                    <input type="checkbox" class="scope-filter mr-3 rounded border-gray-300" value="city">
+                    <span class="text-sm text-gray-700">Kota/Kabupaten</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="scope-filter mr-3 rounded" value="national">
-                    <span class="text-sm">Nasional</span>
+                    <input type="checkbox" class="scope-filter mr-3 rounded border-gray-300" value="national">
+                    <span class="text-sm text-gray-700">Nasional</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="scope-filter mr-3 rounded" value="global">
-                    <span class="text-sm">Global</span>
+                    <input type="checkbox" class="scope-filter mr-3 rounded border-gray-300" value="global">
+                    <span class="text-sm text-gray-700">Global</span>
                   </label>
                 </div>
               </div>
 
               <!-- Skills Filter -->
               <div class="space-y-3">
-                <h4 class="font-semibold text-batu-gray">Keterampilan yang Dibutuhkan</h4>
+                <h4 class="text-sm font-medium text-gray-900">Keterampilan yang Dibutuhkan</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input type="checkbox" class="skills-filter mr-3 rounded" value="leadership">
-                    <span class="text-sm">Kepemimpinan</span>
+                    <input type="checkbox" class="skills-filter mr-3 rounded border-gray-300" value="leadership">
+                    <span class="text-sm text-gray-700">Kepemimpinan</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="skills-filter mr-3 rounded" value="communication">
-                    <span class="text-sm">Komunikasi</span>
+                    <input type="checkbox" class="skills-filter mr-3 rounded border-gray-300" value="communication">
+                    <span class="text-sm text-gray-700">Komunikasi</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="skills-filter mr-3 rounded" value="technical">
-                    <span class="text-sm">Teknis</span>
+                    <input type="checkbox" class="skills-filter mr-3 rounded border-gray-300" value="technical">
+                    <span class="text-sm text-gray-700">Teknis</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="skills-filter mr-3 rounded" value="creative">
-                    <span class="text-sm">Kreatif</span>
+                    <input type="checkbox" class="skills-filter mr-3 rounded border-gray-300" value="creative">
+                    <span class="text-sm text-gray-700">Kreatif</span>
                   </label>
                 </div>
               </div>
 
               <!-- Roles Filter -->
               <div class="space-y-3">
-                <h4 class="font-semibold text-batu-gray">Peran yang Tersedia</h4>
+                <h4 class="text-sm font-medium text-gray-900">Peran yang Tersedia</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input type="checkbox" class="roles-filter mr-3 rounded" value="relawan">
-                    <span class="text-sm">Relawan</span>
+                    <input type="checkbox" class="roles-filter mr-3 rounded border-gray-300" value="relawan">
+                    <span class="text-sm text-gray-700">Relawan</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="roles-filter mr-3 rounded" value="mentor">
-                    <span class="text-sm">Mentor</span>
+                    <input type="checkbox" class="roles-filter mr-3 rounded border-gray-300" value="mentor">
+                    <span class="text-sm text-gray-700">Mentor</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="checkbox" class="roles-filter mr-3 rounded" value="donatur">
-                    <span class="text-sm">Donatur</span>
+                    <input type="checkbox" class="roles-filter mr-3 rounded border-gray-300" value="donatur">
+                    <span class="text-sm text-gray-700">Donatur</span>
                   </label>
                 </div>
               </div>
@@ -1147,11 +803,11 @@ class ProgramCatalog {
             </div>
             
             <!-- Action Buttons -->
-            <div class="flex gap-4 mt-8 pt-6 border-t border-gray-200">
-              <button id="apply-advanced-filter" class="flex-1 py-3 bg-gradient-to-r from-nusantara-green to-samudra-blue text-white rounded-lg font-semibold hover:shadow-lg transition-all">
+            <div class="flex space-x-3 mt-8 pt-6 border-t border-gray-200">
+              <button id="apply-advanced-filter" class="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                 Terapkan Filter
               </button>
-              <button id="reset-advanced-filter" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all">
+              <button id="reset-advanced-filter" class="px-4 py-2.5 border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200">
                 Reset
               </button>
             </div>
@@ -1164,17 +820,13 @@ class ProgramCatalog {
     console.log("Advanced filter modal created successfully!")
   }
 
-  // Tambahkan method untuk setup listener advanced filter
   setupAdvancedFilterListeners() {
-    // Idempotent: pastikan modal ada
     let modal = document.getElementById('advanced-filter-modal')
     if (!modal) {
-      // create it synchronously so callers can rely on it existing
       this.createAdvancedFilterModal()
       modal = document.getElementById('advanced-filter-modal')
     }
 
-    // Close button inside modal
     const closeBtn = modal.querySelector('#close-advanced-filter')
     if (closeBtn) {
       closeBtn.addEventListener('click', (e) => {
@@ -1183,12 +835,12 @@ class ProgramCatalog {
       })
     }
 
-    // Apply / Reset buttons
     const applyBtn = modal.querySelector('#apply-advanced-filter')
     if (applyBtn) {
       applyBtn.addEventListener('click', (e) => {
         e.stopPropagation()
         this.applyAdvancedFilters()
+        this.closeAdvancedFilter()
       })
     }
 
@@ -1200,24 +852,45 @@ class ProgramCatalog {
       })
     }
 
-    // Escape key handler (use stored bound reference)
-    // Remove any existing then add to be safe
     document.removeEventListener('keydown', this._boundEscHandler)
     document.addEventListener('keydown', this._boundEscHandler)
+  }
 
-    // Provide backwards-compatible names expected elsewhere
-    this.openAdvancedFilterModal = this.openAdvancedFilter.bind(this)
+  createAdvancedFilterButton() {
+    console.log("Creating advanced filter button...")
+    
+    const searchContainer = document.querySelector('.max-w-2xl .flex.gap-4')
+    if (searchContainer && !document.getElementById('advanced-filter-btn')) {
+      console.log("Adding advanced filter button to search bar area...")
+      
+      const advancedBtnHTML = `
+        <button id="advanced-filter-btn" class="px-4 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-200 flex items-center whitespace-nowrap">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+          </svg>
+          Filter Lanjutan
+        </button>
+      `
+      
+      searchContainer.insertAdjacentHTML('beforeend', advancedBtnHTML)
+    }
+    
+    if (!document.getElementById('advanced-filter-modal')) {
+      this.createAdvancedFilterModal()
+    }
+    
+    setTimeout(() => {
+      this.setupEventListeners()
+    }, 100)
+    
+    console.log("Advanced filter button created successfully!")
   }
 }
 
-// Improved Initialization - Handle both DOM ready and already loaded states
+// Initialization functions
 function initializeProgramCatalog() {
   console.log("=== INITIALIZING PROGRAM CATALOG ===")
   
-  // Clear any existing setup flags
-  document.documentElement.removeAttribute('data-advanced-filter-setup')
-  
-  // Wait for DOM elements to be ready
   setTimeout(() => {
     if (!window.programCatalog) {
       console.log("Creating new ProgramCatalog instance...")
@@ -1231,88 +904,21 @@ function initializeProgramCatalog() {
   }, 200)
 }
 
-// Handle different DOM states
 if (document.readyState === 'loading') {
-  // DOM is still loading
   document.addEventListener('DOMContentLoaded', initializeProgramCatalog)
 } else if (document.readyState === 'interactive' || document.readyState === 'complete') {
-  // DOM is already loaded
   console.log("DOM already loaded, initializing immediately...")
   initializeProgramCatalog()
 }
 
-// Single fallback initialization
 setTimeout(() => {
   if (!window.programCatalog) {
     console.log("⚠️ Fallback initialization triggered...")
     initializeProgramCatalog()
-  } else {
-    console.log("✅ Program Catalog already exists")
   }
 }, 1500)
 
-// Component loading helper
-function waitForProgramGrid(callback, maxAttempts = 10) {
-  let attempts = 0
-  
-  function checkGrid() {
-    attempts++
-    const grid = document.getElementById('programs-grid')
-    
-    if (grid) {
-      console.log(`✅ Program grid found after ${attempts} attempts`)
-      callback()
-    } else if (attempts < maxAttempts) {
-      setTimeout(checkGrid, 200)
-    } else {
-      console.log("⚠️ Program grid not found, proceeding anyway...")
-      callback()
-    }
-  }
-  
-  checkGrid()
-}
-
-function createProgramGrid() {
-  console.log("Creating program grid manually...")
-  const catalogSection = document.getElementById('program-catalog')
-  
-  if (catalogSection && !document.getElementById('programs-grid')) {
-    const gridHTML = `
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="programs-grid">
-          <!-- Programs will be rendered dynamically here -->
-        </div>
-        
-        <div id="no-results" class="hidden text-center py-12">
-          <div class="text-gray-400 mb-4">
-            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.562M15 6.5a7.966 7.966 0 00-6-2.5c-1.035 0-2.024.174-2.947.5M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada program yang ditemukan</h3>
-          <p class="text-gray-500">Coba ubah kata kunci pencarian atau filter kategori</p>
-        </div>
-      </div>
-    `
-    catalogSection.insertAdjacentHTML('beforeend', gridHTML)
-    console.log("Program grid created successfully!")
-  }
-}
-
-// Enhanced initialization that waits for component loading
-setTimeout(() => {
-  console.log("Enhanced initialization starting...")
-  waitForProgramGrid(() => {
-    if (!window.programCatalog) {
-      window.programCatalog = new ProgramCatalog()
-    } else {
-      window.programCatalog.renderPrograms()
-    }
-  })
-}, 500)
-
-// Global functions
+// Global utility functions
 window.testProgramCatalog = () => {
   console.log("=== TESTING PROGRAM CATALOG ===")
   console.log("Program catalog exists:", !!window.programCatalog)
@@ -1320,19 +926,7 @@ window.testProgramCatalog = () => {
   if (window.programCatalog) {
     console.log("Database:", window.programCatalog.programDatabase)
     console.log("Current category:", window.programCatalog.currentCategory)
-    console.log("Current search:", window.programCatalog.currentSearch)
-    
-    // Test rendering
-    console.log("Testing render...")
     window.programCatalog.renderPrograms()
-    
-    // Test filter buttons
-    console.log("Testing filter buttons...")
-    const filterBtns = document.querySelectorAll('.filter-btn')
-    console.log("Filter buttons found:", filterBtns.length)
-    filterBtns.forEach((btn, index) => {
-      console.log(`Button ${index}:`, btn.dataset.filter, btn.textContent.trim())
-    })
   } else {
     console.log("Program catalog not found - creating new instance...")
     window.programCatalog = new ProgramCatalog()
@@ -1342,174 +936,34 @@ window.testProgramCatalog = () => {
 window.forceRenderPrograms = () => {
   console.log("=== FORCE RENDER PROGRAMS ===")
   
-  // First ensure grid exists
   if (!document.getElementById('programs-grid')) {
     console.log("Grid not found, creating it...")
-    createProgramGrid()
+    const catalogSection = document.getElementById('program-catalog')
+    if (catalogSection && !document.getElementById('programs-grid')) {
+      const gridHTML = `
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="programs-grid">
+            <!-- Programs will be rendered here -->
+          </div>
+          <div id="no-results" class="hidden text-center py-16">
+            <div class="text-gray-400 mb-4">
+              <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.562M15 6.5a7.966 7.966 0 00-6-2.5c-1.035 0-2.024.174-2.947.5M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada program yang ditemukan</h3>
+            <p class="text-gray-500">Coba ubah kata kunci pencarian atau filter kategori</p>
+          </div>
+        </div>
+      `
+      catalogSection.insertAdjacentHTML('beforeend', gridHTML)
+    }
   }
   
-  // Then render programs
   if (window.programCatalog) {
-    console.log("Using existing catalog...")
     window.programCatalog.renderPrograms()
   } else {
-    console.log("Creating new catalog...")
     window.programCatalog = new ProgramCatalog()
-  }
-  
-  // Force fix filter buttons after 500ms
-  setTimeout(() => {
-    const filterBtns = document.querySelectorAll('.filter-btn')
-    console.log("Checking filter buttons after force render:", filterBtns.length)
-    
-    if (filterBtns.length < 5) {
-      console.log("Force creating missing filter buttons...")
-      if (window.createMissingFilterButtons) {
-        window.createMissingFilterButtons()
-      }
-    }
-  }, 500)
-}
-
-// Quick fix function for filter buttons
-window.fixFilterButtons = () => {
-  console.log("=== QUICK FIX FILTER BUTTONS ===")
-  if (window.createMissingFilterButtons) {
-    window.createMissingFilterButtons()
-  }
-  
-  // Also check for advanced filter button
-  setTimeout(() => {
-    const advancedBtn = document.getElementById('advanced-filter-btn')
-    if (!advancedBtn && window.programCatalog) {
-      console.log("Creating missing advanced filter button...")
-      window.programCatalog.createAdvancedFilterButton()
-    }
-  }, 200)
-}
-
-// Force create advanced filter button
-window.createAdvancedFilterButton = () => {
-  console.log("=== FORCE CREATE ADVANCED FILTER BUTTON ===")
-  if (window.programCatalog) {
-    window.programCatalog.createAdvancedFilterButton()
-  } else {
-    console.error("Program catalog not found!")
-  }
-}
-
-// Debug function to check all buttons visibility
-window.debugAllButtons = () => {
-  console.log("=== DEBUG ALL BUTTONS ===")
-  
-  // Check filter buttons
-  const filterBtns = document.querySelectorAll('.filter-btn')
-  console.log("Filter buttons found:", filterBtns.length)
-  
-  filterBtns.forEach((btn, index) => {
-    const rect = btn.getBoundingClientRect()
-    console.log(`Filter Button ${index}:`, {
-      filter: btn.dataset.filter,
-      text: btn.textContent.trim(),
-      visible: rect.width > 0 && rect.height > 0,
-      rect: { width: rect.width, height: rect.height, x: rect.x, y: rect.y }
-    })
-  })
-  
-  // Check advanced filter button
-  const advancedBtn = document.getElementById('advanced-filter-btn')
-  console.log("Advanced filter button:", {
-    exists: !!advancedBtn,
-    visible: advancedBtn ? (advancedBtn.offsetWidth > 0 && advancedBtn.offsetHeight > 0) : false,
-    text: advancedBtn ? advancedBtn.textContent.trim() : 'N/A'
-  })
-  
-  // Check modal
-  const modal = document.getElementById('advanced-filter-modal')
-  console.log("Advanced filter modal:", {
-    exists: !!modal,
-    hidden: modal ? modal.classList.contains('hidden') : 'N/A'
-  })
-  
-  // Check clear button
-  const clearBtn = document.getElementById('clear-search')
-  console.log("Clear button:", {
-    exists: !!clearBtn,
-    visible: clearBtn ? (clearBtn.offsetWidth > 0 && clearBtn.offsetHeight > 0) : false,
-    text: clearBtn ? clearBtn.textContent.trim() : 'N/A'
-  })
-}
-
-// Manual test function for advanced filter
-window.testAdvancedFilter = () => {
-  console.log("=== TESTING ADVANCED FILTER ===")
-  const btn = document.getElementById('advanced-filter-btn')
-  const modal = document.getElementById('advanced-filter-modal')
-  
-  if (!btn) {
-    console.error("Advanced filter button not found!")
-    return
-  }
-  
-  if (!modal) {
-    console.error("Advanced filter modal not found!")
-    return
-  }
-  
-  console.log("Button found, simulating click...")
-  
-  // Create and dispatch a more realistic click event
-  const clickEvent = new MouseEvent('click', {
-    view: window,
-    bubbles: true,
-    cancelable: true
-  })
-  
-  btn.dispatchEvent(clickEvent)
-  
-  setTimeout(() => {
-    const isVisible = !modal.classList.contains('hidden')
-    console.log("Modal visible after click:", isVisible)
-    if (!isVisible) {
-      console.log("Click simulation failed, trying direct method...")
-      if (window.programCatalog && window.programCatalog.openAdvancedFilterModal) {
-        window.programCatalog.openAdvancedFilterModal()
-      }
-    }
-  }, 100)
-}
-
-// Force open modal function using new method
-window.openAdvancedFilter = () => {
-  console.log("=== FORCE OPEN ADVANCED FILTER ===")
-  if (window.programCatalog && window.programCatalog.openAdvancedFilterModal) {
-    window.programCatalog.openAdvancedFilterModal()
-  } else {
-    console.error("Program catalog or openAdvancedFilterModal method not found!")
-    // Fallback to direct DOM manipulation
-    const modal = document.getElementById('advanced-filter-modal')
-    if (modal) {
-      modal.classList.remove('hidden')
-      document.body.style.overflow = 'hidden'
-      console.log("Modal opened manually via fallback")
-    } else {
-      console.error("Modal not found!")
-    }
-  }
-}
-
-// Force setup listeners function
-window.forceSetupAdvancedFilter = () => {
-  console.log("=== FORCE SETUP ADVANCED FILTER ===")
-  
-  // Clear existing setup flag
-  document.documentElement.removeAttribute('data-advanced-filter-setup')
-  
-  if (window.programCatalog && window.programCatalog.setupAdvancedFilterListeners) {
-    window.programCatalog.setupAdvancedFilterListeners()
-    console.log("Advanced filter listeners setup forced")
-  } else {
-    console.error("Program catalog or setupAdvancedFilterListeners method not found!")
   }
 }
 
@@ -1519,79 +973,6 @@ window.highlightProgram = (programId) => {
   }
 }
 
-// Global function to setup filter buttons manually
-window.setupFilterButtons = () => {
-  console.log("=== MANUAL FILTER SETUP ===")
-  const filterBtns = document.querySelectorAll('.filter-btn')
-  console.log("Found filter buttons:", filterBtns.length)
-  
-  // Debug: List all buttons found
-  filterBtns.forEach((btn, index) => {
-    console.log(`Button ${index}:`, {
-      filter: btn.dataset.filter,
-      text: btn.textContent.trim(),
-      visible: btn.offsetWidth > 0 && btn.offsetHeight > 0,
-      display: window.getComputedStyle(btn).display,
-      visibility: window.getComputedStyle(btn).visibility
-    })
-  })
-  
-  if (filterBtns.length === 0) {
-    console.error("No filter buttons found!")
-    return
-  }
-  
-  filterBtns.forEach((btn, index) => {
-    console.log(`Setting up button ${index}:`, btn.dataset.filter)
-    
-    btn.addEventListener('click', (e) => {
-      console.log("Manual filter clicked:", e.currentTarget.dataset.filter)
-      
-      if (window.programCatalog) {
-        window.programCatalog.currentCategory = e.currentTarget.dataset.filter
-        window.programCatalog.updateFilterButtons()
-        window.programCatalog.renderPrograms()
-      } else {
-        console.error("Program catalog not found!")
-      }
-    })
-  })
-  
-  console.log("Manual filter setup completed!")
-}
-
-// Debug function to check filter buttons visibility
-window.debugFilterButtons = () => {
-  console.log("=== DEBUG FILTER BUTTONS ===")
-  const catalogSection = document.getElementById('program-catalog')
-  console.log("Catalog section:", catalogSection)
-  console.log("Catalog innerHTML length:", catalogSection?.innerHTML.length)
-  
-  const filterContainer = document.querySelector('.flex.flex-wrap.justify-center')
-  console.log("Filter container:", filterContainer)
-  
-  const allButtons = document.querySelectorAll('.filter-btn')
-  console.log("All filter buttons:", allButtons.length)
-  
-  allButtons.forEach((btn, index) => {
-    const rect = btn.getBoundingClientRect()
-    console.log(`Button ${index} (${btn.dataset.filter}):`, {
-      text: btn.textContent.trim(),
-      visible: rect.width > 0 && rect.height > 0,
-      rect: rect,
-      classes: btn.className,
-      parent: btn.parentElement?.tagName
-    })
-  })
-  
-  // If not all buttons found, try to fix
-  if (allButtons.length < 5) {
-    console.log("Not all buttons found, attempting to create missing ones...")
-    createMissingFilterButtons()
-  }
-}
-
-// Function to create missing filter buttons
 window.createMissingFilterButtons = () => {
   console.log("=== CREATING MISSING FILTER BUTTONS ===")
   
@@ -1603,18 +984,14 @@ window.createMissingFilterButtons = () => {
     { filter: 'technology', text: 'Teknologi', active: false }
   ]
   
-  // Find or create filter container
   let filterContainer = document.querySelector('.flex.flex-wrap.justify-center')
   
   if (!filterContainer) {
-    console.log("Filter container not found, creating new one...")
     const catalogSection = document.getElementById('program-catalog')
     if (catalogSection) {
       const containerHTML = `
-        <div class="mb-12 w-full">
-          <div class="w-full overflow-x-auto">
-            <div class="flex flex-wrap justify-center gap-3 min-w-max px-4" id="filter-buttons-container">
-            </div>
+        <div class="mb-8 w-full">
+          <div class="flex flex-wrap justify-center gap-3" id="filter-buttons-container">
           </div>
         </div>
       `
@@ -1628,32 +1005,18 @@ window.createMissingFilterButtons = () => {
     return
   }
   
-  // Clear existing buttons
   filterContainer.innerHTML = ''
   
-  // Create all buttons
   expectedButtons.forEach(btnData => {
-    const activeClass = btnData.active ? 'bg-nusantara-green text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    const activeClass = btnData.active ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
     
     const buttonHTML = `
-      <button class="filter-btn px-6 py-3 ${activeClass} rounded-lg font-semibold transition-all" data-filter="${btnData.filter}">
-        <span class="flex items-center">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H5a2 2 0 01-2 2v2M7 7h10"></path>
-          </svg>
-          ${btnData.text}
-        </span>
+      <button class="filter-btn px-4 py-2.5 ${activeClass} border rounded-lg font-medium transition-colors duration-200" data-filter="${btnData.filter}">
+        ${btnData.text}
       </button>
     `
     filterContainer.insertAdjacentHTML('beforeend', buttonHTML)
   })
   
   console.log("All filter buttons created successfully!")
-  
-  // Setup event listeners for new buttons
-  setTimeout(() => {
-    if (window.setupFilterButtons) {
-      window.setupFilterButtons()
-    }
-  }, 100)
 }

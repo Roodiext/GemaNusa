@@ -1,0 +1,390 @@
+<style>
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card {
+    width: 320px;
+    height: 280px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+.card.expanded {
+    width: 640px;
+    z-index: 10;
+}
+
+.card:hover:not(.expanded) {
+    transform: translateY(-4px);
+}
+
+.card-inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card-content {
+    width: 320px;
+    flex-shrink: 0;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-detail {
+    width: 320px;
+    background: white;
+    padding: 24px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.card.expanded .card-detail {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.overlay-gradient {
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, #8B5CF6, #A855F7);
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .card,
+    .card.expanded {
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    .card.expanded .card-detail {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        border-radius: 16px;
+    }
+}
+</style>
+
+<section id="program" class="relative z-10 py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Gerakan Gema Nusa</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Berbagai program sosial yang kami lakukan untuk membantu masyarakat dan membangun Indonesia yang lebih baik</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8">
+            <button class="tab-button active px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-purple-600 text-white" data-program="all">
+                Semua Program
+            </button>
+            <button class="tab-button px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-100 text-gray-600 hover:bg-gray-200" data-program="lingkungan">
+                Lingkungan & Alam
+            </button>
+            <button class="tab-button px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-100 text-gray-600 hover:bg-gray-200" data-program="pendidikan">
+                Pendidikan
+            </button>
+            <button class="tab-button px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-100 text-gray-600 hover:bg-gray-200" data-program="sosial">
+                Sosial & Pangan
+            </button>
+            <button class="tab-button px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-100 text-gray-600 hover:bg-gray-200" data-program="teknologi">
+                Teknologi
+            </button>
+        </div>
+
+        <!-- Cards Container -->
+        <div class="overflow-x-auto pb-4">
+            <div id="cardsGrid" class="cards-container">
+                <!-- Card 1: Program Lingkungan & Alam -->
+                <div class="card cursor-pointer" data-program="lingkungan">
+                    <div class="card-inner">
+                        <div class="card-content" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600');">
+                            <div class="absolute inset-0 overlay-gradient"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">Lingkungan</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white font-bold text-xl mb-2">Pelestarian Lingkungan</h3>
+                                <p class="text-white/80 text-sm">Program konservasi alam dan penghijauan</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-detail">
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="inline-block bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">Lingkungan & Alam</span>
+                                <button class="close-detail p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Pelestarian Lingkungan</h3>
+                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                Program pelestarian lingkungan melalui reboisasi, pembersihan sungai, dan edukasi masyarakat tentang pentingnya menjaga kelestarian alam untuk generasi mendatang.
+                            </p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-green-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Target: Masyarakat & Sekolah</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-green-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Lokasi: Area konservasi</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-green-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Status: Berkelanjutan</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors duration-200">
+                                Lihat Selengkapnya →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Program Pendidikan -->
+                <div class="card cursor-pointer" data-program="pendidikan">
+                    <div class="card-inner">
+                        <div class="card-content" style="background-image: url('https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600');">
+                            <div class="absolute inset-0 overlay-gradient"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">Pendidikan</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white font-bold text-xl mb-2">Kegiatan Sosial Mengajar</h3>
+                                <p class="text-white/80 text-sm">Program pendidikan untuk anak-anak kurang mampu</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-detail">
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="inline-block bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">Pendidikan</span>
+                                <button class="close-detail p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Kegiatan Sosial Mengajar</h3>
+                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                Program pendidikan gratis untuk anak-anak kurang mampu melalui kegiatan mengajar, pemberian beasiswa, dan penyediaan fasilitas belajar yang layak.
+                            </p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-purple-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Target: Anak-anak kurang mampu</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-purple-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Lokasi: Seluruh Indonesia</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-purple-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Status: Aktif</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors duration-200">
+                                Lihat Selengkapnya →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Program Sosial & Pangan -->
+                <div class="card cursor-pointer" data-program="sosial">
+                    <div class="card-inner">
+                        <div class="card-content" style="background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600');">
+                            <div class="absolute inset-0 overlay-gradient"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">Sosial</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white font-bold text-xl mb-2">Bantuan Sosial & Pangan</h3>
+                                <p class="text-white/80 text-sm">Distribusi makanan dan bantuan sosial</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-detail">
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="inline-block bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Sosial & Pangan</span>
+                                <button class="close-detail p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Bantuan Sosial & Pangan</h3>
+                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                Program bantuan pangan dan sosial untuk keluarga kurang mampu, korban bencana, dan masyarakat yang membutuhkan dukungan ekonomi.
+                            </p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Target: Keluarga terdampak</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Lokasi: Zona rawan</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Status: Darurat</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors duration-200">
+                                Lihat Selengkapnya →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Program Teknologi -->
+                <div class="card cursor-pointer" data-program="teknologi">
+                    <div class="card-inner">
+                        <div class="card-content" style="background-image: url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600');">
+                            <div class="absolute inset-0 overlay-gradient"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">Teknologi</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white font-bold text-xl mb-2">Program Teknologi Digital</h3>
+                                <p class="text-white/80 text-sm">Pelatihan teknologi dan literasi digital</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-detail">
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Teknologi</span>
+                                <button class="close-detail p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Program Teknologi Digital</h3>
+                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                Program pelatihan teknologi digital, coding, dan literasi digital untuk generasi muda agar siap menghadapi era digitalisasi.
+                            </p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Target: Remaja & Dewasa Muda</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Lokasi: Kota besar</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Status: Berkelanjutan</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors duration-200">
+                                Lihat Selengkapnya →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Button Lihat Program Lainnya -->
+            <div class="text-center mt-12">
+                <a href="/pages/program.html" class="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                    <span>Lihat Program Lainnya</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>571486292-0ba58a3f068b?w=600');">
+                            <div class="absolute inset-0 overlay-gradient"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">Lainnya</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <h3 class="text-white font-bold text-xl mb-2">Program Lainnya</h3>
+                                <p class="text-white/80 text-sm">Berbagai kegiatan sosial dan pemberdayaan masyarakat</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-detail">
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Pemberdayaan</span>
+                                <button class="close-detail p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Program Lainnya</h3>
+                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                Berbagai program inovatif Gema Nusa lainnya untuk memberdayakan masyarakat melalui pelatihan keterampilan dan pengembangan UMKM.
+                            </p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Target: Remaja & Dewasa</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Lokasi: Kota besar</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span class="text-sm text-gray-600">Status: Berkelanjutan</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors duration-200">
+                                Lihat Selengkapnya →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

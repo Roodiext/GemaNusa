@@ -13,13 +13,13 @@ class ComponentLoader {
     const components = {
       index: [
         { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
-        { id: "hero", file: "components/home/hero-section.html", priority: 1 },
-        { id: "tentang", file: "components/home/tentang-section.html", priority: 2 },
-        { id: "featured-programs", file: "components/home/featured-programs.html", priority: 2 },
-        { id: "luma-quest-intro", file: "components/home/luma-quest-intro.html", priority: 3 },
-        { id: "dampak-stats", file: "components/home/dampak-stats.html", priority: 3 },
-        { id: "testimonials", file: "components/home/testimonials.html", priority: 4 },
-        { id: "ajakan", file: "components/home/ajakan-section.html", priority: 4 },
+        { id: "hero", file: "components/home/home-hero-section.html", priority: 1 },
+        { id: "tentang", file: "components/home/home-about-section.html", priority: 2 },
+        { id: "featured-programs", file: "components/home/home-program-gemanusa.html", priority: 2 },
+        { id: "luma-quest-intro", file: "components/home/home-luma-ai-bot-section.html", priority: 3 },
+        { id: "dampak-stats", file: "components/home/home-testimonials-section.html", priority: 3 },
+        { id: "volunteer", file: "components/home/home-role-gemanusa-section.html", priority: 4 },
+        { id: "ajakan", file: "components/home/home-contact-section.html", priority: 4 },
         { id: "footer", file: "components/shared/footer.html", priority: 5 },
         { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 5 },
       ],
@@ -39,6 +39,15 @@ class ComponentLoader {
         { id: "footer", file: "components/shared/footer.html", priority: 4 },
         { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 4 },
       ],
+      "luma-ocean-rescue": [
+        { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
+        { id: "game-hero", file: "components/game/game-hero.html", priority: 1 },
+        { id: "ocean-rescue-game", file: "components/game/clicker-sea.html", priority: 2 },
+        { id: "game-instructions", file: "components/game/game-instructions.html", priority: 3 },
+        { id: "environmental-impact", file: "components/game/environmental-impact.html", priority: 4 },
+        { id: "footer", file: "components/shared/footer.html", priority: 5 },
+        { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 5 },
+      ],
     }
 
     return components[page] || []
@@ -46,42 +55,62 @@ class ComponentLoader {
 
   // Load component from file
   async loadComponent(componentConfig) {
-    const { id, file } = componentConfig
+    const { id, file } = componentConfig;
 
-    // Check cache first
+    // Return from cache if present
     if (this.componentCache.has(file)) {
-      return this.componentCache.get(file)
+      console.log(`[ComponentLoader] (cache) Returning cached component for ${id} (${file})`);
+      return this.componentCache.get(file);
     }
 
-    try {
-      let filePath = file
-      const currentPath = window.location.pathname
+    // Build candidate paths to try (handles pages/ and root paths)
+    const candidates = [];
 
-      // If we're in pages/ folder, go up one level
-      if (currentPath.includes("/pages/")) {
-        filePath = `../${file}`
-      }
+    // try the path as given (useful when root served or same-level)
+    candidates.push(file);
 
-      console.log(`[v0] Loading component: ${id} from ${filePath}`)
-
-      const response = await fetch(filePath)
-      if (!response.ok) {
-        throw new Error(`Failed to load component: ${file} (${response.status})`)
-      }
-
-      const html = await response.text()
-      this.componentCache.set(file, html)
-      console.log(`[v0] Component ${id} loaded successfully`)
-      return html
-    } catch (error) {
-      console.error(`[v0] Error loading component ${id}:`, error)
-      return `<div class="error-component p-4 bg-red-100 text-red-600 rounded-lg m-4">
-        <h3 class="font-bold">Error loading ${id}</h3>
-        <p class="text-sm">${error.message}</p>
-        <p class="text-xs mt-2">Path: ${file}</p>
-        <p class="text-xs">Current URL: ${window.location.pathname}</p>
-      </div>`
+    // if current URL contains /pages/, try relative one level up
+    const currentPath = window.location.pathname || '';
+    if (currentPath.includes('/pages/')) {
+      candidates.push(`../${file}`);
     }
+
+    // try absolute-from-root path (works if site served from web root)
+    candidates.push(`/${file}`);
+
+    // also try ./file (relative)
+    candidates.push(`./${file}`);
+
+    let lastError = null;
+    for (const filePath of candidates) {
+      try {
+        console.log(`[ComponentLoader] Loading component: ${id} from candidate path: ${filePath}`);
+        const response = await fetch(filePath, { cache: 'no-store' });
+        if (!response.ok) {
+          // log and try next
+          const msg = `HTTP ${response.status} while loading ${filePath}`;
+          console.warn(`[ComponentLoader] ${msg}`);
+          lastError = new Error(msg);
+          continue;
+        }
+        const html = await response.text();
+        this.componentCache.set(file, html);
+        console.log(`[ComponentLoader] Component ${id} loaded successfully from ${filePath}`);
+        return html;
+      } catch (err) {
+        console.warn(`[ComponentLoader] Error fetching ${filePath}:`, err);
+        lastError = err;
+        // try next candidate
+      }
+    }
+
+    // All candidates failed -> return friendly error component
+    console.error(`[ComponentLoader] Error loading component ${id}: all paths failed. Last error:`, lastError);
+    return `<div class="error-component p-4 bg-red-100 text-red-600 rounded-lg m-4">
+      <h3 class="font-bold">Error loading ${id}</h3>
+      <p class="text-sm">Tried paths: ${candidates.join(', ')}</p>
+      <p class="text-xs mt-2">Last error: ${lastError && lastError.message}</p>
+    </div>`;
   }
 
   // Inject component into DOM
@@ -139,14 +168,14 @@ class ComponentLoader {
     const currentPage = this.getCurrentPage()
     const components = this.getPageComponents(currentPage)
 
-    console.log(`[v0] Initializing page: ${currentPage}`)
+    console.log(`[ComponentLoader] Initializing page: ${currentPage}`)
     console.log(
-      `[v0] Components to load:`,
+      `[ComponentLoader] Components to load:`,
       components.map((c) => c.id),
     )
 
     if (components.length === 0) {
-      console.warn(`[v0] No components configured for page: ${currentPage}`)
+      console.warn(`[ComponentLoader] No components configured for page: ${currentPage}`)
       return
     }
 
@@ -155,9 +184,9 @@ class ComponentLoader {
 
     try {
       await this.loadComponentsByPriority(components)
-      console.log(`[v0] Page ${currentPage} loaded successfully`)
+      console.log(`[ComponentLoader] Page ${currentPage} loaded successfully`)
     } catch (error) {
-      console.error("[v0] Error loading page components:", error)
+      console.error("[ComponentLoader] Error loading page components:", error)
     } finally {
       this.hideLoadingSpinner()
     }
@@ -258,35 +287,58 @@ document.addEventListener("componentLoaded", (event) => {
     case "dampak-stats":
       initializeCounterAnimations()
       break
+    case "featured-programs":
+      console.log("Initializing featured-programs component...")
+      if (window.featuredPrograms) {
+        window.featuredPrograms.initialize()
+      }
+      break
+    case "ocean-rescue-game":
+      console.log("Initializing LUMA Ocean Rescue game...")
+      setTimeout(() => {
+        if (typeof LumaOceanRescue !== 'undefined' && !window.lumaOceanRescue) {
+          window.lumaOceanRescue = new LumaOceanRescue()
+          console.log("LUMA Ocean Rescue game initialized successfully!")
+        }
+      }, 100)
+      break
+    case "game-hero":
+      console.log("Game hero section loaded")
+      break
+    case "game-instructions":
+      console.log("Game instructions loaded")
+      break
+    case "environmental-impact":
+      console.log("Environmental impact section loaded")
+      initializeCounterAnimations()
+      break
   }
 })
 
 // Navigation initialization
-  function initializeNavigation() {
-    const mobileMenuButton = document.querySelectorAll("[data-mobile-menu-toggle]");
-    const mobileMenu = document.querySelector("[data-mobile-menu]");
+function initializeNavigation() {
+  const mobileMenuButton = document.querySelectorAll("[data-mobile-menu-toggle]");
+  const mobileMenu = document.querySelector("[data-mobile-menu]");
 
-    mobileMenuButton.forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (mobileMenu) {
-          mobileMenu.classList.toggle("-translate-x-full");
-        }
-      });
-    });
-
-    // Active page highlighting
-    const currentPage = window.componentLoader?.getCurrentPage?.() || '';
-    const navLinks = document.querySelectorAll("[data-nav-link]");
-
-    navLinks.forEach((link) => {
-      const linkPage = link.getAttribute("data-nav-link");
-      if (linkPage === currentPage) {
-        link.classList.add("active");
+  mobileMenuButton.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (mobileMenu) {
+        mobileMenu.classList.toggle("-translate-x-full");
       }
     });
-  }
+  });
 
-  initializeNavigation();
+  // Active page highlighting
+  const currentPage = window.componentLoader?.getCurrentPage?.() || '';
+  const navLinks = document.querySelectorAll("[data-nav-link]");
+
+  navLinks.forEach((link) => {
+    const linkPage = link.getAttribute("data-nav-link");
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    }
+  });
+}
 
 // Counter animations for stats
 function initializeCounterAnimations() {
@@ -327,52 +379,65 @@ function animateCounter(element, target) {
   }, stepTime)
 }
 
-const sabangWords = ["SABANG", "ROTE", "ENDE"];
-const meraukeWords = ["MERAUKE", "ENDE", "SABANG"];
-
-let sabangIndex = 0;
-let meraukeIndex = 0;
-
-function morphText(id, words, indexVar, callback) {
-  const el = document.getElementById(id);
-  el.classList.add("fade-out");
-  setTimeout(() => {
-    indexVar = (indexVar + 1) % words.length;
-    el.textContent = words[indexVar];
-    el.classList.remove("fade-out");
-    callback(indexVar);
-  }, 600); // durasi fade
-}
-
-setInterval(() => {
-  morphText("sabang", sabangWords, sabangIndex, i => sabangIndex = i);
-  morphText("merauke", meraukeWords, meraukeIndex, i => meraukeIndex = i);
-}, 2500); // ganti setiap 2,5 detik
-
-$(document).ready(function() {
-  function checkFade() {
-    $('.fade-scroll').each(function(i) {
-      var bottom_of_element = $(this).offset().top + $(this).outerHeight() / 4;
-      var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-      if (bottom_of_window > bottom_of_element) {
-        // tambahkan delay biar muncul satu per satu
-        $(this).delay(i * 200).queue(function(next) {
-          $(this).addClass('show');
-          next();
-        });
-      }
-    });
+// Safe morph text function - only run on home page
+function initializeMorphText() {
+  // Only run on index page
+  const currentPage = window.componentLoader?.getCurrentPage?.() || '';
+  if (currentPage !== 'index') {
+    return;
   }
 
-  // Cek pertama kali load
-  checkFade();
+  const sabangWords = ["SABANG", "ROTE", "ENDE"];
+  const meraukeWords = ["MERAUKE", "ENDE", "SABANG"];
 
-  // Cek saat discroll
-  $(window).on('scroll', function() {
+  let sabangIndex = 0;
+  let meraukeIndex = 0;
+
+  function morphText(id, words, indexVar, callback) {
+    const el = document.getElementById(id);
+    if (!el) return; // Safety check
+    
+    el.classList.add("fade-out");
+    setTimeout(() => {
+      indexVar = (indexVar + 1) % words.length;
+      el.textContent = words[indexVar];
+      el.classList.remove("fade-out");
+      callback(indexVar);
+    }, 600);
+  }
+
+  // Only start if elements exist
+  if (document.getElementById("sabang") && document.getElementById("merauke")) {
+    setInterval(() => {
+      morphText("sabang", sabangWords, sabangIndex, i => sabangIndex = i);
+      morphText("merauke", meraukeWords, meraukeIndex, i => meraukeIndex = i);
+    }, 2500);
+  }
+}
+
+// jQuery fade scroll effect - with safety check
+if (typeof $ !== 'undefined') {
+  $(document).ready(function() {
+    function checkFade() {
+      $('.fade-scroll').each(function(i) {
+        var bottom_of_element = $(this).offset().top + $(this).outerHeight() / 4;
+        var bottom_of_window = $(window).scrollTop() + $(window).height();
+
+        if (bottom_of_window > bottom_of_element) {
+          $(this).delay(i * 200).queue(function(next) {
+            $(this).addClass('show');
+            next();
+          });
+        }
+      });
+    }
+
     checkFade();
+    $(window).on('scroll', function() {
+      checkFade();
+    });
   });
-});
+}
 
 function initProgramCards(cardSelector, programsData) {
   const cards = document.querySelectorAll(cardSelector);
@@ -382,6 +447,8 @@ function initProgramCards(cardSelector, programsData) {
   const detailDesc = document.getElementById("detailDesc");
   const detailLink = document.getElementById("detailLink");
 
+  if (!cards.length || !detailSection) return; // Safety check
+
   cards.forEach(card => {
     card.addEventListener("click", () => {
       const programKey = card.dataset.program;
@@ -389,45 +456,52 @@ function initProgramCards(cardSelector, programsData) {
       if (!program) return;
 
       // Update detail section
-      detailImage.src = program.image;
-      detailImage.alt = program.title;
-      detailTitle.textContent = program.title;
-      detailDesc.textContent = program.desc;
-      detailLink.href = program.link;
+      if (detailImage) detailImage.src = program.image;
+      if (detailImage) detailImage.alt = program.title;
+      if (detailTitle) detailTitle.textContent = program.title;
+      if (detailDesc) detailDesc.textContent = program.desc;
+      if (detailLink) detailLink.href = program.link;
 
-      // Tampilkan section
+      // Show section
       detailSection.classList.remove("hidden");
-
-      // Scroll ke section
       detailSection.scrollIntoView({ behavior: "smooth" });
     });
   });
 }
 
-// Panggil function
-initProgramCards(".card", {
-  mengajar: {
-    title: "Kegiatan Sosial Mengajar",
-    desc: "Kami aktif dalam berbagai program sosial—dari kegiatan mengajar, bakti sosial, hingga pemberdayaan masyarakat. Gema Nusa menjadi penggema pendidikan di titik kehampaan gelapnya dunia.",
-    image: "/assets/img/mengajar.jpg",
-    link: "#"
-  },
-  bakti: {
-    title: "Kegiatan Bakti Sosial",
-    desc: "Program bakti sosial Gema Nusa berfokus pada kepedulian dan aksi nyata bagi masyarakat yang membutuhkan.",
-    image: "/assets/img/bakti.jpg",
-    link: "#"
-  },
-  bantuan: {
-    title: "Bantuan Pangan",
-    desc: "Distribusi bantuan pangan bagi mereka yang terdampak ketidakstabilan ekonomi dan bencana alam.",
-    image: "/assets/img/bantuan.jpg",
-    link: "#"
-  },
-  lainnya: {
-    title: "Program Lainnya",
-    desc: "Berbagai program inovatif Gema Nusa lainnya untuk memberdayakan masyarakat.",
-    image: "/assets/img/lainnya.jpg",
-    link: "#"
+// Initialize morph text after components load
+document.addEventListener("componentLoaded", (event) => {
+  if (event.detail.componentId === "hero") {
+    setTimeout(initializeMorphText, 500);
   }
 });
+
+// Safe program cards initialization
+setTimeout(() => {
+  initProgramCards(".card", {
+    mengajar: {
+      title: "Kegiatan Sosial Mengajar",
+      desc: "Kami aktif dalam berbagai program sosial dari kegiatan mengajar, bakti sosial, hingga pemberdayaan masyarakat. Gema Nusa menjadi penggema pendidikan di titik kehampaan gelapnya dunia.",
+      image: "/assets/img/mengajar.jpg",
+      link: "#"
+    },
+    bakti: {
+      title: "Kegiatan Bakti Sosial",
+      desc: "Program bakti sosial Gema Nusa berfokus pada kepedulian dan aksi nyata bagi masyarakat yang membutuhkan.",
+      image: "/assets/img/bakti.jpg",
+      link: "#"
+    },
+    bantuan: {
+      title: "Bantuan Pangan",
+      desc: "Distribusi bantuan pangan bagi mereka yang terdampak ketidakstabilan ekonomi dan bencana alam.",
+      image: "/assets/img/bantuan.jpg",
+      link: "#"
+    },
+    lainnya: {
+      title: "Program Lainnya",
+      desc: "Berbagai program inovatif Gema Nusa lainnya untuk memberdayakan masyarakat.",
+      image: "/assets/img/lainnya.jpg",
+      link: "#"
+    }
+  });
+}, 2000);

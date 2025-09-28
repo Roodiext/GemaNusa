@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vice City Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        .gallery-container {
+            display: flex;
+            width: fit-content;
+            height: 100vh;
+        }
+        .section {
+            min-width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .lightbox-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .image-placeholder {
+            background: linear-gradient(45deg, #f3f4f6 25%, transparent 25%),
+                        linear-gradient(-45deg, #f3f4f6 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #f3f4f6 75%),
+                        linear-gradient(-45deg, transparent 75%, #f3f4f6 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(30, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 0.75rem;
+            height: 95vh;
+            width: 170vw;
+            padding: 1rem;
+        }
+        /* Layout berdasarkan foto yang diberikan */
+        .grid-item-1 { grid-column: 1 / 6; grid-row: 1 / 4; }    /* Pool - Kiri atas, large */
+        .grid-item-2 { grid-column: 6 /9; grid-row: 1 / 6; }    /* Basketball - Tengah atas, wide */
+        .grid-item-3 { grid-column: 16/ 22; grid-row: 4 / 1; }   /* Character - Kanan, tall */
+        .grid-item-4 { grid-column: 24 / 36; grid-row: 10 / 1; }  /* art deco - Kanan atas, small */
+        .grid-item-5 { grid-column: 1 / 3; grid-row: 4 / 10; }    /* ocean - Kiri tengah, medium */
+        .grid-item-6 { grid-column: 10 / 14; grid-row: 1 / 10; }    /* Nightlife - Tengah, tall */
+        .grid-item-7 { grid-column: 15 / 19; grid-row: 5 / 8; }   /* Street Art - Tengah bawah, wide */
+        .grid-item-8 { grid-column: 19 / 22; grid-row: 4 / 10; }  /* Cityscape - Kanan bawah, medium */
+        .grid-item-9 { grid-column: 3 / 9; grid-row: 6 / 10; }    /* Cars - Kiri bawah, wide */
+    </style>
+</head>
+<body class="bg-stone-100 font-sans">
+    <!-- Fixed Back Button -->
+    <button class="back-button bg-pink-200 hover:bg-pink-300 px-6 py-3 rounded-full font-medium transition-colors duration-200 shadow-lg">
+        ← Back
+    </button>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" id="closeLightbox">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="">
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <!-- Section 1 - Main Introduction -->
+        <div class="section bg-purple-300 flex items-center justify-center">
+            <div class="flex items-center justify-between w-full max-w-7xl mx-auto px-12">
+                <!-- Left side - Vice City postcard -->
+                <div class="transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                    <div class="bg-white p-4 rounded-lg shadow-xl cursor-pointer clickable-image" data-src="placeholder-vice-city.jpg">
+                        <div class="image-placeholder w-96 h-64 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-gray-500 text-lg font-medium">Vice City Postcard</span>
+                        </div>
+                        <div class="text-center">
+                            <h2 class="text-3xl font-bold text-cyan-600 mb-2" style="font-family: cursive;">Penggerak</h2>
+                            <div class="bg-teal-400 text-white px-3 py-1 rounded text-sm inline-block">
+                                GEMA NUSA
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side - Text content -->
+                <div class="text-right max-w-lg">
+                    <h1 class="text-6xl font-bold text-stone-100 mb-8 leading-tight">
+                        EVERYTHING<br>
+                        IN EXCESS
+                    </h1>
+                    <div class="text-stone-100 space-y-4">
+                        <p class="text-lg font-medium">
+                            WE'RE A LONG WAY FROM THE '80S, BUT VICE CITY<br>
+                            IS STILL THE SUN AND FUN CAPITAL OF AMERICA.
+                        </p>
+                        <p class="text-base leading-relaxed">
+                            The glamour, hustle, and greed of America captured in a single city. Each neighborhood has something to offer, from the pastel art deco hotels and bright white sands of Ocean Beach, to the bustling panaderias of Little Cuba and the bootleg brands of the Tisha-Wocka flea market, out to the VC Port, the cruise ship capital of the world.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2 - Single Gallery with 9 Photos -->
+        <div class="section bg-purple-300 flex items-center justify-center">
+            <div class="masonry-grid">
+                <!-- Pool scene - Large Wide -->
+                <div class="grid-item-1 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-pool.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Pool Party Scene</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Basketball court - Medium Wide -->
+                <div class="grid-item-2 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-basketball.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Basketball Court</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Character portrait - Tall -->
+                <div class="grid-item-3 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-character.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Character Portrait</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Hotel scene - Square -->
+                <div class="grid-item-4 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-hotel.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Art Deco Hotel</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Ocean Beach - Kiri Bawah Small -->
+                <div class="grid-item-5 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-beach.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium text-sm">Ocean Beach</span>
+                    </div>
+                    <div class="absolute bottom-4 right-4 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Nightlife - Tengah Medium Tall -->
+                <div class="grid-item-6 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-nightlife.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Nightlife Scene</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Street Art - Tengah Bawah Wide -->
+                <div class="grid-item-7 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-street-art.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Street Art</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Cityscape - Kanan Tall -->
+                <div class="grid-item-8 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-cityscape.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Night Cityscape</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Cars - Kiri Bawah Wide -->
+                <div class="grid-item-9 bg-white p-3 rounded-lg shadow-lg cursor-pointer clickable-image hover:scale-105 transition-transform duration-300 relative" data-src="placeholder-cars.jpg">
+                    <div class="image-placeholder w-full h-full rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 font-medium">Cars & Streets</span>
+                    </div>
+                    <div class="absolute bottom-6 right-6 bg-purple-400 text-white p-2 rounded-full">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Horizontal scroll with mouse wheel
+            $('body').on('wheel', function(e) {
+                e.preventDefault();
+                const delta = e.originalEvent.deltaY;
+                window.scrollBy(delta, 0);
+            });
+
+            // Image lightbox functionality
+            $('.clickable-image').on('click', function() {
+                const imageSrc = $(this).data('src');
+                const placeholderText = $(this).find('.image-placeholder span').text();
+                
+                // Create SVG placeholder for lightbox
+                $('#lightboxImage').attr('src', 'data:image/svg+xml;base64,' + btoa(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+                        <rect width="800" height="600" fill="#f3f4f6"/>
+                        <text x="400" y="280" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" fill="#6b7280" font-weight="bold">
+                            ${placeholderText}
+                        </text>
+                        <text x="400" y="320" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#9ca3af">
+                            Placeholder Image - Click to close
+                        </text>
+                    </svg>
+                `));
+                
+                $('#lightbox').fadeIn(300);
+            });
+
+            // Close lightbox
+            $('#closeLightbox, #lightbox').on('click', function(e) {
+                if (e.target === this) {
+                    $('#lightbox').fadeOut(300);
+                }
+            });
+
+            // Close lightbox with ESC key
+            $(document).on('keydown', function(e) {
+                if (e.keyCode === 27) { // ESC key
+                    $('#lightbox').fadeOut(300);
+                }
+            });
+
+            // Prevent lightbox image click from closing the lightbox
+            $('#lightboxImage').on('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Smooth scrolling for better UX
+            $('body').css('scroll-behavior', 'smooth');
+        });
+
+        // Pure JavaScript fallback for scroll
+        document.addEventListener('wheel', function(e) {
+            if (!window.jQuery) {
+                e.preventDefault();
+                window.scrollBy(e.deltaY, 0);
+            }
+        });
+    </script>
+</body>
+</html>
