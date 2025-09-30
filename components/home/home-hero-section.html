@@ -1,31 +1,43 @@
 <!-- Hero Section -->
-<section id="beranda" 
+<section
+  id="beranda"
   class="relative w-full h-screen bg-cover bg-center bg-no-repeat overflow-hidden flex flex-col items-center justify-center"
-  style="background-image: url('/assets/img/hero-image/background-hero.svg');">
-
+  style="background-image: url('/assets/img/hero-image/background-hero.svg')"
+>
   <!-- Overlay Hitam -->
   <div class="absolute inset-0 bg-black/80 z-0"></div>
 
   <!-- Gradient bawah -->
-  <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent z-20"></div>
+  <div
+    class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent z-20"
+  ></div>
 
   <!-- Gambar Kiri (desktop only) -->
-  <img src="/assets/img/hero-image/hero-kids-left.svg" 
-       alt="Ilustrasi anak-anak kiri" 
-       class="hidden md:block absolute left-0 bottom-0 h-[65%] sm:h-[70%] md:h-[80%] max-w-[50%] sm:max-w-[45%] object-contain pointer-events-none z-10">
+  <img
+    src="/assets/img/hero-image/hero-kids-left.svg"
+    alt="Ilustrasi anak-anak kiri"
+    class="hidden md:block absolute left-0 bottom-0 h-[65%] sm:h-[70%] md:h-[80%] max-w-[50%] sm:max-w-[45%] object-contain pointer-events-none z-10"
+  />
 
   <!-- Gambar Kanan (desktop only) -->
-  <img src="/assets/img/hero-image/hero-kids-right.svg" 
-       alt="Ilustrasi anak-anak kanan" 
-       class="hidden md:block absolute right-0 bottom-0 h-[65%] sm:h-[70%] md:h-[80%] max-w-[50%] sm:max-w-[45%] object-contain pointer-events-none z-10">
+  <img
+    src="/assets/img/hero-image/hero-kids-right.svg"
+    alt="Ilustrasi anak-anak kanan"
+    class="hidden md:block absolute right-0 bottom-0 h-[65%] sm:h-[70%] md:h-[80%] max-w-[50%] sm:max-w-[45%] object-contain pointer-events-none z-10"
+  />
 
   <!-- Konten -->
-  <div class="relative z-30 text-center max-w-xl sm:max-w-3xl md:max-w-4xl px-4 sm:px-6 md:px-12 space-y-6 sm:space-y-8">
-
+  <div
+    class="relative z-30 text-center max-w-xl sm:max-w-3xl md:max-w-4xl px-4 sm:px-6 md:px-12 space-y-6 sm:space-y-8"
+  >
     <!-- Slogan -->
-    <div class="flex items-center justify-center mt-4 sm:mt-6 md:mt-12">
-      <span class="px-3 sm:px-4 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30">
-        <p class="text-xs sm:text-sm md:text-base font-medium text-white">
+    <div
+      class="font-sans flex items-center justify-center mt-4 sm:mt-6 md:mt-12"
+    >
+      <span
+        class="px-3 sm:px-4 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30"
+      >
+        <p class="font-inter text-xs sm:text-sm md:text-base text-white">
           Be The Change, Donate Today
         </p>
       </span>
@@ -33,39 +45,52 @@
 
     <!-- Judul dengan Tagar -->
     <div class="text-center">
-      <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-snug text-white">
+      <h1
+        class="font-product font-bold leading-snug text-white"
+      >
         <span class="inline-flex items-center justify-center">
-          <img src="/assets/img/hero-image/hashtag.svg" 
-               alt="Ikon tagar" 
-               class="w-6 h-6 sm:w-8 sm:h-8 md:w-14 md:h-14 inline-block align-middle -mt-1 mr-1">
-          <span class="align-middle">
+          <img
+            src="/assets/img/hero-image/hashtag.svg"
+            alt="Ikon tagar"
+            class="w-6 h-6 sm:w-8 sm:h-8 md:w-14 md:h-14 inline-block align-middle -mt-1 mr-1"
+          />
+          <span class="align-middle text-3xl sm:text-4xl md:text-5xl">
             Dari <span id="text-left" class="text-sabang">Sabang</span>
           </span>
-        </span><br>
-        Hingga <span id="text-right" class="text-merauke">Merauke</span><br>
-        <span class="text-white">Kita Peduli</span>
+        </span>
+        <br />
+        <span class="text-3xl sm:text-4xl md:text-5xl font-bold">
+          Hingga <span id="text-right" class="text-merauke">Merauke</span>
+        </span>
+        <br />
+        <span class="text-2xl sm:text-3xl md:text-4xl font-semibold">
+          Kita Peduli
+        </span>
       </h1>
     </div>
 
     <!-- Sub Judul -->
-    <p class="text-white text-sm sm:text-base md:text-lg">
+    <p class="font-inter text-white text-sm sm:text-base md:text-lg">
       Bersama Kita Wujudkan Harapan
     </p>
 
     <!-- Button -->
-    <div class="flex flex-row gap-3 sm:gap-4 pt-4 sm:pt-6 justify-center flex-wrap">
-      <a href="#"
-         class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-merauke text-white font-semibold 
-                hover:bg-purple-900 hover:shadow-md transition text-sm sm:text-base">
-        Baca Selengkapnya
+    <div
+      class="flex flex-row gap-3 sm:gap-4 pt-4 sm:pt-6 justify-center flex-wrap"
+    >
+      <a
+        href="#about"
+        class="px-3 py-2 sm:px-5 sm:py-2.5 sm:text-base text-sm rounded-full bg-merauke text-white font-semibold font-inter hover:bg-purple-600 hover:shadow-md transition"
+      >
+        Lihat Selengkapnya
       </a>
-      <a href="#"
-         class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full border-2 border-sabang text-white font-semibold 
-                hover:bg-[#B0E638] hover:text-white hover:shadow-md transition text-sm sm:text-base">
+      <a
+        href="#volunteer"
+        class="px-3 py-2 sm:px-5 sm:py-2.5 sm:text-base text-sm rounded-full border-2 border-sabang text-white font-semibold font-inter hover:bg-[#B0E638] hover:text-white hover:shadow-md transition"
+      >
         Jadi Penggema
       </a>
     </div>
-
   </div>
 </section>
 <!-- End of Hero Section -->

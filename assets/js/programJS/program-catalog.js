@@ -1,4 +1,4 @@
-// Program Catalog JavaScript - Clean Design
+// Program Catalog JavaScript - Full restored + image placeholders + detail modal
 console.log("=== PROGRAM CATALOG JS LOADED ===")
 
 class ProgramCatalog {
@@ -18,6 +18,13 @@ class ProgramCatalog {
       if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
         this.closeAdvancedFilter()
       }
+      // ESC to close program detail modal if open
+      if (e.key === 'Escape' && document.getElementById('program-detail-modal')) {
+        const modal = document.getElementById('program-detail-modal')
+        if (modal && !modal.classList.contains('hidden')) {
+          this.closeProgramDetailModal()
+        }
+      }
     }
     
     // Performance optimization
@@ -25,15 +32,17 @@ class ProgramCatalog {
     this.renderTimeout = null
     this.searchTimeout = null
     
+    // Modal open state
+    this.isAdvancedFilterOpen = false
+
     console.log("Program database loaded:", Object.keys(this.programDatabase).length, "programs")
     this.init()
-
-    // State untuk modal filter
-    this.isAdvancedFilterOpen = false
   }
 
   init() {
     console.log("ProgramCatalog init() called")
+    // Ensure small UI fixes for filter texts/images
+    this.injectUIFixes()
     this.setupEventListeners()
     
     setTimeout(() => {
@@ -48,7 +57,26 @@ class ProgramCatalog {
     }, 500)
   }
 
+  // Inject small CSS fixes so filter button text/icons show reliably
+  injectUIFixes() {
+    if (document.getElementById('program-catalog-inline-style')) return
+    const style = document.createElement('style')
+    style.id = 'program-catalog-inline-style'
+    style.innerHTML = `
+      /* make sure filter button text is visible and can wrap if needed */
+      .filter-btn span { display: inline-flex !important; align-items: center; gap: 0.5rem; white-space: normal !important; }
+      .filter-btn svg { flex: 0 0 auto; }
+      /* ensure program image covers the top area */
+      #programs-grid .program-card img { display:block; width:100%; height:100%; object-fit:cover; }
+      /* modal overlay base */
+      .program-detail-overlay { position: fixed; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index: 9999; padding: 20px; }
+      .program-detail-overlay.hidden { display: none; }
+    `
+    document.head.appendChild(style)
+  }
+
   initializeProgramDatabase() {
+    // Original program database restored as in previous file (kept content and keys)
     return {
       mentor_muda_nusantara: {
         name: "Mentor Muda Nusantara",
@@ -191,6 +219,7 @@ class ProgramCatalog {
         name: "Global Climate Action",
         description: "Aksi kolaboratif lintas negara untuk mengatasi perubahan iklim di Asia Tenggara",
         category: "conservation",
+        tags: ["conservation"],
         commitment: "high",
         scope: "global",
         skills: ["leadership", "communication"],
@@ -208,6 +237,7 @@ class ProgramCatalog {
         name: "ASEAN Youth Exchange",
         description: "Program pertukaran pemuda ASEAN untuk berbagi pengetahuan dan budaya",
         category: "education",
+        tags: ["education"],
         commitment: "mid",
         scope: "global",
         skills: ["communication", "leadership"],
@@ -225,6 +255,7 @@ class ProgramCatalog {
         name: "Ocean Guardian Network",
         description: "Jaringan penjaga laut Asia-Pasifik untuk konservasi ekosistem laut",
         category: "conservation",
+        tags: ["conservation", "ocean"],
         commitment: "high",
         scope: "global",
         skills: ["technical", "leadership"],
@@ -242,6 +273,7 @@ class ProgramCatalog {
         name: "Digital Literacy Asia",
         description: "Program literasi digital untuk masyarakat kurang mampu di Asia",
         category: "technology",
+        tags: ["education", "technical"],
         commitment: "mid",
         scope: "global",
         skills: ["technical", "communication"],
@@ -259,6 +291,7 @@ class ProgramCatalog {
         name: "Sustainable Cities Initiative",
         description: "Inisiatif kota berkelanjutan dengan teknologi smart city",
         category: "technology",
+        tags: ["social", "technical"],
         commitment: "high",
         scope: "global",
         skills: ["technical", "leadership"],
@@ -291,14 +324,18 @@ class ProgramCatalog {
       filterBtns.forEach((btn, index) => {
         console.log(`Setting up button ${index}:`, btn.dataset.filter, btn.textContent.trim())
         
-        btn.removeEventListener('click', this.handleFilterClick)
+        // remove previous handler if any
+        try { btn.removeEventListener('click', btn._pcFilterHandler) } catch (e) {}
         
-        btn.addEventListener('click', (e) => {
+        const handler = (e) => {
+          e.preventDefault()
           console.log("Filter button clicked:", e.currentTarget.dataset.filter)
           this.currentCategory = e.currentTarget.dataset.filter
           this.updateFilterButtons()
           this.debouncedRender()
-        })
+        }
+        btn._pcFilterHandler = handler
+        btn.addEventListener('click', handler)
       })
       
       console.log("Filter buttons setup completed!")
@@ -328,7 +365,8 @@ class ProgramCatalog {
         clearBtn.addEventListener('click', () => {
           this.currentSearch = ''
           this.currentCategory = 'all'
-          document.getElementById('program-search').value = ''
+          const inp = document.getElementById('program-search')
+          if (inp) inp.value = ''
           this.updateFilterButtons()
           this.renderPrograms()
         })
@@ -351,12 +389,9 @@ class ProgramCatalog {
       })
     }
 
-    // Escape key handler
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isAdvancedFilterOpen) {
-        this.closeAdvancedFilter()
-      }
-    })
+    // Escape key handler (global)
+    document.removeEventListener('keydown', this._boundEscHandler)
+    document.addEventListener('keydown', this._boundEscHandler)
   }
 
   handleOutsideClick(event) {
@@ -438,6 +473,44 @@ class ProgramCatalog {
     })
   }
 
+  // Pastikan semua tombol filter menampilkan ikon + label sesuai data-filter
+  ensureFilterButtonLabels() {
+    // Peta untuk label tombol filter
+    const mapping = {
+      all: 'Semua',
+      conservation: 'Lingkungan & Alam',
+      education: 'Pendidikan',
+      social: 'Sosial & Pangan',
+      technology: 'Teknologi'
+    }
+
+    // Update setiap tombol filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      const key = btn.dataset.filter || ''
+      const label = mapping[key] || (key.charAt(0).toUpperCase() + key.slice(1))
+
+      // Jika tombol sudah memiliki span.filter-label, cukup perbarui teksnya
+      const existing = btn.querySelector('span.filter-label')
+      const svg = btn.querySelector('svg')
+      const svgHTML = svg ? svg.outerHTML : ''
+
+      if (existing) {
+        // Perbarui teks label
+        const textSpan = existing.querySelector('span')
+        if (textSpan) textSpan.textContent = label
+        // Pastikan tetap terlihat
+        existing.style.display = 'inline-flex'
+      } else {
+        // Buat markup konsisten: <span.filter-label><svg...><span>Label</span></span>
+        btn.innerHTML = `<span class="filter-label inline-flex items-center" style="gap:.5rem;white-space:normal;">${svgHTML}<span>${label}</span></span>`
+      }
+
+      // Pastikan tombol tidak menyusut menjadi hanya ikon (gunakan min-width)
+      btn.style.minWidth = '120px'
+      btn.style.whiteSpace = 'normal'
+    })
+  }
+
   filterPrograms() {
     const cacheKey = JSON.stringify({
       category: this.currentCategory,
@@ -453,10 +526,10 @@ class ProgramCatalog {
       const categoryMatch = this.currentCategory === 'all' || program.category === this.currentCategory
       
       const searchMatch = !this.currentSearch || 
-        program.name.toLowerCase().includes(this.currentSearch) ||
-        program.description.toLowerCase().includes(this.currentSearch) ||
-        program.skills.some(skill => skill.toLowerCase().includes(this.currentSearch)) ||
-        program.tags.some(tag => tag.toLowerCase().includes(this.currentSearch))
+        (program.name && program.name.toLowerCase().includes(this.currentSearch)) ||
+        (program.description && program.description.toLowerCase().includes(this.currentSearch)) ||
+        (program.skills && program.skills.some(skill => skill.toLowerCase().includes(this.currentSearch))) ||
+        (program.tags && program.tags.some(tag => tag.toLowerCase().includes(this.currentSearch)))
       
       const commitmentMatch = this.advancedFilters.commitment.length === 0 || 
         this.advancedFilters.commitment.includes(program.commitment)
@@ -465,10 +538,10 @@ class ProgramCatalog {
         this.advancedFilters.scope.includes(program.scope)
       
       const skillsMatch = this.advancedFilters.skills.length === 0 || 
-        this.advancedFilters.skills.some(skill => program.skills.includes(skill))
+        (program.skills && this.advancedFilters.skills.some(skill => program.skills.includes(skill)))
       
       const rolesMatch = this.advancedFilters.roles.length === 0 || 
-        this.advancedFilters.roles.some(role => program.rolesAvailable.includes(role))
+        (program.rolesAvailable && this.advancedFilters.roles.some(role => program.rolesAvailable.includes(role)))
       
       return categoryMatch && searchMatch && commitmentMatch && scopeMatch && skillsMatch && rolesMatch
     })
@@ -554,11 +627,24 @@ class ProgramCatalog {
     }
 
     if (noResults) noResults.classList.add('hidden')
-    
+
+    // placeholder image as lightweight data URI
+    const placeholderSrc = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+         <rect width="100%" height="100%" fill="#f3f4f6"/>
+         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9CA3AF" font-family="Arial, sans-serif" font-size="28">Gambar Program (Placeholder)</text>
+       </svg>`
+    )
+
     grid.innerHTML = filteredPrograms.map(([id, program]) => `
       <div class="program-card bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200" 
            data-program-id="${id}" data-category="${program.category}">
         
+        <!-- Image placeholder (pinned at top) -->
+        <div class="w-full h-44 overflow-hidden bg-gray-100">
+          <img src="${program.image ? program.image : placeholderSrc}" alt="${this.escapeHtml(program.name)}" class="w-full h-full object-cover">
+        </div>
+
         <!-- Header dengan warna solid -->
         <div class="p-6 border-b border-gray-100">
           <div class="flex items-start justify-between mb-3">
@@ -624,6 +710,12 @@ class ProgramCatalog {
     }, 100)
   }
 
+  // small helper for escaping simple HTML in dynamic text to avoid injection
+  escapeHtml(str) {
+    if (!str) return ''
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')
+  }
+
   highlightProgram(programId) {
     const targetCard = document.querySelector(`[data-program-id="${programId}"]`)
     if (targetCard) {
@@ -686,12 +778,111 @@ class ProgramCatalog {
 
   joinProgram(programId) {
     console.log("Join program:", programId)
-    alert(`Bergabung dengan program: ${this.programDatabase[programId]?.name}`)
+    // Placeholder: open program detail modal or trigger join flow
+    // Keep behavior minimal for now
+    this.showProgramInfo(programId)
+  }
+
+  // Program detail modal creation and show/close functions
+  createProgramDetailModal() {
+    if (document.getElementById('program-detail-modal')) return
+    console.log("Creating program detail modal...")
+
+    const modalHTML = `
+      <div id="program-detail-modal" class="program-detail-overlay hidden">
+        <div class="max-w-3xl w-full mx-4">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-xl">
+            <div class="relative">
+              <div id="program-detail-image" class="w-full h-48 bg-gray-100"></div>
+              <button id="program-detail-close" class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-gray-100">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div class="p-6">
+              <h3 id="program-detail-title" class="text-2xl font-bold mb-2 text-batu-gray"></h3>
+              <p id="program-detail-short" class="text-gray-600 mb-4"></p>
+
+              <div id="program-detail-meta" class="text-sm text-gray-500 space-y-3 mb-4"></div>
+
+              <div id="program-detail-desc" class="text-gray-700 mb-6"></div>
+
+              <div class="flex gap-3">
+                <button id="program-detail-join" class="flex-1 py-3 bg-nusantara-green text-white rounded-lg font-semibold">Bergabung</button>
+                <button id="program-detail-close-2" class="px-4 py-3 bg-gray-100 rounded-lg">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+    document.body.insertAdjacentHTML('beforeend', modalHTML)
+
+    const overlay = document.getElementById('program-detail-modal')
+    // close handlers
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) this.closeProgramDetailModal()
+    })
+    overlay.querySelectorAll('#program-detail-close, #program-detail-close-2').forEach(b => {
+      b.addEventListener('click', () => this.closeProgramDetailModal())
+    })
+    overlay.querySelector('#program-detail-join').addEventListener('click', () => {
+      const pid = overlay.dataset.currentProgramId
+      if (pid) {
+        // Implement join logic here; for now just alert and close
+        alert(`Terima kasih! Anda memulai proses bergabung untuk program: ${this.programDatabase[pid]?.name || pid}`)
+        this.closeProgramDetailModal()
+      }
+    })
   }
 
   showProgramInfo(programId) {
     console.log("Show program info:", programId)
-    alert(`Info program: ${this.programDatabase[programId]?.name}`)
+    // Create modal if missing
+    this.createProgramDetailModal()
+    const overlay = document.getElementById('program-detail-modal')
+    if (!overlay) return
+
+    const program = this.programDatabase[programId] || Object.values(this.programDatabase).find(p => (p.id == programId || p.programId == programId || p.key == programId))
+    if (!program) {
+      console.warn('Program not found for id', programId)
+      alert(`Info program tidak ditemukan: ${programId}`)
+      return
+    }
+
+    // placeholder image as lightweight data URI
+    const placeholderSrc = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+         <rect width="100%" height="100%" fill="#f3f4f6"/>
+         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9CA3AF" font-family="Arial, sans-serif" font-size="28">Gambar Program (Placeholder)</text>
+       </svg>`
+    )
+
+    const imgContainer = overlay.querySelector('#program-detail-image')
+    imgContainer.innerHTML = `<img src="${program.image ? program.image : placeholderSrc}" alt="${this.escapeHtml(program.name)}" class="w-full h-full object-cover">`
+
+    overlay.querySelector('#program-detail-title').textContent = program.name || ''
+    overlay.querySelector('#program-detail-short').textContent = program.description ? (program.description.substring(0,140) + (program.description.length > 140 ? '...' : '')) : ''
+    overlay.querySelector('#program-detail-meta').innerHTML = `
+      <div><strong>Kategori:</strong> ${this.getCategoryLabel(program.category)}</div>
+      <div><strong>Cakupan:</strong> ${this.getScopeLabel(program.scope)}</div>
+      <div><strong>Komitmen:</strong> ${this.getCommitmentLabel(program.commitment)}</div>
+      <div><strong>Peran:</strong> ${(program.rolesAvailable && program.rolesAvailable.length) ? program.rolesAvailable.map(r => this.getRoleLabel(r)).join(', ') : '-'}</div>
+    `
+    overlay.querySelector('#program-detail-desc').innerHTML = program.description ? this.escapeHtml(program.description).replace(/\n/g, '<br>') : '<em>Tidak ada deskripsi lebih lanjut.</em>'
+
+    overlay.dataset.currentProgramId = programId
+    overlay.classList.remove('hidden')
+    document.addEventListener('keydown', this._boundEscHandler)
+  }
+
+  closeProgramDetailModal() {
+    const overlay = document.getElementById('program-detail-modal')
+    if (!overlay) return
+    overlay.classList.add('hidden')
+    overlay.dataset.currentProgramId = ''
+    document.removeEventListener('keydown', this._boundEscHandler)
   }
 
   createAdvancedFilterModal() {
@@ -1012,7 +1203,7 @@ window.createMissingFilterButtons = () => {
     
     const buttonHTML = `
       <button class="filter-btn px-4 py-2.5 ${activeClass} border rounded-lg font-medium transition-colors duration-200" data-filter="${btnData.filter}">
-        ${btnData.text}
+        <span>${btnData.text}</span>
       </button>
     `
     filterContainer.insertAdjacentHTML('beforeend', buttonHTML)

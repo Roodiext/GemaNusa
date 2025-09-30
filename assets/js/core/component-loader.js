@@ -55,7 +55,8 @@ class ComponentLoader {
         { id: "environmental-tips", file: "components/game/lumaGreenGames/environmental-tips.html", priority: 3 },
         { id: "footer", file: "components/shared/footer.html", priority: 4 },
         { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 4 },
-],
+      ],
+
     }
 
     return components[page] || []
@@ -310,6 +311,7 @@ document.addEventListener("componentLoaded", (event) => {
         }
       }, 100)
       break
+   
     case "game-hero":
       console.log("Game hero section loaded")
       break

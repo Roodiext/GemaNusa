@@ -1,0 +1,48 @@
+ /* Background animasi */
+  .animate-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .animate-bg > div {
+    animation: movebg 30s linear infinite;
+    background-size: auto 100%;
+  }
+  @keyframes movebg {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Animasi muncul dari kiri */
+  .fade-left {
+    opacity: 0;
+    transform: translateX(-80px);
+    animation: fadeInLeft 1s ease-out forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%; /* mulai saat masuk viewport */
+  }
+  @keyframes fadeInLeft {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Animasi muncul dari kanan */
+  .fade-right {
+    opacity: 0;
+    transform: translateX(80px);
+    animation: fadeInRight 1s ease-out forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+  @keyframes fadeInRight {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
