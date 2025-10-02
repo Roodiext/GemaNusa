@@ -1,0 +1,67 @@
+
+        /* === HORIZONTAL SCROLL SETUP === */
+        /* Tailwind tidak support overflow-x tanpa overflow-y secara bersamaan */
+        body {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        /* === GALLERY CONTAINER === */
+        /* Tailwind tidak punya width: fit-content utility class */
+        .gallery-container {
+            display: flex;
+            width: fit-content;
+            height: 100vh;
+        }
+        
+        .section {
+            min-width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+
+        /* === LIGHTBOX === */
+        /* Display none untuk initial state (di-toggle dengan JavaScript) */
+        .lightbox {
+            display: none;
+        }
+
+        /* === MASONRY GRID LAYOUT === */
+        /* Taassets/jsilwind hanya support grid sampai 12 columns, ini butuh 30 columns */
+        /* Tailwind tidak support custom grid-template-rows */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(30, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 0.75rem;
+            height: 95vh;
+            width: 170vw;
+            padding: 1rem;
+        }
+
+        /* === GRID ITEM POSITIONS === */
+        /* Tailwind tidak support grid-column/row dengan nilai custom seperti 1/6, 16/22, dst */
+        .grid-item-1 { grid-column: 1 / 6; grid-row: 1 / 4; }
+        .grid-item-2 { grid-column: 6 / 9; grid-row: 1 / 6; }
+        .grid-item-3 { grid-column: 16 / 22; grid-row: 1 / 4; }
+        .grid-item-4 { grid-column: 24 / 36; grid-row: 1 / 10; }
+        .grid-item-5 { grid-column: 1 / 3; grid-row: 4 / 10; }
+        .grid-item-6 { grid-column: 10 / 14; grid-row: 1 / 10; }
+        .grid-item-7 { grid-column: 15 / 19; grid-row: 5 / 8; }
+        .grid-item-8 { grid-column: 19 / 22; grid-row: 4 / 10; }
+        .grid-item-9 { grid-column: 3 / 9; grid-row: 6 / 10; }
+
+        /* === HOVER EFFECTS === */
+        /* Tailwind tidak support hover untuk child elements (parent:hover > child) */
+        .hover-scale:hover img { 
+            transform: scale(1.05); 
+        }   
+        
+        .hover-text {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .clickable-image:hover .hover-text {
+            opacity: 1;
+        }

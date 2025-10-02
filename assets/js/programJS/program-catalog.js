@@ -93,7 +93,8 @@ class ProgramCatalog {
           "Workshop keterampilan hidup"
         ],
         impact: "1,200+ anak terbimbing, 85% naik kelas dengan nilai baik",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-mentormudanusantara.jpg"
       },
       perpustakaan_hidup: {
         name: "Perpustakaan Hidup",
@@ -110,7 +111,8 @@ class ProgramCatalog {
           "Storytelling untuk anak"
         ],
         impact: "50+ perpustakaan mini, 3,000+ buku terdistribusi",
-        color: "#7b00ff" // Merauke Purple
+        color: "#7b00ff", // Merauke Purple
+        image: "../assets/img/image-program-catalog/program-perpustakaanhidup.jpg"
       },
       sahabat_hutan: {
         name: "Sahabat Hutan",
@@ -127,7 +129,8 @@ class ProgramCatalog {
           "Edukasi masyarakat sekitar hutan"
         ],
         impact: "25,000+ pohon ditanam, 1,200 hektar hutan terlindungi",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-sahabathutan.jpg"
       },
       laut_bersih_bersinar: {
         name: "Laut Bersih Bersinar",
@@ -144,7 +147,8 @@ class ProgramCatalog {
           "Kampanye reduce plastic usage"
         ],
         impact: "50+ pantai dibersihkan, 25 ton sampah plastik terangkut",
-        color: "#7b00ff" // Merauke Purple
+        color: "#7b00ff", // Merauke Purple
+        image: "../assets/img/image-program-catalog/program-laut-bersih-bersinar.jpg"
       },
       dapur_peduli: {
         name: "Dapur Peduli",
@@ -161,7 +165,8 @@ class ProgramCatalog {
           "Edukasi gizi seimbang"
         ],
         impact: "15,000+ porsi makanan terdistribusi, 800+ keluarga terbantu",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-dapur-peduli.jpg"
       },
       gerakan_sembako_harapan: {
         name: "Gerakan Sembako Harapan",
@@ -178,7 +183,8 @@ class ProgramCatalog {
           "Koordinasi dengan pemerintah daerah"
         ],
         impact: "2,500+ paket sembako, 1,200+ keluarga terbantu",
-        color: "#7b00ff" // Merauke Purple
+        color: "#7b00ff", // Merauke Purple
+        image: "../assets/img/image-program-catalog/program-gerakan-sembako-harapan.jpg"
       },
       tech_for_good: {
         name: "Tech for Good",
@@ -195,7 +201,8 @@ class ProgramCatalog {
           "Platform edukasi digital"
         ],
         impact: "15+ aplikasi diluncurkan, 50+ NGO terbantu teknologi",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-tech-for-good.jpg"
       },
       smart_village_project: {
         name: "Smart Village Project",
@@ -213,7 +220,8 @@ class ProgramCatalog {
           "Sistem informasi desa"
         ],
         impact: "20+ desa ter-digitalisasi, 500+ petani terbantu teknologi",
-        color: "#7b00ff" // Merauke Purple
+        color: "#7b00ff", // Merauke Purple
+        image: "../assets/img/image-program-catalog/program-smart-village-project.jpg"
       },
       global_climate_action: {
         name: "Global Climate Action",
@@ -231,7 +239,8 @@ class ProgramCatalog {
           "Research kolaboratif dampak iklim"
         ],
         impact: "4 negara terlibat, 50+ proyek energi hijau",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-global-climate-action.jpg"
       },
       asean_youth_exchange: {
         name: "ASEAN Youth Exchange",
@@ -249,7 +258,8 @@ class ProgramCatalog {
           "Collaborative social projects"
         ],
         impact: "500+ youth participants, 5 negara ASEAN terlibat",
-        color: "#7b00ff" // Merauke Purple
+        color: "#7b00ff", // Merauke Purple
+        image: "../assets/img/image-program-catalog/program-asean-youth-exchange.jpg"
       },
       ocean_guardian_network: {
         name: "Ocean Guardian Network",
@@ -267,7 +277,8 @@ class ProgramCatalog {
           "Ocean pollution monitoring"
         ],
         impact: "3 negara, 15 marine reserves, 200+ fishermen trained",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-ocean-guardian-network.jpg"
       },
       digital_literacy_asia: {
         name: "Digital Literacy Asia",
@@ -285,7 +296,8 @@ class ProgramCatalog {
           "Online learning platform development"
         ],
         impact: "4 negara, 2000+ people trained, 50+ digital centers",
-        color: "#7b00ff" // Merauke Purple
+        color: "#7b00ff", // Merauke Purple
+        image: "../assets/img/image-program-catalog/program-digital-literacy-asia.jpg"
       },
       sustainable_cities_initiative: {
         name: "Sustainable Cities Initiative",
@@ -303,7 +315,8 @@ class ProgramCatalog {
           "Urban farming initiatives"
         ],
         impact: "6 cities, 1M+ residents benefited, 30% waste reduction",
-        color: "#B0E638" // Sabang Green
+        color: "#B0E638", // Sabang Green
+        image: "../assets/img/image-program-catalog/program-sustainable-cities-initiative.jpg"
       }
     }
   }

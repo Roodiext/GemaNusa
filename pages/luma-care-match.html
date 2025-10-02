@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="id">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Luma Care Match</title>
+	<link rel="icon" href="/assets/img/logo/Logo-Light-Solid.png" type="image">
+	<!-- Tailwind via CDN -->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		/* small flip helpers */
+		.card .card-front { backface-visibility: hidden; transform: rotateY(180deg); transition: transform .5s; }
+		.card .card-back { backface-visibility: hidden; transition: opacity .5s; }
+		.card.flipped { transform: rotateY(180deg); }
+	</style>
+</head>
+<body class="antialiased bg-[#F9FAFB]">
+	<div id="component-root" class="min-h-screen">
+		<!-- component will be loaded here -->
+	</div>
+
+	<script>
+		// fetch and inject component HTML, then load JS
+		(async function(){
+			const root = document.getElementById('component-root');
+			try {
+				const res = await fetch('/components/game/lumaCareMatch/luma-care.html');
+				const html = await res.text();
+				root.innerHTML = html;
+			} catch (e) {
+				root.innerHTML = '<div class="p-6 text-center text-red-600">Component failed to load.</div>';
+			}
+			// load game script
+			const s = document.createElement('script');
+			s.src = '/assets/js/gameJS/luma-care.js';
+			document.body.appendChild(s);
+		})();
+	</script>
+</body>
+</html>

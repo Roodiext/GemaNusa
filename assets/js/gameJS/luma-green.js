@@ -1,4 +1,4 @@
-// Luma Green Mission Game Logic
+// Luma Green Mission Game Logic - Optimized UX
 class LumaGreenGame {
     constructor() {
         this.score = 0;
@@ -15,45 +15,46 @@ class LumaGreenGame {
             { id: 8, name: '💡', category: 'nonrecycle', description: 'Lampu Bekas' }
         ];
         this.draggedItem = null;
+        this.isMobile = this.checkMobile();
         this.init();
+    }
+
+    checkMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+            || window.innerWidth < 1024;
     }
 
     init() {
         this.setupEventListeners();
-        this.showLumaMessage("Halo! Aku Luma! Yuk mulai misi hijau kita! 🌱", 3000);
+        this.handleResize();
+        this.showLumaMessage("Halo! Aku Luma! Yuk mulai misi hijau kita! 🌱", 3500);
+    }
+
+    handleResize() {
+        window.addEventListener('resize', () => {
+            this.isMobile = this.checkMobile();
+        });
     }
 
     setupEventListeners() {
-        // Start game button
         const startBtn = document.getElementById('start-game-btn');
         if (startBtn) {
-            startBtn.addEventListener('click', () => {
-                this.startGame();
-            });
+            startBtn.addEventListener('click', () => this.startGame());
         }
 
-        // Play again button
         const playAgainBtn = document.getElementById('play-again-btn');
         if (playAgainBtn) {
-            playAgainBtn.addEventListener('click', () => {
-                this.resetGame();
-            });
+            playAgainBtn.addEventListener('click', () => this.resetGame());
         }
 
-        // Back to home button
         const backHomeBtn = document.getElementById('back-home-btn');
         if (backHomeBtn) {
-            backHomeBtn.addEventListener('click', () => {
-                this.backToHome();
-            });
+            backHomeBtn.addEventListener('click', () => this.backToHome());
         }
 
-        // Luma mascot click
         const lumaMascot = document.getElementById('luma-mascot');
         if (lumaMascot) {
-            lumaMascot.addEventListener('click', () => {
-                this.showRandomTip();
-            });
+            lumaMascot.addEventListener('click', () => this.showRandomTip());
         }
     }
 
@@ -62,7 +63,6 @@ class LumaGreenGame {
         const loadingSection = document.getElementById('loading-section');
         
         if (heroSection && loadingSection) {
-            // Add transition styles
             heroSection.style.transition = 'all 0.5s ease-out';
             heroSection.style.opacity = '0';
             heroSection.style.transform = 'scale(0.95)';
@@ -80,18 +80,14 @@ class LumaGreenGame {
         if (!progressBar) return;
         
         let progress = 0;
-        
         const loadingInterval = setInterval(() => {
             progress += Math.random() * 15 + 5;
             if (progress > 100) progress = 100;
-            
             progressBar.style.width = progress + '%';
             
             if (progress >= 100) {
                 clearInterval(loadingInterval);
-                setTimeout(() => {
-                    this.showGameSection();
-                }, 500);
+                setTimeout(() => this.showGameSection(), 500);
             }
         }, 100);
     }
@@ -106,59 +102,78 @@ class LumaGreenGame {
             
             this.generateGameItems();
             this.setupDragAndDrop();
-            this.showLumaMessage("Sekarang pilah sampah dengan benar ya! Seret item ke kategori yang tepat! 💪", 4000);
+            
+            const message = this.isMobile 
+                ? "Sekarang pilah sampah dengan benar ya! Sentuh dan seret item ke kategori yang tepat! 💪"
+                : "Sekarang pilah sampah dengan benar ya! Seret item ke kategori yang tepat! 💪";
+            this.showLumaMessage(message, 4500);
         }
     }
 
     generateGameItems() {
-        const container = document.getElementById('items-container');
+        const containerDesktop = document.getElementById('items-container');
+        const containerMobile = document.getElementById('items-container-mobile');
+        const container = containerMobile || containerDesktop;
+        
         if (!container) return;
         
-        container.innerHTML = '';
+        // Clear both containers if they exist
+        if (containerDesktop) containerDesktop.innerHTML = '';
+        if (containerMobile) containerMobile.innerHTML = '';
         
-        // Shuffle items for randomness
         const shuffledItems = [...this.gameItems].sort(() => Math.random() - 0.5);
         
         shuffledItems.forEach(item => {
             const itemElement = document.createElement('div');
-            itemElement.className = 'draggable-item bg-white rounded-xl shadow-md p-4 text-center cursor-move hover:shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-transparent select-none';
+            itemElement.className = 'draggable-item bg-white rounded-xl shadow-md p-4 sm:p-5 lg:p-6 text-center cursor-move hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-gray-100 hover:border-emerald-300 select-none touch-manipulation';
             itemElement.draggable = true;
             itemElement.dataset.itemId = item.id;
             itemElement.dataset.category = item.category;
             
             itemElement.innerHTML = `
-                <div class="text-4xl mb-2 pointer-events-none">${item.name}</div>
-                <p class="text-xs text-gray-600 font-medium pointer-events-none">${item.description}</p>
+                <div class="text-4xl sm:text-5xl lg:text-6xl mb-2 sm:mb-3 pointer-events-none">${item.name}</div>
+                <p class="text-xs sm:text-sm lg:text-base text-gray-600 font-medium pointer-events-none">${item.description}</p>
             `;
             
-            container.appendChild(itemElement);
+            // Add to both containers if they exist
+            if (containerDesktop) {
+                const cloneDesktop = itemElement.cloneNode(true);
+                cloneDesktop.draggable = true;
+                cloneDesktop.dataset.itemId = item.id;
+                cloneDesktop.dataset.category = item.category;
+                containerDesktop.appendChild(cloneDesktop);
+            }
+            if (containerMobile) {
+                const cloneMobile = itemElement.cloneNode(true);
+                cloneMobile.draggable = true;
+                cloneMobile.dataset.itemId = item.id;
+                cloneMobile.dataset.category = item.category;
+                containerMobile.appendChild(cloneMobile);
+            }
         });
     }
 
     setupDragAndDrop() {
-        // Setup draggable items
         const draggableItems = document.querySelectorAll('.draggable-item');
         draggableItems.forEach(item => {
             item.addEventListener('dragstart', (e) => {
                 this.draggedItem = e.target;
                 e.target.style.opacity = '0.5';
-                e.target.classList.add('border-blue-400', 'scale-110');
+                e.target.classList.add('border-emerald-400', 'scale-110', 'shadow-2xl');
                 e.dataTransfer.effectAllowed = 'move';
             });
             
             item.addEventListener('dragend', (e) => {
                 e.target.style.opacity = '1';
-                e.target.classList.remove('border-blue-400', 'scale-110');
+                e.target.classList.remove('border-emerald-400', 'scale-110', 'shadow-2xl');
             });
 
-            // Touch support for mobile
             item.addEventListener('touchstart', (e) => {
-                e.preventDefault();
                 this.handleTouchStart(e, item);
             }, { passive: false });
         });
 
-        // Setup drop zones
+        // Setup ALL drop zones (mobile and desktop)
         const dropZones = document.querySelectorAll('.drop-zone');
         dropZones.forEach(zone => {
             zone.addEventListener('dragover', (e) => {
@@ -168,7 +183,6 @@ class LumaGreenGame {
             });
             
             zone.addEventListener('dragleave', (e) => {
-                // Only remove highlight if we're actually leaving the zone
                 if (!zone.contains(e.relatedTarget)) {
                     this.highlightDropZone(zone, false);
                 }
@@ -184,49 +198,88 @@ class LumaGreenGame {
 
     highlightDropZone(zone, highlight) {
         if (highlight) {
-            zone.classList.add('ring-4', 'ring-opacity-50', 'scale-105');
-            if (zone.id === 'organic-zone') zone.classList.add('ring-green-400', 'bg-green-200');
-            if (zone.id === 'recycle-zone') zone.classList.add('ring-blue-400', 'bg-blue-200');
-            if (zone.id === 'nonrecycle-zone') zone.classList.add('ring-red-400', 'bg-red-200');
+            zone.classList.add('ring-4', 'ring-opacity-50', 'scale-105', 'shadow-lg');
+            if (zone.id === 'organic-zone') {
+                zone.classList.add('ring-emerald-400', 'bg-emerald-100', 'border-emerald-400');
+            }
+            if (zone.id === 'recycle-zone') {
+                zone.classList.add('ring-blue-400', 'bg-blue-100', 'border-blue-400');
+            }
+            if (zone.id === 'nonrecycle-zone') {
+                zone.classList.add('ring-red-400', 'bg-red-100', 'border-red-400');
+            }
         } else {
-            zone.classList.remove('ring-4', 'ring-opacity-50', 'ring-green-400', 'ring-blue-400', 'ring-red-400', 'scale-105');
-            if (zone.id === 'organic-zone') zone.classList.remove('bg-green-200');
-            if (zone.id === 'recycle-zone') zone.classList.remove('bg-blue-200');
-            if (zone.id === 'nonrecycle-zone') zone.classList.remove('bg-red-200');
+            zone.classList.remove('ring-4', 'ring-opacity-50', 'ring-emerald-400', 'ring-blue-400', 'ring-red-400', 'scale-105', 'shadow-lg');
+            if (zone.id === 'organic-zone') {
+                zone.classList.remove('bg-emerald-100', 'border-emerald-400');
+            }
+            if (zone.id === 'recycle-zone') {
+                zone.classList.remove('bg-blue-100', 'border-blue-400');
+            }
+            if (zone.id === 'nonrecycle-zone') {
+                zone.classList.remove('bg-red-100', 'border-red-400');
+            }
         }
     }
 
     handleTouchStart(e, item) {
-        // Simple touch-based drag simulation for mobile
+        e.preventDefault();
+        
         this.draggedItem = item;
-        item.style.opacity = '0.7';
-        item.classList.add('border-blue-400', 'scale-110');
+        item.style.opacity = '0.8';
+        item.classList.add('border-emerald-400', 'scale-110', 'shadow-2xl');
+        
+        const clone = item.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.pointerEvents = 'none';
+        clone.style.zIndex = '1000';
+        clone.style.opacity = '0.9';
+        clone.style.transform = 'scale(1.1)';
+        clone.id = 'drag-clone';
+        
+        const touch = e.touches[0];
+        const rect = item.getBoundingClientRect();
+        const offsetX = touch.clientX - rect.left;
+        const offsetY = touch.clientY - rect.top;
+        
+        clone.style.left = (touch.clientX - offsetX) + 'px';
+        clone.style.top = (touch.clientY - offsetY) + 'px';
+        clone.style.width = rect.width + 'px';
+        
+        document.body.appendChild(clone);
         
         const moveHandler = (e) => {
             e.preventDefault();
             const touch = e.touches[0];
+            const dragClone = document.getElementById('drag-clone');
+            
+            if (dragClone) {
+                dragClone.style.left = (touch.clientX - offsetX) + 'px';
+                dragClone.style.top = (touch.clientY - offsetY) + 'px';
+            }
+            
             const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
             const dropZone = elementBelow?.closest('.drop-zone');
             
-            if (dropZone) {
-                document.querySelectorAll('.drop-zone').forEach(zone => {
-                    this.highlightDropZone(zone, zone === dropZone);
-                });
-            }
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                this.highlightDropZone(zone, zone === dropZone);
+            });
         };
         
         const endHandler = (e) => {
             e.preventDefault();
+            
+            const dragClone = document.getElementById('drag-clone');
+            if (dragClone) dragClone.remove();
+            
             const touch = e.changedTouches[0];
             const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
             const dropZone = elementBelow?.closest('.drop-zone');
             
-            if (dropZone) {
-                this.handleDrop(e, dropZone);
-            }
+            if (dropZone) this.handleDrop(e, dropZone);
             
             item.style.opacity = '1';
-            item.classList.remove('border-blue-400', 'scale-110');
+            item.classList.remove('border-emerald-400', 'scale-110', 'shadow-2xl');
             document.querySelectorAll('.drop-zone').forEach(zone => {
                 this.highlightDropZone(zone, false);
             });
@@ -246,10 +299,15 @@ class LumaGreenGame {
         const itemCategory = this.draggedItem.dataset.category;
         let zoneCategory = '';
         
-        // Map zone IDs to categories
-        if (dropZone.id === 'organic-zone') zoneCategory = 'organic';
-        else if (dropZone.id === 'recycle-zone') zoneCategory = 'recycle';
-        else if (dropZone.id === 'nonrecycle-zone') zoneCategory = 'nonrecycle';
+        // Map zone IDs to categories (support both mobile and desktop zones)
+        const zoneId = dropZone.id;
+        if (zoneId === 'organic-zone' || zoneId === 'organic-zone-desktop') {
+            zoneCategory = 'organic';
+        } else if (zoneId === 'recycle-zone' || zoneId === 'recycle-zone-desktop') {
+            zoneCategory = 'recycle';
+        } else if (zoneId === 'nonrecycle-zone' || zoneId === 'nonrecycle-zone-desktop') {
+            zoneCategory = 'nonrecycle';
+        }
         
         if (itemCategory === zoneCategory) {
             this.handleCorrectPlacement(this.draggedItem, dropZone);
@@ -264,27 +322,28 @@ class LumaGreenGame {
         this.score += 10;
         this.itemsCompleted++;
         
+        // Get item ID to remove all instances
+        const itemId = item.dataset.itemId;
+        
         // Visual feedback - item disappears
-        item.style.transition = 'all 0.3s ease-out';
+        item.style.transition = 'all 0.4s ease-out';
         item.style.transform = 'scale(0) rotate(360deg)';
         item.style.opacity = '0';
         
         setTimeout(() => {
-            if (item.parentNode) {
-                item.remove();
-            }
-        }, 300);
+            // Remove all items with the same ID from both containers
+            document.querySelectorAll(`[data-item-id="${itemId}"]`).forEach(el => {
+                if (el.parentNode) el.remove();
+            });
+        }, 400);
         
-        // Zone success animation
-        zone.classList.add('bg-green-300', 'scale-110');
+        zone.classList.add('bg-emerald-200', 'scale-110');
         setTimeout(() => {
-            zone.classList.remove('bg-green-300', 'scale-110');
-        }, 500);
+            zone.classList.remove('bg-emerald-200', 'scale-110');
+        }, 600);
         
-        // Update UI
         this.updateUI();
         
-        // Luma feedback
         const correctMessages = [
             "Benar! Bagus sekali! 🎉",
             "Hebat! Kamu pintar! ⭐",
@@ -294,29 +353,20 @@ class LumaGreenGame {
         const randomMessage = correctMessages[Math.floor(Math.random() * correctMessages.length)];
         this.showLumaMessage(randomMessage, 2000);
         
-        // Check if game completed
         if (this.itemsCompleted >= this.totalItems) {
-            setTimeout(() => {
-                this.completeGame();
-            }, 1000);
+            setTimeout(() => this.completeGame(), 1000);
         }
     }
 
     handleWrongPlacement(item) {
-        // Visual feedback for wrong placement
         item.classList.add('border-red-500', 'bg-red-50');
-        item.style.transform = 'scale(1.1)';
-        
-        // Add shake animation
         item.style.animation = 'shake 0.5s ease-in-out';
         
         setTimeout(() => {
             item.classList.remove('border-red-500', 'bg-red-50');
-            item.style.transform = 'scale(1)';
             item.style.animation = '';
         }, 500);
         
-        // Wrong placement messages
         const wrongMessages = [
             "Ups! Coba lagi ya! Baca petunjuknya dengan teliti! 🤔",
             "Hmm, sepertinya salah kategori. Yuk coba lagi! 💭",
@@ -350,6 +400,8 @@ class LumaGreenGame {
         
         if (modal && modalContent) {
             modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
             setTimeout(() => {
                 modalContent.classList.remove('scale-95', 'opacity-0');
                 modalContent.classList.add('scale-100', 'opacity-100');
@@ -358,11 +410,9 @@ class LumaGreenGame {
     }
 
     resetGame() {
-        // Reset game state
         this.score = 0;
         this.itemsCompleted = 0;
         
-        // Hide modal with animation
         const modal = document.getElementById('game-complete-modal');
         const modalContent = document.getElementById('modal-content');
         
@@ -372,10 +422,10 @@ class LumaGreenGame {
             
             setTimeout(() => {
                 modal.classList.add('hidden');
+                document.body.style.overflow = '';
             }, 300);
         }
         
-        // Reset UI and regenerate game
         this.updateUI();
         this.generateGameItems();
         this.setupDragAndDrop();
@@ -388,10 +438,11 @@ class LumaGreenGame {
         const gameSection = document.getElementById('game-section');
         const heroSection = document.getElementById('hero-section');
         
-        // Hide modal
-        if (modal) modal.classList.add('hidden');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
         
-        // Show hero section
         if (gameSection && heroSection) {
             gameSection.classList.add('hidden');
             heroSection.classList.remove('hidden');
@@ -399,7 +450,6 @@ class LumaGreenGame {
             heroSection.style.transform = 'scale(1)';
         }
         
-        // Reset game state
         this.score = 0;
         this.itemsCompleted = 0;
         this.updateUI();
@@ -438,53 +488,66 @@ class LumaGreenGame {
     }
 }
 
-// Add CSS animations
+// CSS Animations
 const style = document.createElement('style');
 style.textContent = `
     @keyframes shake {
         0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-        20%, 40%, 60%, 80% { transform: translateX(5px); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+        20%, 40%, 60%, 80% { transform: translateX(8px); }
     }
     
     .draggable-item {
         user-select: none;
         -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        touch-action: none;
+        min-height: 100px;
     }
     
     .drop-zone {
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    .drop-zone.highlight {
-        transform: scale(1.05);
+    @media (max-width: 640px) {
+        .draggable-item {
+            min-height: 110px;
+        }
+        
+        .drop-zone {
+            min-height: 120px;
+        }
+    }
+    
+    .draggable-item * {
+        pointer-events: none;
+    }
+    
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    #drag-clone {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
 `;
 document.head.appendChild(style);
 
-// Initialize the game when DOM is loaded
+// Initialize game
 function initLumaGreenGame() {
-    // Check if we're in the correct context
     if (document.getElementById('hero-section')) {
         new LumaGreenGame();
     }
 }
 
-// Handle different loading scenarios
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLumaGreenGame);
 } else {
-    // DOM is already loaded
     initLumaGreenGame();
 }
 
-// Also handle the case where this script is loaded dynamically
 if (typeof window !== 'undefined') {
     window.LumaGreenGame = LumaGreenGame;
     
-    // Auto-initialize if elements are present
     setTimeout(() => {
         if (document.getElementById('hero-section') && !window.lumaGameInitialized) {
             new LumaGreenGame();

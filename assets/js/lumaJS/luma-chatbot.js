@@ -9,6 +9,19 @@ class EnhancedLumaAI {
       engagementLevel: "beginner",
     };
 
+    // Bubble chat system
+    this.bubbleMessages = [
+      "Halo! Aku Luma , Selamat datang di Gema Nusa!",
+      "Yuk, jelajahi program-program lingkungan kita bersama! 🌱",
+      "Ada yang ingin kamu tanyakan tentang konservasi alam? 🌍",
+      "Aku bisa bantu kamu temukan program yang cocok! 🎯",
+      "Mari bersama-sama jaga bumi untuk masa depan! 💚",
+      "Klik aku kalau mau ngobrol lebih lanjut! 💬"
+    ];
+    this.currentMessageIndex = 0;
+    this.bubbleTimer = null;
+    this.bubbleVisible = false;
+
     this.topicCategories = {
       environment: [
         "lingkungan",
@@ -45,6 +58,7 @@ class EnhancedLumaAI {
     if (this.isInitialized) return;
     this.createInterface();
     this.setupEventListeners();
+    this.startBubbleChat();
     this.isInitialized = true;
     console.log("Luma Chat initialized successfully");
   }
@@ -251,48 +265,93 @@ class EnhancedLumaAI {
 
     document.body.appendChild(chatContainer);
 
-    // Floating Button - Desain seperti WhatsApp
-    const floatingBtn = document.createElement("button");
-    floatingBtn.id = "luma-floating-btn";
-    floatingBtn.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 200px; /* jauh lebih besar */
-    height: 200px;
-    background: transparent; /* transparan biar full image */
-    border: none;
-    cursor: pointer;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    padding: 0;
-    overflow: hidden;
-`;
+    // Luma Mascot Container (Always Visible) - Same as luma-ocean
+    const mascotContainer = document.createElement("div");
+    mascotContainer.id = "luma-mascot-container";
+    mascotContainer.style.cssText = `
+      position: fixed;
+      bottom: 8px;
+      right: 16px;
+      z-index: 30;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
 
-    // Ganti emoji jadi image
-    const img = document.createElement("img");
-    img.src = "/assets/img/luma-ai-bot/luma-ai-greeting.svg"; // contoh: logo WA
-    img.alt = "Chat";
-    img.style.cssText = `
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-`;
+    const mascotImg = document.createElement("img");
+    mascotImg.id = "luma-mascot";
+    mascotImg.src = "/assets/img/luma-ai-bot/luma-ai-bot.svg"; // Same as luma-ocean
+    mascotImg.alt = "Luma";
+    mascotImg.style.cssText = `
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    `;
 
-    floatingBtn.appendChild(img);
-
-    floatingBtn.addEventListener("mouseenter", () => {
-      floatingBtn.style.transform = "scale(1.15)";
+    mascotImg.addEventListener("mouseenter", () => {
+      mascotImg.style.transform = "scale(1.1)";
     });
 
-    floatingBtn.addEventListener("mouseleave", () => {
-      floatingBtn.style.transform = "scale(1)";
+    mascotImg.addEventListener("mouseleave", () => {
+      mascotImg.style.transform = "scale(1)";
     });
 
-    document.body.appendChild(floatingBtn);
+    mascotContainer.appendChild(mascotImg);
+    document.body.appendChild(mascotContainer);
+
+    // Bubble Chat (Separate from Mascot) - Same style as luma-ocean
+    const bubbleChat = document.createElement("div");
+    bubbleChat.id = "luma-bubble-chat";
+    bubbleChat.style.cssText = `
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 30;
+      transform: translateY(16px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    `;
+
+    bubbleChat.innerHTML = `
+      <div style="
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        border: 1px solid #e5e7eb;
+        padding: 16px;
+        max-width: 18rem;
+        margin-bottom: 80px;
+        margin-right: 40px;
+        position: relative;
+      ">
+        <p id="luma-bubble-message" style="
+          color: #374151;
+          font-size: 14px;
+          line-height: 1.4;
+          margin: 0;
+          font-family: 'Inter', sans-serif;
+        "></p>
+        <!-- Chat bubble tail pointing to mascot -->
+        <div style="
+          position: absolute;
+          bottom: -4px;
+          right: 8px;
+          width: 12px;
+          height: 12px;
+          background: white;
+          transform: rotate(45deg);
+          border-right: 1px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
+        "></div>
+      </div>
+    `;
+
+    document.body.appendChild(bubbleChat);
 
     // Tambahan CSS
     const style = document.createElement("style");
@@ -313,14 +372,14 @@ class EnhancedLumaAI {
   }
 
   setupEventListeners() {
-    const floatingBtn = document.getElementById("luma-floating-btn");
+    const mascotImg = document.getElementById("luma-mascot");
     const closeBtn = document.getElementById("luma-close-btn");
     const sendBtn = document.getElementById("luma-send-btn");
     const messageInput = document.getElementById("luma-message-input");
     const quickBtns = document.querySelectorAll(".quick-reply-btn");
 
     // Toggle chat
-    floatingBtn?.addEventListener("click", () => this.toggleChat());
+    mascotImg?.addEventListener("click", () => this.toggleChat());
     closeBtn?.addEventListener("click", () => this.toggleChat());
 
     // Send message
@@ -353,17 +412,73 @@ class EnhancedLumaAI {
 
   toggleChat() {
     const container = document.getElementById("luma-chat-container");
-    const floatingBtn = document.getElementById("luma-floating-btn");
+    const mascotImg = document.getElementById("luma-mascot");
 
     if (container.style.display === "none" || !container.style.display) {
       container.style.display = "flex";
-      floatingBtn.style.opacity = "0.5";
+      mascotImg.style.opacity = "0.7";
+      this.stopBubbleChat(); // Stop bubble when chat is open
       setTimeout(() => {
         document.getElementById("luma-message-input")?.focus();
       }, 100);
     } else {
       container.style.display = "none";
-      floatingBtn.style.opacity = "1";
+      mascotImg.style.opacity = "1";
+      this.startBubbleChat(); // Resume bubble when chat is closed
+    }
+  }
+
+  startBubbleChat() {
+    // Show first message after 2 seconds
+    setTimeout(() => {
+      this.showBubbleMessage();
+    }, 2000);
+  }
+
+  stopBubbleChat() {
+    if (this.bubbleTimer) {
+      clearTimeout(this.bubbleTimer);
+      this.bubbleTimer = null;
+    }
+    this.hideBubbleMessage();
+  }
+
+  showBubbleMessage() {
+    const bubbleChat = document.getElementById("luma-bubble-chat");
+    const bubbleMessage = document.getElementById("luma-bubble-message");
+    
+    if (bubbleChat && bubbleMessage && !this.bubbleVisible) {
+      // Update message content
+      bubbleMessage.textContent = this.bubbleMessages[this.currentMessageIndex];
+      
+      // Show bubble with animation
+      bubbleChat.style.opacity = "1";
+      bubbleChat.style.transform = "translateY(0)";
+      this.bubbleVisible = true;
+      
+      // Hide after 4 seconds
+      setTimeout(() => {
+        this.hideBubbleMessage();
+      }, 4000);
+      
+      // Move to next message
+      this.currentMessageIndex = (this.currentMessageIndex + 1) % this.bubbleMessages.length;
+    }
+  }
+
+  hideBubbleMessage() {
+    const bubbleChat = document.getElementById("luma-bubble-chat");
+    
+    if (bubbleChat && this.bubbleVisible) {
+      bubbleChat.style.opacity = "0";
+      bubbleChat.style.transform = "translateY(16px)";
+      this.bubbleVisible = false;
+      
+      // Schedule next message (8-12 seconds interval)
+      const nextInterval = Math.random() * 4000 + 8000; // 8-12 seconds
+      this.bubbleTimer = setTimeout(() => {
+        this.showBubbleMessage();
+      }, nextInterval);
     }
   }
 

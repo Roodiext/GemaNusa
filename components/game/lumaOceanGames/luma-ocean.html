@@ -1,0 +1,333 @@
+<!-- Luma Ocean Rescue Game Component -->
+<section id="luma-ocean-rescue" class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+  <!-- Hero Section -->
+  <div id="hero-section" class="relative min-h-screen flex items-center justify-center px-4 bg-blue-50">
+    <div class="text-center max-w-5xl mx-auto">
+      <!-- Subtle background pattern -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+        <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-200 rounded-full"></div>
+        <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-cyan-200 rounded-full"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-indigo-200 rounded-full"></div>
+      </div>
+      
+      <!-- Main content -->
+      <div class="relative z-10">
+        <!-- Game icon/logo -->
+        <div class="mb-8">
+          <div class="inline-flex items-center justify-center  mb-4">
+            <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-20 h-20 object-contain">
+          </div>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-800 mb-6 tracking-tight">
+          Luma Ocean Rescue
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
+          Bergabunglah dengan Luma dalam misi membersihkan lautan dari sampah plastik. Mulai dari level mudah dan naik ke tantangan yang lebih besar!
+        </p>
+        
+        <div class="flex flex-col items-center gap-6">
+          <button id="start-game-btn" class="group relative bg-slate-800 hover:bg-slate-700 text-white font-bold py-5 px-10 rounded-2xl text-xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 border-2 border-slate-700 hover:border-slate-600">
+            <span class="relative z-10 flex items-center gap-3">
+              <span>Mulai Game</span>
+              <span class="group-hover:translate-x-1 transition-transform duration-300 text-2xl">→</span>
+            </span>
+          </button>
+          
+          <div class="text-center">
+            <div class="text-sm text-slate-500 flex items-center justify-center gap-2 mb-2">
+              <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              <span>Game edukatif & interaktif</span>
+            </div>
+            <p class="text-xs text-slate-400">Klik untuk memulai petualangan membersihkan lautan</p>
+          </div>
+        </div>
+        
+        <!-- Game features preview -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div class="text-2xl mb-3">🎯</div>
+            <h3 class="font-semibold text-slate-800 mb-2">Klik & Kumpulkan</h3>
+            <p class="text-sm text-slate-600">Klik sampah yang jatuh untuk membersihkan lautan</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div class="text-2xl mb-3">📈</div>
+            <h3 class="font-semibold text-slate-800 mb-2">Level Bertingkat</h3>
+            <p class="text-sm text-slate-600">Mulai dari 10 sampah, naik hingga 50 sampah per level</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div class="text-2xl mb-3">🏆</div>
+            <h3 class="font-semibold text-slate-800 mb-2">Bonus Waktu</h3>
+            <p class="text-sm text-slate-600">Selesaikan level untuk mendapat tambahan 10 detik</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Section -->
+  <div id="loading-section" class="hidden min-h-screen flex items-center justify-center bg-blue-50">
+    <div class="text-center">
+      <div class="relative mb-8">
+        <div class="w-20 h-20 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-8 h-8 object-contain">
+        </div>
+      </div>
+      <h2 class="text-2xl font-semibold text-slate-800 mb-2">Menyiapkan Petualangan</h2>
+      <p class="text-slate-600">Luma sedang mempersiapkan lautan untuk dibersihkan...</p>
+      <div class="mt-6 flex justify-center space-x-1">
+        <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+        <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+        <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Section -->
+  <div id="game-section" class="hidden min-h-screen relative overflow-hidden">
+    <!-- Game Header -->
+    <div class="absolute top-0 left-0 right-0 z-20 bg-white border-b border-gray-200 shadow-sm">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+          <!-- Score -->
+          <div class="bg-gray-100 border border-gray-300 rounded-xl px-4 py-3 flex items-center space-x-3">
+            <div>
+              <div class="text-sm text-slate-500 font-medium">Skor</div>
+              <div class="text-xl font-bold text-slate-800"><span id="game-score">0</span></div>
+            </div>
+          </div>
+          
+          <!-- Level Info -->
+          <div class="bg-blue-100 border border-blue-300 rounded-xl px-4 py-3 flex items-center space-x-3">
+            <div class="text-center">
+              <div class="text-sm text-blue-600 font-medium">Level</div>
+              <div class="text-xl font-bold text-blue-800"><span id="current-level">1</span></div>
+            </div>
+          </div>
+          
+          <!-- Timer -->
+          <div class="bg-gray-100 border border-gray-300 rounded-xl px-4 py-3 flex items-center space-x-3">
+            <div>
+              <div class="text-sm text-slate-500 font-medium">Waktu</div>
+              <div class="text-xl font-bold text-slate-800"><span id="game-timer">30</span>s</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="mt-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-slate-600">Progress Level <span id="progress-level">1</span></span>
+            <span class="text-sm text-slate-500">Target: <span id="current-target">5</span> sampah</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div id="progress-bar" class="bg-blue-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Area -->
+    <div id="game-area" class="absolute inset-0 bg-blue-300 overflow-hidden">
+      <!-- Ocean depth layers -->
+      <div class="absolute inset-0 bg-blue-400 opacity-20"></div>
+      
+      <!-- Floating particles -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+        <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-1000"></div>
+        <div class="absolute top-2/3 left-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse delay-2000"></div>
+        <div class="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse delay-3000"></div>
+      </div>
+      
+      <!-- Ocean waves animation -->
+      <div class="absolute bottom-0 left-0 right-0 h-40 bg-blue-600 opacity-30">
+        <div class="w-full h-full bg-repeat-x opacity-40" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 20%22%3E%3Cpath d=%22M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z%22 fill=%22%23ffffff%22 opacity=%220.3%22/%3E%3C/svg%3E'); animation: wave 4s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Luma Mascot (Always Visible) -->
+  <div id="luma-mascot-container" class="fixed bottom-8 right-4 z-30">
+    <div class="w-16 h-16 flex items-center justify-center">
+      <img id="luma-mascot" src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-12 h-12 object-contain">
+    </div>
+  </div>
+
+  <!-- Luma Chat Bubble (Separate from Mascot) -->
+  <div id="luma-chat" class="fixed bottom-4 right-4 z-30 transform transition-all duration-300 opacity-0 translate-y-4">
+    <!-- Chat Bubble -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-4 max-w-xs mb-20 relative mr-10">
+      <p id="luma-message" class="text-slate-700 text-sm leading-relaxed"></p>
+      <!-- Chat bubble tail pointing to mascot -->
+      <div class="absolute -bottom-1 right-2 w-3 h-3 bg-white transform rotate-45 border-r border-b border-gray-200"></div>
+    </div>
+  </div>
+
+  <!-- Game End Modal -->
+  <div id="game-modal" class="hidden fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full transform transition-all duration-300 scale-95 opacity-0 border border-gray-200" id="modal-content">
+      <div class="p-8">
+        <!-- Modal Header -->
+        <div class="text-center mb-8">
+          <div class="w-20 h-20 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <span class="text-white text-3xl">🏆</span>
+          </div>
+          <h2 class="text-3xl font-bold text-slate-800 mb-3">Petualangan Selesai!</h2>
+          <p class="text-slate-600 text-lg">Terima kasih telah membantu membersihkan lautan!</p>
+        </div>
+
+        <!-- Score Display -->
+        <div class="bg-gray-50 rounded-2xl p-6 mb-8 border border-gray-200">
+          <div class="text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+              <span class="text-4xl" id="achievement-emoji">🤍</span>
+              <div>
+                <p class="text-sm text-slate-500 font-medium">Pencapaian</p>
+                <p class="text-xl font-bold text-slate-800" id="achievement-title">Pemula Peduli</p>
+              </div>
+            </div>
+            <div class="border-t border-gray-200 pt-4">
+              <p class="text-sm text-slate-500 mb-2">Skor Akhir</p>
+              <p class="text-4xl font-bold text-blue-600" id="final-score">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Luma's Final Message -->
+        <div class="bg-gray-50 rounded-2xl p-5 mb-8 border border-gray-200">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+              <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-6 h-6 object-contain">
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-sm font-semibold text-slate-700">Luma</span>
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+              </div>
+              <p id="final-message" class="text-slate-700 text-sm leading-relaxed">Terima kasih telah membantu!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+          <button id="play-again-btn" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            Main Lagi
+          </button>
+          <button id="back-home-btn" class="flex-1 bg-gray-100 hover:bg-gray-200 text-slate-700 font-semibold py-4 px-6 rounded-xl transition-all duration-300 border border-gray-200">
+            Kembali
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CSS Animations -->
+<style>
+  @keyframes wave {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-25px); }
+  }
+
+  @keyframes drop {
+    from {
+      transform: translateY(-100px);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100vh);
+      opacity: 0.8;
+    }
+  }
+
+  /* Trash items now appear randomly without drop animation */
+
+  @keyframes splash {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  .trash-item {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    width: 3rem;
+    height: 3rem;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    outline: none;
+  }
+
+  .trash-item:hover {
+    transform: scale(1.2);
+  }
+
+  .trash-item:active {
+    transform: scale(0.8);
+  }
+
+  .splash-effect {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: splash 0.6s ease-out forwards;
+    pointer-events: none;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    #luma-chat {
+      max-width: 18rem;
+      bottom: 1rem;
+      right: 1rem;
+    }
+    
+    #luma-mascot-container {
+      bottom: 1rem;
+      right: 1rem;
+    }
+    
+    #luma-message {
+      font-size: 0.875rem;
+    }
+    
+    .trash-item {
+      width: 3rem;
+      height: 3rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    #luma-chat {
+      max-width: 20rem;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    #luma-chat {
+      max-width: 22rem;
+    }
+    
+    .trash-item {
+      width: 3.5rem;
+      height: 3.5rem;
+      font-size: 1.75rem;
+    }
+  }
+</style>

@@ -16,12 +16,14 @@ class ComponentLoader {
         { id: "hero", file: "components/home/home-hero-section.html", priority: 1 },
         { id: "tentang", file: "components/home/home-about-section.html", priority: 2 },
         { id: "featured-programs", file: "components/home/home-program-gemanusa.html", priority: 2 },
+        { id: "galeri", file: "components/home/home-galeri-gemanusa.html", priority: 2 },
         { id: "luma-quest-intro", file: "components/home/home-luma-ai-bot-section.html", priority: 3 },
         { id: "dampak-stats", file: "components/home/home-testimonials-section.html", priority: 3 },
         { id: "volunteer", file: "components/home/home-role-gemanusa-section.html", priority: 4 },
         { id: "ajakan", file: "components/home/home-contact-section.html", priority: 4 },
-        { id: "footer", file: "components/shared/footer.html", priority: 5 },
-        { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 5 },
+        { id: "games", file: "components/home/home-games-section.html", priority: 5 },
+        { id: "footer", file: "components/shared/footer.html", priority: 6 },
+        { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 6 },
       ],
       program: [
         { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
@@ -39,22 +41,14 @@ class ComponentLoader {
         { id: "footer", file: "components/shared/footer.html", priority: 4 },
         { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 4 },
       ],
+      
       "luma-ocean-rescue": [
-        { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
-        { id: "game-hero", file: "components/game/lumaOceanGames/game-hero.html", priority: 1 },
-        { id: "ocean-rescue-game", file: "components/game/lumaOceanGames/clicker-sea.html", priority: 2 },
-        { id: "game-instructions", file: "components/game/lumaOceanGames/game-instructions.html", priority: 3 },
-        { id: "environmental-impact", file: "components/game/lumaOceanGames/environmental-impact.html", priority: 4 },
-        { id: "footer", file: "components/shared/footer.html", priority: 5 },
-        { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 5 },
+        { id: "ocean-rescue-game", file: "components/game/lumaOceanGames/luma-ocean.html", priority: 1 },
       ],
       "luma-green-mission": [
-        { id: "navbar", file: "components/shared/navbar.html", priority: 1 },
+       
         { id: "green-mission-game", file: "components/game/lumaGreenGames/luma-green.html", priority: 1 },
-        { id: "game-instructions", file: "components/game/lumaGreenGames/game-instructions.html", priority: 2 },
-        { id: "environmental-tips", file: "components/game/lumaGreenGames/environmental-tips.html", priority: 3 },
-        { id: "footer", file: "components/shared/footer.html", priority: 4 },
-        { id: "luma-chatbot", file: "components/shared/luma-chatbot.html", priority: 4 },
+
       ],
 
     }
@@ -308,6 +302,10 @@ document.addEventListener("componentLoaded", (event) => {
         if (typeof LumaOceanRescue !== 'undefined' && !window.lumaOceanRescue) {
           window.lumaOceanRescue = new LumaOceanRescue()
           console.log("LUMA Ocean Rescue game initialized successfully!")
+        } else if (typeof LumaOceanRescue !== 'undefined' && window.lumaOceanRescue) {
+          console.log("LUMA Ocean Rescue game already initialized")
+        } else {
+          console.warn("LumaOceanRescue class not found")
         }
       }, 100)
       break

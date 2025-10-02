@@ -7,8 +7,8 @@ tailwind.config = {
         product: ['"Product Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
-        sabang: "#B0E638",
-        merauke: "#7b00ffff",
+            sabang: "#B0E638",
+            merauke: "#7b00ffff",
       },
     },
   },

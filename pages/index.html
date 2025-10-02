@@ -13,10 +13,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../assets/js/core/tailwind-config.js"></script>
 
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/img/logo/Logo-Light-Solid.png" type="image" />
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/custom.css" />
@@ -26,14 +35,13 @@
     <link rel="stylesheet" href="/assets/css/preloader.css" />
     <link rel="stylesheet" href="/assets/css/cursor.css" />
     <link rel="stylesheet" href="/assets/css/program.css" />
-    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   </head>
 
-  <body class="bg-kapas-white text-batu-gray">
-    <!-- ================= Preloader ================= -->
+  <body class="bg-kapas-white text-batu-gray pdb-10">
+    <!-- Preloader -->
     <div id="preloader">
       <div class="preloader-content">
         <img
@@ -41,158 +49,148 @@
           alt="Logo Gema Nusa"
           class="logo"
         />
-
         <div class="loader"></div>
       </div>
     </div>
+    
 
-    <!-- ================= Navbar Container (will be loaded by component loader) ================= -->
-    <!DOCTYPE html>
-    <html lang="id">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Gema Nusa - Platform Kolaborasi Generasi Muda Indonesia</title>
-        <meta
-          name="description"
-          content="Gema Nusa adalah gerakan sosial dan kreatif yang menyatukan generasi muda Indonesia dalam aksi nyata untuk lingkungan dan keberlanjutan."
-        />
+    <!-- ================= Navbar ================= -->
+    <nav
+      class="font-bold font-inter fixed top-4 left-1/2 transform -translate-x-1/2 w-[90%] z-50"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex items-center justify-between h-16 bg-gray-800/30 backdrop-blur-lg border border-white/10 rounded-full px-6 shadow-lg"
+        >
+          <!-- Left: Logo -->
+          <div class="flex-shrink-0">
+            <a href="index.html" class="flex items-center">
+              <img
+                src="/assets/img/logo/Logo-Dark-Solid.png"
+                alt="Logo"
+                class="h-6 w-auto"
+              />
+            </a>
+          </div>
 
-        <!-- TailwindCSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="/assets/js/core/tailwind-config.js"></script>
+          <!-- Center: Links -->
+          <div
+            class="hidden md:flex items-center space-x-8 text-sm font-medium text-white"
+          >
+            <a href="#beranda" class="nav-link">Beranda</a>
+            <a href="#tentang" class="nav-link">Tentang Kami</a>
+            <a href="#program" class="nav-link">Program</a>
+            <a href="#luma-ai" class="nav-link">Luma AI</a>
+            <a href="#games" class="nav-link">Games</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </div>
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/assets/css/custom.css" />
-        <link rel="stylesheet" href="/assets/css/luma-ai.css" />
-        <link rel="stylesheet" href="/assets/css/preloader.css" />
-        <link rel="stylesheet" href="/assets/css/cursor.css" />
+          <!-- Right: CTA -->
+          <div class="hidden md:block">
+            <a
+              href="luma-quest.html"
+              class="bg-merauke text-white px-6 py-2 rounded-full font-medium hover:bg-purple-600 transition"
+            >
+              Mulai Quest
+            </a>
+          </div>
 
-        <link
-          rel="icon"
-          href="/assets/img/logo/Logo-Light-Solid.png"
-          type="image/x-icon"
-        />
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-
-        <!-- jQuery CDN -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-      </head>
-
-      <body class="bg-kapas-white text-batu-gray pdb-10 ">
-        <!-- ================= Navbar Container ================= -->
-<nav class="font-bold font-inter fixed top-4 left-1/2 transform -translate-x-1/2 w-[90%] z-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16 bg-gray-800/30 backdrop-blur-lg border border-white/10 rounded-full px-6 shadow-lg">
-      
-      <!-- Left: Logo -->
-      <div class="flex-shrink-0">
-        <a href="index.html" class="flex items-center">
-          <img src="/assets/img/logo/Logo-Dark-Solid.png" alt="Logo" class="h-6 w-auto" />
-        </a>
+          <!-- Mobile menu button -->
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-toggle"
+              class="p-2 rounded-md text-white hover:text-gray-300"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Center: Links -->
-      <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-white">
-        <a href="index.html#beranda" class="nav-link">Beranda</a>
-        <a href="#tentang" class="nav-link">Tentang Kami</a>
-        <a href="#program" class="nav-link">Program</a>
-        <a href="#luma-ai" class="nav-link">Luma AI</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </div>
-
-      <!-- Right: CTA -->
-      <div class="hidden md:block">
-        <a href="luma-quest.html" class="bg-merauke text-white px-6 py-2 rounded-full font-medium hover:bg-purple-600 transition">
+      <!-- Mobile menu -->
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden bg-gray-800/30 backdrop-blur-lg border border-white/10 rounded-xl p-4 space-y-2 mt-2 shadow-lg"
+      >
+        <a
+          href="#beranda"
+          class="block w-fit nav-link-mobile text-white border-b-2 border-transparent hover:border-white transition"
+          >Beranda</a
+        >
+        <a
+          href="#tentang"
+          class="block w-fit nav-link-mobile text-white border-b-2 border-transparent hover:border-white transition"
+          >Tentang Kami</a
+        >
+        <a
+          href="#program"
+          class="block w-fit nav-link-mobile text-white border-b-2 border-transparent hover:border-white transition"
+          >Program</a
+        >
+        <a
+          href="#luma-ai"
+          class="block w-fit nav-link-mobile text-white border-b-2 border-transparent hover:border-white transition"
+          >Luma AI</a
+        >
+        <a
+          href="#games"
+          class="block w-fit nav-link-mobile text-white border-b-2 border-transparent hover:border-white transition"
+          >Games</a
+        >
+        <a
+          href="#contact"
+          class="block w-fit nav-link-mobile text-white border-b-2 border-transparent hover:border-white transition"
+          >Contact</a
+        >
+        <a
+          href="luma-quest.html"
+          class="block bg-merauke text-white px-4 py-2 rounded-full text-center hover:bg-purple-600 transition"
+        >
           Mulai Quest
         </a>
       </div>
+    </nav>
 
-      <!-- Mobile menu button -->
-      <div class="md:hidden">
-        <button id="mobile-menu-toggle" class="p-2 rounded-md text-white hover:text-gray-300">
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
+    <!-- ================= Main Content ================= -->
+    <main id="main-content" class="opacity-0 transition-opacity duration-1000">
+      <section id="hero"></section>
+      <section id="tentang"></section>
+      <section id="featured-programs"></section>
+      <section id="galeri"></section>
+      <section id="luma-quest-intro"></section>
+      <section id="dampak-stats"></section>
+      <section id="games"></section>
+      <section id="volunteer"></section>
+      <section id="ajakan"></section>
+    </main>
 
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="md:hidden hidden bg-gray-800/30 backdrop-blur-lg border border-white/10 rounded-xl p-4 space-y-2 mt-2 shadow-lg">
-    <a href="index.html#beranda" class=" block nav-link-mobile text-white">Beranda</a>
-    <a href="#tentang" class="block nav-link-mobile text-white">Tentang Kami</a>
-    <a href="#program" class="block nav-link-mobile text-white">Program</a>
-    <a href="#luma-ai" class="block nav-link-mobile text-white">Luma AI</a>
-    <a href="#contact" class="block nav-link-mobile text-white">Contact</a>
-    <a href="luma-quest.html" class="block bg-merauke text-white px-4 py-2 rounded-full text-center hover:bg-purple-600 transition">
-      Mulai Quest
-    </a>
-  </div>
-</nav>
-
-
-
-
-
-
-
-        <!-- ================= Main Content ================= -->
-        <main
-          id="main-content"
-          class="opacity-0 transition-opacity duration-1000"
-        >
-          <!-- Hero Section (will be loaded by component loader) -->
-          <section id="hero"></section>
-
-          <!-- Tentang Section (will be loaded by component loader) -->
-          <section id="tentang"></section>
-
-          <!-- Featured Programs (will be loaded by component loader) -->
-          <section id="featured-programs"></section>
-
-          <!-- Luma Quest Intro (will be loaded by component loader) -->
-          <section id="luma-quest-intro"></section>
-
-          <!-- Impact Stats (will be loaded by component loader) -->
-          <section id="dampak-stats"></section>
-
-          <!-- volunteer (will be loaded by component loader) -->
-          <section id="volunteer"></section>
-
-          <!-- Call to Action (will be loaded by component loader) -->
-          <section id="ajakan"></section>
-        </main>
-
-        <!-- ================= Footer (will be loaded by component loader) ================= -->
-        <footer id="footer"></footer>
-
-        <!-- ================= Scripts ================= -->
-        <script src="/assets/js/component-loader.js"></script>
-        <script src="/assets/js/navbar.js"></script>
-        <script src="/assets/js/preloader.js"></script>
-        <script src="/assets/js/luma-chatbot.js"></script>
-        <script src="/assets/js/luma-quest.js"></script>
-        <script src="/assets/js/main.js"></script>
-        <script src="/assets/js/morph-text.js"></script>
-        <script src="/assets/js/typing-effect-luma.js"></script>
-        <script src="/assets/js/counter-volunteer.js"></script>
-        <script src="/assets/js/programJS/featured-programs.js"></script>
-
-        <!-- END: Inlined Navbar (fallback) -->
-      </body>
-    </html>
+    <!-- ================= Footer ================= -->
+    <footer id="footer"></footer>
 
     <!-- ================= Scripts ================= -->
+    <script src="/assets/js/component-loader.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/preloader.js"></script>
+    <script src="/assets/js/luma-chatbot.js"></script>
+    <script src="/assets/js/luma-quest.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/morph-text.js"></script>
+    <script src="/assets/js/typing-effect-luma.js"></script>
+    <script src="/assets/js/counter-volunteer.js"></script>
+    <script src="/assets/js/programJS/featured-programs.js"></script>
+
     <script src="/assets/js/core/component-loader.js"></script>
     <script src="/assets/js/core/navbar.js"></script>
     <script src="/assets/js/core/preloader.js"></script>
@@ -204,7 +202,6 @@
     <script src="/assets/js/core/counter-volunteer.js"></script>
     <script src="/assets/js/core/contact-form-handler.js"></script>
 
-    <!-- END: Inlined Navbar (fallback) -->
     <!-- Script untuk Sidebar Mobile -->
     <script>
       const mobileMenuToggle = document.getElementById("mobile-menu-toggle");

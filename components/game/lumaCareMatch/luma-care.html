@@ -1,0 +1,112 @@
+<section id="luma-care" class="min-h-screen bg-[#F9FAFB] text-gray-800 p-6">
+	<!-- Hero -->
+	<div id="luma-hero" class="max-w-4xl mx-auto text-center py-20 transition-opacity duration-700">
+		<div class="bg-white rounded-xl shadow-md p-10">
+			<h1 class="text-4xl font-semibold text-gray-800">Luma Care Match</h1>
+			<p class="mt-3 text-lg text-gray-600">Cocokkan pasangan bantuan dan bantu Luma menyebarkan kebaikan!</p>
+
+			<!-- Target / Achievement -->
+			<div class="mt-6 flex justify-center gap-4">
+				<div class="px-4 py-2 bg-green-50 rounded-lg text-center">
+					<div class="text-xl font-semibold">≥ 800</div>
+					<div class="text-sm text-gray-600">Pahlawan Peduli</div>
+				</div>
+				<div class="px-4 py-2 bg-yellow-50 rounded-lg text-center">
+					<div class="text-xl font-semibold">600–799</div>
+					<div class="text-sm text-gray-600">Relawan Hebat</div>
+				</div>
+				<div class="px-4 py-2 bg-gray-50 rounded-lg text-center">
+					<div class="text-xl font-semibold">400–599</div>
+					<div class="text-sm text-gray-600">Pejuang Peduli</div>
+				</div>
+			</div>
+
+			<button id="start-game-btn" class="mt-8 px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">Mulai Game</button>
+			<div class="mt-4 text-sm text-gray-500">Klik kartu untuk membalik. Cocokkan semua pasangan!</div>
+
+			<!-- Instructions -->
+			<div class="mt-8 text-left">
+				<div class="bg-gray-50 border rounded-lg p-4">
+					<h3 class="font-semibold mb-2">Cara Bermain</h3>
+					<ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+						<li>Klik satu kartu untuk membalik, lalu klik kartu kedua untuk mencocokkan.</li>
+						<li>Jika cocok, kartu tetap terbuka. Jika salah, kartu akan kembali dalam 1 detik.</li>
+						<li>Capai semua pasangan untuk menyelesaikan permainan.</li>
+					</ul>
+					<h3 class="font-semibold mt-3 mb-2">Tips & Trik</h3>
+					<ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+						<li>Ingat posisi ikon yang sudah pernah dibuka untuk mengurangi moves.</li>
+						<li>Kerjakan per baris/area supaya mudah menghafal posisi.</li>
+						<li>Bersantai dan fokus – waktu & moves memengaruhi skor.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Game Area -->
+	<div id="luma-game" class="max-w-4xl mx-auto hidden transition-opacity duration-700">
+		<!-- UI Top -->
+		<div class="flex items-center justify-between mb-4">
+			<div class="flex items-center space-x-6">
+				<div class="text-sm">
+					<div class="text-xs text-gray-500">Timer</div>
+					<div id="timer" class="text-xl font-medium">0s</div>
+				</div>
+				<div class="text-sm">
+					<div class="text-xs text-gray-500">Moves</div>
+					<div id="moves" class="text-xl font-medium">0</div>
+				</div>
+			</div>
+			<div class="w-1/2">
+				<div class="text-xs text-gray-500 mb-2">Progress</div>
+				<div class="w-full bg-gray-200 h-3 rounded-full">
+					<div id="progress-bar" class="h-3 bg-green-600 rounded-full w-0"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Kartu akan ditempatkan di sini oleh JS -->
+		<div id="board" class="grid grid-cols-4 gap-4">
+			<!-- Kartu akan ditempatkan di sini oleh JS -->
+		</div>
+
+		<!-- Controls: Reset (left), Kembali ke Hero, Kembali ke Beranda (index) -->
+		<div class="mt-6 flex items-center justify-between">
+			<div class="flex items-center space-x-3">
+				<button id="reset-btn" class="px-4 py-2 bg-gray-100 rounded text-gray-700 border">Reset</button>
+				<button id="to-hero-btn" class="px-4 py-2 bg-gray-50 rounded text-gray-700 border">Kembali ke Hero</button>
+				<button id="page-home-btn" class="px-4 py-2 bg-gray-50 rounded text-gray-700 border">Kembali ke Beranda</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Result Modal -->
+	<div id="result-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+		<div class="bg-white rounded-xl shadow-xl border border-green-100 max-w-md w-full p-6">
+			<h2 id="result-title" class="text-2xl font-semibold">Hasil</h2>
+			<div class="mt-4 space-y-2">
+				<div class="flex justify-between text-sm text-gray-600"><span>Score</span><span id="result-score">0</span></div>
+				<div class="flex justify-between text-sm text-gray-600"><span>Total Moves</span><span id="result-moves">0</span></div>
+				<div class="flex justify-between text-sm text-gray-600"><span>Waktu</span><span id="result-time">0s</span></div>
+			</div>
+			<p id="result-badge" class="mt-4 text-lg font-medium"></p>
+			<p id="result-dialog" class="mt-3 text-gray-700"></p>
+			<div class="mt-6 flex justify-end space-x-3">
+				<button id="home-btn" class="px-4 py-2 bg-gray-100 rounded border text-gray-700">Kembali ke Beranda</button>
+				<button id="play-again-btn" class="px-4 py-2 bg-green-600 text-white rounded">Main Lagi</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Luma Maskot + Bubble -->
+	<div id="luma-maskot" class="fixed right-6 bottom-6 z-40">
+		<div id="luma-bubble" class="absolute hidden bg-white p-3 shadow-lg border border-green-100"
+		     style="right: 90px; bottom: 55px; border-radius: 18px; border-bottom-right-radius: 4px; width: 140px;">
+			<p id="luma-bubble-text" class="text-sm text-gray-800 leading-relaxed"></p>
+			<div class="absolute -right-1 bottom-0 w-0 h-0 border-l-8 border-l-white border-t-8 border-t-transparent"></div>
+		</div>
+		<img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-20 h-20 object-contain">
+	</div>
+
+</section>

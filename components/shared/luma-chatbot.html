@@ -1,0 +1,93 @@
+<!-- Luma AI Chatbot Component -->
+<!-- This component will be automatically initialized by luma-chatbot.js -->
+<!-- The chatbot interface will be created dynamically -->
+
+<!-- Responsive adjustments for mobile -->
+<style>
+  @media (max-width: 640px) {
+    #luma-bubble-chat {
+      max-width: 16rem !important;
+      bottom: 1rem !important;
+      right: 1rem !important;
+    }
+    
+    #luma-mascot-container {
+      bottom: 1rem !important;
+      right: 1rem !important;
+    }
+    
+    #luma-bubble-message {
+      font-size: 0.875rem !important;
+    }
+    
+    #luma-chat-container {
+      width: 95vw !important;
+      height: 80vh !important;
+      bottom: 1rem !important;
+      right: 1rem !important;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    #luma-bubble-chat {
+      max-width: 18rem !important;
+    }
+    
+    #luma-chat-container {
+      width: 360px !important;
+      height: 480px !important;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    #luma-bubble-chat {
+      max-width: 20rem !important;
+    }
+    
+    #luma-chat-container {
+      width: 380px !important;
+      height: 500px !important;
+    }
+  }
+
+  /* Animation for bubble appearance */
+  @keyframes bubbleBounce {
+    0% {
+      transform: translateY(20px) scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(-5px) scale(1.05);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  #luma-bubble-chat.show {
+    animation: bubbleBounce 0.5s ease-out;
+  }
+
+  /* Mascot hover effect */
+  #luma-mascot:hover {
+    filter: drop-shadow(0 0 10px rgba(123, 0, 255, 0.3));
+  }
+
+  /* Chat container entrance animation */
+  #luma-chat-container.show {
+    animation: slideInUp 0.3s ease-out;
+  }
+
+  @keyframes slideInUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
