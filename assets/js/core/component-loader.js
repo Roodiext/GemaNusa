@@ -488,25 +488,25 @@ setTimeout(() => {
     mengajar: {
       title: "Kegiatan Sosial Mengajar",
       desc: "Kami aktif dalam berbagai program sosial dari kegiatan mengajar, bakti sosial, hingga pemberdayaan masyarakat. Gema Nusa menjadi penggema pendidikan di titik kehampaan gelapnya dunia.",
-      image: "/assets/img/mengajar.jpg",
+      image: "../assets/img/mengajar.jpg",
       link: "#"
     },
     bakti: {
       title: "Kegiatan Bakti Sosial",
       desc: "Program bakti sosial Gema Nusa berfokus pada kepedulian dan aksi nyata bagi masyarakat yang membutuhkan.",
-      image: "/assets/img/bakti.jpg",
+      image: "../assets/img/bakti.jpg",
       link: "#"
     },
     bantuan: {
       title: "Bantuan Pangan",
       desc: "Distribusi bantuan pangan bagi mereka yang terdampak ketidakstabilan ekonomi dan bencana alam.",
-      image: "/assets/img/bantuan.jpg",
+      image: "../assets/img/bantuan.jpg",
       link: "#"
     },
     lainnya: {
       title: "Program Lainnya",
       desc: "Berbagai program inovatif Gema Nusa lainnya untuk memberdayakan masyarakat.",
-      image: "/assets/img/lainnya.jpg",
+      image: "../assets/img/lainnya.jpg",
       link: "#"
     }
   });

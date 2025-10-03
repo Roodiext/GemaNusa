@@ -211,7 +211,7 @@ class EnhancedLumaAI {
         align-items: center;
         justify-content: center;
     ">
-        <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Icon" style="width: 100%; height: 100%; object-fit: cover;">
+        <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Icon" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
     <div>
         <div class="font-product" style="font-weight: 500; font-size: 16px;">Luma AI Bot</div>
@@ -388,7 +388,7 @@ class EnhancedLumaAI {
 
     const mascotImg = document.createElement("img");
     mascotImg.id = "luma-mascot";
-    mascotImg.src = "/assets/img/luma-ai-bot/luma-ai-bot.svg";
+    mascotImg.src = "../assets/img/luma-ai-bot/luma-ai-bot.svg";
     mascotImg.alt = "Luma";
     mascotImg.style.cssText = `
       width: 64px;
