@@ -16,6 +16,12 @@ class LumaGreenGame {
         ];
         this.draggedItem = null;
         this.isMobile = this.checkMobile();
+        // Audio elements
+        this.bgmAudio = null;
+        this.collectSfx = null;
+        this.failSfx = null;
+        this.winnerSfx = null;
+        this.isMuted = false;
         this.init();
     }
 
@@ -25,9 +31,83 @@ class LumaGreenGame {
     }
 
     init() {
+        this.initAudio();
         this.setupEventListeners();
         this.handleResize();
         this.showLumaMessage("Halo! Aku Luma! Yuk mulai misi hijau kita! 🌱", 3500);
+    }
+
+    initAudio() {
+        this.bgmAudio = document.getElementById('bgm-audio');
+        this.collectSfx = document.getElementById('collect-sfx');
+        this.failSfx = document.getElementById('fail-sfx');
+        this.winnerSfx = document.getElementById('winner-sfx');
+        
+        // Set volume levels
+        if (this.bgmAudio) this.bgmAudio.volume = 0.5;
+        if (this.collectSfx) this.collectSfx.volume = 0.7;
+        if (this.failSfx) this.failSfx.volume = 0.8;
+        if (this.winnerSfx) this.winnerSfx.volume = 0.8;
+        
+        // Handle page visibility changes for background music
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.pauseBGM();
+            } else {
+                this.resumeBGM();
+            }
+        });
+    }
+
+    playSound(audioElement) {
+        if (!audioElement || this.isMuted) return;
+        
+        try {
+            audioElement.currentTime = 0;
+            audioElement.play().catch(error => {
+                console.log('Audio play failed:', error);
+            });
+        } catch (error) {
+            console.log('Audio error:', error);
+        }
+    }
+
+    playBGM() {
+        if (!this.bgmAudio || this.isMuted) return;
+        
+        try {
+            this.bgmAudio.play().catch(error => {
+                console.log('BGM play failed:', error);
+            });
+        } catch (error) {
+            console.log('BGM error:', error);
+        }
+    }
+
+    pauseBGM() {
+        if (this.bgmAudio && !this.bgmAudio.paused) {
+            this.bgmAudio.pause();
+        }
+    }
+
+    resumeBGM() {
+        if (this.bgmAudio && this.bgmAudio.paused && !this.isMuted) {
+            this.bgmAudio.play().catch(error => {
+                console.log('BGM resume failed:', error);
+            });
+        }
+    }
+
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        
+        if (this.isMuted) {
+            this.pauseBGM();
+        } else {
+            this.resumeBGM();
+        }
+        
+        return this.isMuted;
     }
 
     handleResize() {
@@ -55,6 +135,15 @@ class LumaGreenGame {
         const lumaMascot = document.getElementById('luma-mascot');
         if (lumaMascot) {
             lumaMascot.addEventListener('click', () => this.showRandomTip());
+        }
+
+        const muteToggle = document.getElementById('mute-toggle');
+        if (muteToggle) {
+            muteToggle.addEventListener('click', () => {
+                const muted = this.toggleMute();
+                muteToggle.textContent = muted ? '🔇' : '🔊';
+                muteToggle.title = muted ? 'Unmute Sound' : 'Mute Sound';
+            });
         }
     }
 
@@ -99,6 +188,9 @@ class LumaGreenGame {
         if (loadingSection && gameSection) {
             loadingSection.classList.add('hidden');
             gameSection.classList.remove('hidden');
+            
+            // Start background music when game begins
+            this.playBGM();
             
             this.generateGameItems();
             this.setupDragAndDrop();
@@ -344,6 +436,9 @@ class LumaGreenGame {
         
         this.updateUI();
         
+        // Play collect sound
+        this.playSound(this.collectSfx);
+        
         const correctMessages = [
             "Benar! Bagus sekali! 🎉",
             "Hebat! Kamu pintar! ⭐",
@@ -361,6 +456,9 @@ class LumaGreenGame {
     handleWrongPlacement(item) {
         item.classList.add('border-red-500', 'bg-red-50');
         item.style.animation = 'shake 0.5s ease-in-out';
+        
+        // Play fail sound
+        this.playSound(this.failSfx);
         
         setTimeout(() => {
             item.classList.remove('border-red-500', 'bg-red-50');
@@ -392,6 +490,10 @@ class LumaGreenGame {
     }
 
     completeGame() {
+        // Stop background music and play winner sound
+        this.pauseBGM();
+        this.playSound(this.winnerSfx);
+        
         const finalScore = document.getElementById('final-score');
         if (finalScore) finalScore.textContent = this.score;
         
@@ -430,6 +532,9 @@ class LumaGreenGame {
         this.generateGameItems();
         this.setupDragAndDrop();
         
+        // Resume background music
+        this.playBGM();
+        
         this.showLumaMessage("Yay! Mari kita mulai misi baru! 🚀", 2000);
     }
 
@@ -453,6 +558,9 @@ class LumaGreenGame {
         this.score = 0;
         this.itemsCompleted = 0;
         this.updateUI();
+        
+        // Stop background music when going back to home
+        this.pauseBGM();
         
         this.showLumaMessage("Sampai jumpa lagi! Terima kasih sudah bermain! 👋", 3000);
     }

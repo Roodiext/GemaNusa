@@ -2,32 +2,67 @@
 <!-- This component will be automatically initialized by luma-chatbot.js -->
 <!-- The chatbot interface will be created dynamically -->
 
-<!-- Responsive adjustments for mobile -->
+<!-- Enhanced responsive adjustments -->
 <style>
+  /* Mobile First Approach */
   @media (max-width: 640px) {
     #luma-bubble-chat {
       max-width: 16rem !important;
       bottom: 1rem !important;
       right: 1rem !important;
+      margin-right: 0 !important;
+      margin-bottom: 70px !important;
     }
     
     #luma-mascot-container {
       bottom: 1rem !important;
       right: 1rem !important;
+      width: 60px !important;
+      height: 60px !important;
+    }
+    
+    #luma-mascot {
+      width: 48px !important;
+      height: 48px !important;
     }
     
     #luma-bubble-message {
       font-size: 0.875rem !important;
+      line-height: 1.3 !important;
     }
     
     #luma-chat-container {
       width: 95vw !important;
-      height: 80vh !important;
+      height: 85vh !important;
       bottom: 1rem !important;
       right: 1rem !important;
+      max-width: none !important;
+      max-height: none !important;
+    }
+    
+    .quick-reply-btn {
+      font-size: 0.75rem !important;
+      padding: 4px 8px !important;
+      margin: 2px !important;
+      min-height: 32px !important;
+      min-width: 80px !important;
+    }
+    
+    #luma-send-btn {
+      width: 36px !important;
+      height: 36px !important;
+    }
+    
+    #luma-messages {
+      padding: 12px !important;
+    }
+    
+    #luma-messages > div {
+      max-width: 85% !important;
     }
   }
 
+  /* Tablet */
   @media (min-width: 641px) and (max-width: 1024px) {
     #luma-bubble-chat {
       max-width: 18rem !important;
@@ -37,8 +72,19 @@
       width: 360px !important;
       height: 480px !important;
     }
+    
+    #luma-mascot-container {
+      width: 70px !important;
+      height: 70px !important;
+    }
+    
+    #luma-mascot {
+      width: 56px !important;
+      height: 56px !important;
+    }
   }
 
+  /* Desktop */
   @media (min-width: 1025px) {
     #luma-bubble-chat {
       max-width: 20rem !important;
@@ -47,6 +93,16 @@
     #luma-chat-container {
       width: 380px !important;
       height: 500px !important;
+    }
+    
+    #luma-mascot-container {
+      width: 80px !important;
+      height: 80px !important;
+    }
+    
+    #luma-mascot {
+      width: 64px !important;
+      height: 64px !important;
     }
   }
 
@@ -68,6 +124,7 @@
 
   #luma-bubble-chat.show {
     animation: bubbleBounce 0.5s ease-out;
+    pointer-events: auto !important;
   }
 
   /* Mascot hover effect */
@@ -88,6 +145,48 @@
     to {
       transform: translateY(0);
       opacity: 1;
+    }
+  }
+
+  /* Improved scrollbar for messages */
+  #luma-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #luma-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  #luma-messages::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
+    border-radius: 10px;
+  }
+
+  #luma-messages::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  .quick-reply-btn, #luma-send-btn, #luma-close-btn, #luma-mascot {
+    transition: all 0.2s ease-in-out !important;
+  }
+
+  /* Focus styles for accessibility */
+  #luma-message-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(123, 0, 255, 0.1);
+  }
+
+  /* Mobile touch improvements */
+  @media (max-width: 640px) {
+    .quick-reply-btn:active {
+      transform: scale(0.95);
+      background-color: #e5e7eb !important;
+    }
+    
+    #luma-send-btn:active {
+      transform: scale(0.9);
     }
   }
 </style>

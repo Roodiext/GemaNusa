@@ -29,87 +29,87 @@
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   </head>
-  <body class="bg-gray-50 text-gray-800">
+  <body class="bg-gray-50 text-gray-800 md:overflow-hidden md:h-screen">
    
     <!-- Main -->
-    <main class="min-h-screen pt-32">
-      <section class="py-16 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-6 text-center">
+    <main class="min-h-screen pt-20 sm:pt-32 md:h-screen md:overflow-y-auto md:pt-0">
+      <section class="py-8 sm:py-16 bg-gray-50 md:min-h-screen md:flex md:items-center md:justify-center md:py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <!-- Quest Intro Section -->
           <div id="quest-intro">
             <!-- Header -->
-            <div class="text-center mb-8">
+            <div class="text-center mb-6 sm:mb-8">
               <!-- Logo + Brand -->
-              <div class="flex items-center justify-center gap-2 mb-4">
+              <div class="flex items-center justify-center gap-2 mb-3 sm:mb-4">
                 <img
                   src="https://img.icons8.com/ios-filled/50/brain.png"
-                  class="w-8 h-8"
+                  class="w-6 h-6 sm:w-8 sm:h-8"
                   alt="Brain Icon"
                 />
-                <span class="font-semibold text-gray-800 font-product"
+                <span class="font-semibold text-base sm:text-lg text-gray-800 font-product"
                   >Luma Quest</span
                 >
               </div>
               <!-- Title -->
               <h1
-                class="font-product text-3xl sm:text-4xl font-bold text-gray-800"
+                class="font-product text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 px-2"
               >
                 Cari <span class="text-purple-primary">Passion</span> Anda di
                 Quiz ini !
               </h1>
               <!-- Subtitle -->
-              <p class="font-inter mt-3 text-gray-600">
+              <p class="font-inter mt-2 sm:mt-3 text-sm sm:text-base text-gray-600 px-2">
                 Uji Pemahaman tentang passion anda disini dan temukan passion
                 kamu!
               </p>
             </div>
 
             <!-- Grid Content -->
-            <div class="grid md:grid-cols-3 gap-6 mt-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12">
               <!-- Fitur Quiz -->
-              <div class="bg-white rounded-xl shadow p-6 text-left">
-                <h2 class="text-lg font-semibold font-product mb-4">
+              <div class="bg-white rounded-xl shadow p-5 sm:p-6 text-left">
+                <h2 class="text-base sm:text-lg font-semibold font-product mb-3 sm:mb-4">
                   Fitur Quiz
                 </h2>
-                <ul class="font-inter space-y-4">
-                  <li class="flex items-start gap-3">
+                <ul class="font-inter space-y-3 sm:space-y-4">
+                  <li class="flex items-start gap-2 sm:gap-3">
                     <img
                       src="https://img.icons8.com/forma-regular/96/head-with-brain.png"
-                      class="w-8 h-8"
+                      class="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0"
                       alt="Reflektif"
                     />
-                    <p>
+                    <p class="text-sm sm:text-base">
                       <span class="font-semibold">Pertanyaan Reflektif</span
                       ><br />
-                      <span class="text-sm text-gray-600"
+                      <span class="text-xs sm:text-sm text-gray-600"
                         >Dirancang untuk membantumu mengenal minat dan
                         kepribadianmu lebih dalam.</span
                       >
                     </p>
                   </li>
-                  <li class="flex items-start gap-3">
+                  <li class="flex items-start gap-2 sm:gap-3">
                     <img
                       src="https://img.icons8.com/glyph-neue/64/timer.png"
-                      class="w-8 h-8"
+                      class="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0"
                       alt="Hasil"
                     />
-                    <p>
+                    <p class="text-sm sm:text-base">
                       <span class="font-semibold">Hasil Personal</span><br />
-                      <span class="text-sm text-gray-600"
+                      <span class="text-xs sm:text-sm text-gray-600"
                         >Dapatkan hasil yang sesuai dengan jawabanmu—temukan
                         arah passion yang paling cocok.</span
                       >
                     </p>
                   </li>
-                  <li class="flex items-start gap-3">
+                  <li class="flex items-start gap-2 sm:gap-3">
                     <img
                       src="https://img.icons8.com/ios-filled/50/brainstorm-skill.png"
-                      class="w-8 h-8"
+                      class="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0"
                       alt="Wawasan"
                     />
-                    <p>
+                    <p class="text-sm sm:text-base">
                       <span class="font-semibold">Wawasan Tambahan</span><br />
-                      <span class="text-sm text-gray-600"
+                      <span class="text-xs sm:text-sm text-gray-600"
                         >Setelah kuis selesai, pelajari penjelasan hasil agar
                         kamu lebih memahami potensimu.</span
                       >
@@ -119,11 +119,11 @@
               </div>
 
               <!-- Tips -->
-              <div class="bg-white rounded-xl shadow p-6 text-left">
-                <h2 class="font-product text-lg font-semibold mb-4">
+              <div class="bg-white rounded-xl shadow p-5 sm:p-6 text-left">
+                <h2 class="font-product text-base sm:text-lg font-semibold mb-3 sm:mb-4">
                   Tips Sukses Mengerjakan
                 </h2>
-                <ol class="space-y-3 text-gray-700 text-sm">
+                <ol class="space-y-2 sm:space-y-3 text-gray-700 text-xs sm:text-sm">
                   <li>1. Pilih jawaban sesuai dengan passion anda</li>
                   <li>
                     2. Jujur pada diri sendiri, hasil lebih akurat jika menjawab
@@ -136,18 +136,18 @@
 
               <!-- CTA -->
               <div
-                class="bg-white rounded-xl shadow p-6 flex flex-col justify-between"
+                class="bg-white rounded-xl shadow p-5 sm:p-6 flex flex-col justify-between"
               >
                 <div>
-                  <h2 class="font-product text-lg font-semibold mb-2">
+                  <h2 class="font-product text-base sm:text-lg font-semibold mb-2">
                     Ayo Coba Quiz sekarang!
                   </h2>
-                  <p class="font-inter text-gray-600 mb-4 text-sm">
+                  <p class="font-inter text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm">
                     Temukan Passion yang cocok untuk kamu di Quiz ini
                   </p>
                   <button
                     id="start-quest-btn"
-                    class="font-inter block w-full px-6 py-3 bg-merauke hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition text-center"
+                    class="font-inter block w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-merauke hover:bg-purple-700 text-white text-sm sm:text-base font-semibold rounded-lg shadow transition text-center"
                   >
                     Coba Sekarang →
                   </button>
@@ -155,13 +155,13 @@
                     Gratis • Tidak Berbayar • Tidak perlu Daftar
                   </p>
                 </div>
-                <div class="flex items-center gap-2 mt-6">
+                <div class="flex items-center gap-2 mt-4 sm:mt-6">
                   <img
                     src="https://img.icons8.com/color/48/group.png"
-                    class="w-12 h-12"
+                    class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0"
                     alt="Users"
                   />
-                  <p class="font-inter text-gray-600 text-sm" t>
+                  <p class="font-inter text-gray-600 text-xs sm:text-sm text-left">
                     <span class="font-semibold">100K</span><br />
                     Orang yang sudah mencoba Quiz
                   </p>
@@ -173,49 +173,49 @@
           <!-- Quest Container (Hidden initially) -->
           <div
             id="quest-container"
-            class="bg-white rounded-3xl p-8 md:p-12 border-2 border-gray-100 shadow-2xl hidden"
+            class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 border-2 border-gray-100 shadow-2xl hidden"
           >
             <!-- Progress Bar -->
-            <div class="mb-8">
+            <div class="mb-6 sm:mb-8">
               <div class="flex justify-between items-center mb-2">
-                <span class="font-inter   text-sm font-medium text-gray-600"
+                <span class="font-inter text-xs sm:text-sm font-medium text-gray-600"
                   >Progress Quest</span
                 >
                 <span
                   id="progress-text"
-                  class="text-sm font-medium text-gray-600"
+                  class="text-xs sm:text-sm font-medium text-gray-600"
                   >Pertanyaan 1 dari 5</span
                 >
               </div>
-              <div class="w-full bg-gray-200 rounded-full h-3">
+              <div class="w-full bg-gray-200 rounded-full h-2 sm:h-3">
                 <div
                   id="progress-bar"
-                  class="bg-gradient-to-r from-nusantara-green to-samudra-blue h-3 rounded-full transition-all duration-500"
+                  class="bg-gradient-to-r from-nusantara-green to-samudra-blue h-2 sm:h-3 rounded-full transition-all duration-500"
                   style="width: 20%"
                 ></div>
               </div>
             </div>
 
             <!-- Question Content -->
-            <div id="question-content" class="min-h-[400px]">
+            <div id="question-content" class="min-h-[300px] sm:min-h-[400px]">
               <!-- Questions will be dynamically inserted here -->
             </div>
 
             <!-- Navigation -->
-            <div class="flex justify-between mt-8">
+            <div class="flex justify-between mt-6 sm:mt-8 gap-2 sm:gap-4">
               <button
                 id="prev-btn"
-                class="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                class="px-3 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled
               >
-                ← Sebelumnya
+                ← <span class="hidden xs:inline">Sebelumnya</span>
               </button>
               <button
                 id="next-btn"
-                class="px-8 py-3 bg-merauke text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                class="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-merauke text-white rounded-lg sm:rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled
               >
-                Selanjutnya →
+                <span class="hidden xs:inline">Selanjutnya</span> →
               </button>
             </div>
           </div>
@@ -223,14 +223,14 @@
           <!-- Quest Results (Hidden initially) -->
           <div
             id="quest-results"
-            class="bg-white rounded-3xl p-8 md:p-12 border-2 border-gray-100 shadow-2xl hidden"
+            class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 border-2 border-gray-100 shadow-2xl hidden"
           >
-            <div class="text-center mb-8">
+            <div class="text-center mb-6 sm:mb-8">
               <div
-                class="w-20 h-20 bg-gradient-to-r from-nusantara-green to-samudra-blue rounded-full flex items-center justify-center mx-auto mb-6"
+                class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-nusantara-green to-samudra-blue rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6"
               >
                 <svg
-                  class="w-10 h-10 text-white"
+                  class="w-8 h-8 sm:w-10 sm:h-10 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -243,31 +243,31 @@
                   ></path>
                 </svg>
               </div>
-              <h2 class="text-4xl font-bold text-batu-gray mb-4">
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-batu-gray mb-3 sm:mb-4">
                 Quest Selesai!
               </h2>
-              <p class="text-gray-600 mb-2">
+              <p class="text-sm sm:text-base text-gray-600 mb-2 px-2">
                 Berdasarkan jawaban kamu, peran utama yang cocok adalah:
               </p>
               <div
                 id="main-role"
-                class="text-3xl font-bold text-transparent bg-gradient-to-r from-nusantara-green to-tradisi-gold bg-clip-text mb-4"
+                class="text-xl sm:text-2xl md:text-3xl font-bold text-transparent bg-gradient-to-r from-nusantara-green to-tradisi-gold bg-clip-text mb-3 sm:mb-4 px-2"
               >
                 <!-- Role will be inserted here -->
               </div>
-              <div id="scope-result" class="text-lg text-gray-600 mb-6">
+              <div id="scope-result" class="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 px-2">
                 <!-- Scope will be inserted here -->
               </div>
             </div>
 
-            <div id="recommended-programs" class="space-y-6 mb-8">
+            <div id="recommended-programs" class="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
               <!-- Recommended programs will be inserted here -->
             </div>
 
             <div class="text-center">
               <button
                 id="view-programs-btn"
-                class="bg-gradient-to-r from-samudra-blue to-nusantara-green text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-all"
+                class="bg-gradient-to-r from-samudra-blue to-nusantara-green text-white px-6 sm:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg hover:shadow-lg transition-all w-full sm:w-auto"
               >
                 Lihat Semua Program
               </button>
@@ -275,12 +275,6 @@
           </div>
         </div>
       </section>
-
-      <section id="success-stories"></section>
     </main>
-
-    <!-- Success Stories -->
-
-    <footer id="footer"></footer>
   </body>
 </html>

@@ -9,15 +9,13 @@
     
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- panggil navbar helper -->
-
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/custom.css">
     <link rel="stylesheet" href="../assets/css/luma-ai.css">
     <script src="/assets/js/tailwind-config.js"></script>
     
-     <link rel="icon" href="/assets/img/logo/Logo-Light-Solid.png" type="image/x-icon">
+    <link rel="icon" href="/assets/img/logo/Logo-Light-Solid.png" type="image/x-icon">
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     
@@ -40,27 +38,162 @@
                 }
             }
         }
-
-        
     </script>
+    
+    <!-- Responsive Styles -->
+    <style>
+        /* Mobile-first responsive styles */
+        @media (max-width: 640px) {
+            .mobile-container {
+                padding: 0 12px;
+            }
+            
+            .mobile-search-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-filter-tabs {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            
+            .mobile-filter-btn {
+                padding: 8px 6px;
+                font-size: 11px;
+                min-width: auto;
+                flex: 1;
+                min-width: 0;
+                border-radius: 8px;
+                height: 36px;
+            }
+            
+            .mobile-program-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .mobile-program-card {
+                padding: 10px;
+            }
+            
+            .mobile-program-title {
+                font-size: 13px;
+                line-height: 1.2;
+            }
+            
+            .mobile-program-desc {
+                font-size: 10px;
+                line-height: 1.2;
+            }
+            
+            .mobile-program-details {
+                flex-wrap: wrap;
+                gap: 4px;
+                margin-bottom: 6px;
+            }
+            
+            .mobile-program-detail {
+                font-size: 9px;
+                padding: 3px 5px;
+            }
+            
+            .mobile-program-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .mobile-join-btn, .mobile-detail-btn {
+                width: 100%;
+                padding: 6px;
+                font-size: 11px;
+            }
+            
+            .mobile-impact {
+                font-size: 9px;
+                line-height: 1.2;
+            }
+            
+            /* Hide commitment time on mobile */
+            .mobile-commitment {
+                display: none;
+            }
+        }
+        
+        /* Tablet styles */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .mobile-program-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 1025px) {
+            .mobile-program-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            /* Show commitment time on desktop */
+            .mobile-commitment {
+                display: block;
+            }
+        }
+        
+        /* Custom scrollbar for mobile */
+        @media (max-width: 640px) {
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: #c1c1c1;
+                border-radius: 2px;
+            }
+        }
+        
+        /* Smooth animations */
+        .mobile-transition {
+            transition: all 0.3s ease;
+        }
+        
+        /* Fix for filter button text visibility */
+        .filter-btn span {
+            display: inline !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Ensure text doesn't overflow in mobile */
+        .text-truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .text-truncate-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body class="bg-kapas-white text-batu-gray">
-    <!-- Main Content -->
     <main>
-        <!-- Map Hero Section -->
-        <section id="map-hero"></section>
-        
         <!-- Program Catalog -->
         <section id="program-catalog"></section>
-        
-        
     </main>
     
     <!-- Footer -->
     <footer id="footer"></footer>
-    
-    <!-- Luma Chatbot -->
-    <div id="luma-chatbot"></div>
     
     <!-- Scripts -->
     <script src="../assets/js/core/component-loader.js"></script>
@@ -68,37 +201,8 @@
     
     <!-- Quest Integration Script -->
     <script>
-        // Debug logging
-        console.log("=== PROGRAM PAGE LOADED ===")
-        
-        // Handle Quest results integration
         document.addEventListener('DOMContentLoaded', function() {
             console.log("DOM Content Loaded - Program Page")
-            
-            // Debug: Check if components are loading
-            setTimeout(() => {
-                console.log("=== DEBUG INFO ===")
-                console.log("Map container exists:", !!document.getElementById('map-container'))
-                console.log("Map system exists:", !!window.mapSystem)
-                console.log("Program catalog exists:", !!window.programCatalog)
-                
-                // Force map initialization if needed
-                if (document.getElementById('map-container') && !window.mapSystem) {
-                    console.log("Forcing map system initialization...")
-                    if (typeof MapSystem !== 'undefined') {
-                        window.mapSystem = new MapSystem()
-                    }
-                }
-                
-                // Test file access
-                fetch('../assets/map/indonesia-map.json')
-                    .then(r => console.log('Indonesia JSON accessible:', r.ok))
-                    .catch(e => console.error('Indonesia JSON error:', e))
-                    
-                fetch('../assets/map/world-map.json')
-                    .then(r => console.log('World JSON accessible:', r.ok))
-                    .catch(e => console.error('World JSON error:', e))
-            }, 2000)
             
             // Check for quest results from localStorage
             const questResults = localStorage.getItem('luma_quest_results')
@@ -107,18 +211,11 @@
                     const results = JSON.parse(questResults)
                     console.log('Quest results found:', results)
                     
-                    // Initialize map with quest scope
-                    if (window.mapSystem && results.userScope) {
-                        setTimeout(() => {
-                            window.mapSystem.handleQuestIntegration(results)
-                        }, 1000)
-                    }
-                    
                     // Highlight recommended programs
                     if (window.programCatalog && results.results) {
                         setTimeout(() => {
                             results.results.forEach(([programId], index) => {
-                                if (index === 0) { // Highlight top recommendation
+                                if (index === 0) {
                                     window.programCatalog.highlightProgram(programId)
                                 }
                             })
@@ -135,7 +232,6 @@
             // Handle URL parameters for direct program highlighting
             const urlParams = new URLSearchParams(window.location.search)
             const highlightProgram = urlParams.get('highlight')
-            const scope = urlParams.get('scope')
             
             if (highlightProgram) {
                 setTimeout(() => {
@@ -144,45 +240,17 @@
                     }
                 }, 1000)
             }
-            
-            if (scope && window.mapSystem) {
-                setTimeout(() => {
-                    window.mapSystem.setScope(scope)
-                }, 500)
-            }
         })
         
-        // Additional debugging after page load
-        window.addEventListener('load', function() {
-            console.log("Window loaded - checking components...")
-            setTimeout(() => {
-                const mapContainer = document.getElementById('map-container')
-                if (mapContainer) {
-                    console.log("Map container found:", mapContainer)
-                    if (!window.mapSystem) {
-                        console.log("Map system not found, creating manually...")
-                        // Force create map system if not exists
-                        if (typeof MapSystem !== 'undefined') {
-                            window.mapSystem = new MapSystem()
-                        }
-                    }
-                } else {
-                    console.log("Map container NOT found - component may not be loaded")
-                }
-            }, 3000)
-        })
-        
-        // After inserting the advanced button, attach handler immediately
+        // Initialize program catalog after components are loaded
         setTimeout(() => {
-          const adv = document.getElementById('advanced-filter-btn')
-          if (adv) {
-            adv.addEventListener('click', (e) => {
-              e.stopPropagation()
-              e.preventDefault()
-              this.openAdvancedFilter()
-            })
-          }
-        }, 50)
+            if (!window.programCatalog) {
+                console.log("Initializing program catalog...")
+                if (typeof ProgramCatalog !== 'undefined') {
+                    window.programCatalog = new ProgramCatalog()
+                }
+            }
+        }, 1000)
     </script>
     <script src="../assets/js/luma-chatbot.js"></script>
     <script src="../assets/js/main.js"></script>

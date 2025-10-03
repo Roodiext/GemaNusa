@@ -1,67 +1,67 @@
-<section id="hero-section" class="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
-    <!-- Subtle background pattern -->
-    <div class="absolute inset-0 opacity-5">
-        <svg width="100%" height="100%">
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="#10b981"/>
-            </pattern>
-            <rect width="100%" height="100%" fill="url(#grid)"/>
-        </svg>
-    </div>
-    
-    <div class="container mx-auto px-4 sm:px-6 text-center z-10 py-8">
-        <div class="max-w-4xl mx-auto">
-            <!-- Game Title -->
-            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4 sm:mb-5 tracking-tight">
-                Luma Green Mission
-            </h1>
-            
-            <!-- Subtitle -->
-            <p class="text-lg sm:text-xl md:text-2xl text-gray-600 mb-10 sm:mb-12 leading-relaxed max-w-2xl mx-auto px-4">
-                Bantu Luma menyelamatkan bumi dengan memilah sampah dan menjaga alam
-            </p>
-            
-            <!-- Mascot Area -->
-            <div class="mb-10 sm:mb-12">
-                <div class="inline-block relative">
-                    <div class="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-emerald-50 rounded-3xl flex items-center justify-center shadow-sm border border-emerald-100">
-                        <div class="w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-emerald-100 rounded-2xl flex items-center justify-center">
-                            <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40">
-                        </div>
-                    </div>
-                    <!-- Decorative element -->
-                    <div class="absolute -top-2 -right-2 w-12 h-12 sm:w-14 sm:h-14 bg-emerald-400 rounded-full flex items-center justify-center text-white text-xl sm:text-2xl">
-                        🌱
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Start Game Button -->
-            <button id="start-game-btn" class="px-10 sm:px-12 py-4 sm:py-5 text-lg sm:text-xl font-semibold text-white bg-emerald-600 rounded-xl shadow-md hover:bg-emerald-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 ease-out active:scale-95">
-                Mulai Bermain
-            </button>
-            
-            <!-- Info cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mt-12 sm:mt-16 max-w-3xl mx-auto">
-                <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
-                    <div class="text-3xl sm:text-4xl mb-3">🎯</div>
-                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg">Mudah Dimainkan</h3>
-                    <p class="text-sm sm:text-base text-gray-600">Seret dan lepas item ke kategori yang tepat</p>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
-                    <div class="text-3xl sm:text-4xl mb-3">🏆</div>
-                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg">Kumpulkan Poin</h3>
-                    <p class="text-sm sm:text-base text-gray-600">Dapatkan skor maksimal dengan jawaban benar</p>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
-                    <div class="text-3xl sm:text-4xl mb-3">🌍</div>
-                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg">Selamatkan Bumi</h3>
-                    <p class="text-sm sm:text-base text-gray-600">Belajar memilah sampah dengan benar</p>
-                </div>
-            </div>
+<section id="hero-section" class="h-screen bg-white flex items-center relative overflow-hidden">
+  <!-- Audio Elements -->
+  <audio id="bgm-audio" src="/assets/audio/lumaGreenBGM.mp3" preload="auto" loop class="hidden"></audio>
+  <audio id="collect-sfx" src="/assets/audio/collect.mp3" preload="auto" class="hidden"></audio>
+  <audio id="fail-sfx" src="/assets/audio/fail.mp3" preload="auto" class="hidden"></audio>
+  <audio id="winner-sfx" src="/assets/audio/winner.mp3" preload="auto" class="hidden"></audio>
+  
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg width="100%" height="100%">
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <circle cx="20" cy="20" r="1" fill="#10b981" />
+      </pattern>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+
+  <div class="container mx-auto px-6 sm:px-8 z-10">
+    <div class="flex flex-col md:flex-row items-center md:items-center justify-center gap-6 md:gap-10">
+      
+      <!-- Left: Text -->
+      <div class="max-w-xl text-center md:text-left">
+        <!-- Game Title -->
+        <h1 class="font-product text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight">
+          Luma Green Mission
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="font-inter text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 sm:mb-10 leading-relaxed">
+          Bantu Luma menyelamatkan bumi dengan memilah sampah dan menjaga alam
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 sm:justify-start justify-center">
+          <button 
+            id="start-game-btn" 
+            class="font-inter px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-emerald-600 rounded-xl shadow-md hover:bg-emerald-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 ease-out active:scale-95"
+          >
+            Mulai Bermain
+          </button>
+          <a 
+            href="/pages/index.html#games" 
+            class="font-inter px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold text-emerald-600 border border-emerald-600 rounded-xl hover:bg-emerald-50 transition-all duration-200 ease-out active:scale-95 text-center"
+          >
+            Kembali Beranda
+          </a>
         </div>
+      </div>
+
+      <!-- Right: Mascot -->
+      <div class="flex justify-center md:justify-end">
+        <img 
+          src="/assets/img/luma-ai-bot/lumaGreenMission.png" 
+          alt="Luma" 
+          class="w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72"
+        >
+      </div>
+
     </div>
+  </div>
 </section>
+
+
+
 
 <!-- Loading Section -->
 <section id="loading-section" class="min-h-screen bg-white flex items-center justify-center hidden px-4">
@@ -77,7 +77,7 @@
                 <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-20 h-20 sm:w-24 sm:h-24">
             </div>
             <div class="bg-gray-50 rounded-xl px-6 sm:px-7 py-4 sm:py-5 shadow-sm border border-gray-100 relative mx-auto">
-                <p class="text-gray-700 font-medium text-base sm:text-lg">Menyiapkan permainan...</p>
+                <p class="text-gray-700 font-medium text-base sm:text-lg font-product">Menyiapkan permainan...</p>
             </div>
         </div>
         
@@ -86,7 +86,7 @@
             <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
                 <div id="loading-progress" class="h-full bg-emerald-600 rounded-full transition-all duration-100 ease-out" style="width: 0%"></div>
             </div>
-            <p class="text-gray-600 mt-4 text-sm sm:text-base font-medium">Memuat permainan...</p>
+            <p class="text-gray-600 mt-4 text-sm sm:text-base font-medium font-inter">Memuat permainan...</p>
         </div>
     </div>
 </section>
@@ -102,11 +102,11 @@
                         <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-10 h-10 sm:w-12 sm:h-12">
                     </div>
                     <div>
-                        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Misi Pemilahan Sampah</h2>
-                        <p class="text-gray-600 text-sm sm:text-base">Seret item ke kategori yang tepat</p>
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 font-product">Misi Pemilahan Sampah</h2>
+                        <p class="text-gray-600 text-sm sm:text-base font-inter">Seret item ke kategori yang tepat</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-6 sm:space-x-8 ml-auto">
+                <div class="font-inter flex items-center space-x-6 sm:space-x-8 ml-auto">
                     <div class="text-center">
                         <p class="text-xs sm:text-sm text-gray-500 uppercase tracking-wide mb-1">Skor</p>
                         <p id="score-display" class="text-3xl sm:text-4xl font-bold text-emerald-600">0</p>
@@ -115,6 +115,9 @@
                         <p class="text-xs sm:text-sm text-gray-500 uppercase tracking-wide mb-1">Tersisa</p>
                         <p id="items-left" class="text-3xl sm:text-4xl font-bold text-gray-900">8</p>
                     </div>
+                    <button id="mute-toggle" class="text-2xl hover:bg-gray-100 p-2 rounded-lg transition-colors" title="Toggle Sound">
+                        🔊
+                    </button>
                 </div>
             </div>
             
@@ -127,7 +130,7 @@
         </div>
         
         <!-- Game Area - Mobile Optimized Layout -->
-        <div class="space-y-5 sm:space-y-6">
+        <div class="font-inter space-y-5 sm:space-y-6">
             <!-- Drop Zones - At Top for Mobile -->
             <div class="grid grid-cols-3 gap-3 sm:gap-4 lg:hidden">
                 <!-- Organic Waste -->
@@ -212,11 +215,29 @@
                 <p id="luma-message" class="text-gray-700 font-medium text-sm sm:text-base leading-relaxed"></p>
                 <div class="absolute -bottom-2 left-6 w-4 h-4 bg-white border-r-2 border-b-2 border-gray-200 transform rotate-45"></div>
             </div>
-            <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center cursor-pointer shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 active:scale-95">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24  flex items-center justify-center cursor-pointer  duration-300 ">
                 <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-full h-full">
             </div>
         </div>
     </div>
+    <!-- Info cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mt-12 sm:mt-16 max-w-3xl mx-auto">
+                <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
+                    <div class="text-3xl sm:text-4xl mb-3">🎯</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg font-product">Mudah Dimainkan</h3>
+                    <p class="text-sm sm:text-base text-gray-600 font-inter">Seret dan lepas item ke kategori yang tepat</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
+                    <div class="text-3xl sm:text-4xl mb-3">🏆</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg font-product">Kumpulkan Poin</h3>
+                    <p class="text-sm sm:text-base text-gray-600 font-inter">Dapatkan skor maksimal dengan jawaban benar</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
+                    <div class="text-3xl sm:text-4xl mb-3">🌍</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg font-product">Selamatkan Bumi</h3>
+                    <p class="text-sm sm:text-base text-gray-600 font-inter">Belajar memilah sampah dengan benar</p>
+                </div>
+            </div>
 </section>
 
 <!-- Game Complete Modal -->
@@ -225,24 +246,24 @@
         <div class="w-20 h-20 sm:w-24 sm:h-24 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-5 sm:mb-6">
             <span class="text-5xl sm:text-6xl">🎉</span>
         </div>
-        <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-5">Selamat!</h3>
+        <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 font-product">Selamat!</h3>
         <div class="bg-gray-50 rounded-xl p-5 sm:p-7 mb-5 sm:mb-6 border border-gray-100">
             <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center mx-auto mb-4 border-2 border-emerald-100">
                 <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-12 h-12 sm:w-16 sm:h-16">
             </div>
             <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm border border-gray-100">
-                <p class="text-gray-700 font-medium text-base sm:text-lg">Hebat! Kamu berhasil menyelesaikan misi hijau! 🌿✨</p>
+                <p class="text-gray-700 font-medium text-base sm:text-lg font-product">Hebat! Kamu berhasil menyelesaikan misi hijau! 🌿✨</p>
             </div>
         </div>
         <div class="text-lg sm:text-xl text-gray-600 mb-5 sm:mb-6">
-            Skor Akhir: <span id="final-score" class="font-bold text-3xl sm:text-4xl text-emerald-600">0</span>
+            Skor Akhir: <span id="final-score" class="font-bold font-inter text-3xl sm:text-4xl text-emerald-600">0</span>
         </div>
-        <div class="space-y-3 sm:space-y-4">
+        <div class=" font-inter space-y-3 sm:space-y-4">
             <button id="play-again-btn" class="w-full px-6 sm:px-7 py-3 sm:py-4 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 active:scale-95 text-base sm:text-lg">
-                🔄 Main Lagi
+                Main Lagi
             </button>
             <button id="back-home-btn" class="w-full px-6 sm:px-7 py-3 sm:py-4 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-200 active:scale-95 text-base sm:text-lg">
-                🏠 Kembali ke Beranda
+                Kembali Beranda
             </button>
         </div>
     </div>

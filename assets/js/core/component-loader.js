@@ -46,9 +46,7 @@ class ComponentLoader {
         { id: "ocean-rescue-game", file: "components/game/lumaOceanGames/luma-ocean.html", priority: 1 },
       ],
       "luma-green-mission": [
-       
         { id: "green-mission-game", file: "components/game/lumaGreenGames/luma-green.html", priority: 1 },
-
       ],
 
     }

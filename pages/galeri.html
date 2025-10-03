@@ -1,283 +1,549 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Galeri GemaNusa</title>
-    <link
-      rel="icon"
-      href="/assets/img/logo/Logo-Light-Solid.png"
-      type="image"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/assets/js/core/tailwind-config.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/assets/css/galeri.css" />
-  </head>
-  <body class="bg-[#0D1526] font-sans">
-    <!-- Back Button -->
-    <a
-      href="index.html"
-      class="font-inter fixed top-8 left-8 z-50 bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-full font-medium transition-colors duration-200 shadow-lg"
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeri GemaNusa</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/img/logo/Logo-Light-Solid.png" type="image" />
+  
+  <!-- Script & Style Eksternal -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/assets/js/core/tailwind-config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="/assets/css/galeri.css" />
+  <style>
+    /* ========================================
+   PENGATURAN SCROLL HORIZONTAL
+   ======================================== */
+body {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* ========================================
+   KONTAINER GALERI
+   ======================================== */
+.gallery-container {
+  display: flex;
+  width: fit-content;
+  height: 100vh;
+}
+
+.section {
+  min-width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   LIGHTBOX
+   ======================================== */
+.lightbox {
+  display: none;
+}
+
+/* ========================================
+   TATA LETAK MASONRY GRID (Desktop)
+   ======================================== */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 0.75rem;
+  height: 95vh;
+  width: 170vw;
+  padding: 1rem;
+}
+
+/* Posisi Item Grid */
+.grid-item-1 { grid-column: 1 / 6; grid-row: 1 / 4; }
+.grid-item-2 { grid-column: 6 / 9; grid-row: 1 / 6; }
+.grid-item-3 { grid-column: 16 / 22; grid-row: 1 / 4; }
+.grid-item-4 { grid-column: 24 / 36; grid-row: 1 / 10; }
+.grid-item-5 { grid-column: 1 / 3; grid-row: 4 / 10; }
+.grid-item-6 { grid-column: 10 / 14; grid-row: 1 / 10; }
+.grid-item-7 { grid-column: 15 / 19; grid-row: 5 / 8; }
+.grid-item-8 { grid-column: 19 / 22; grid-row: 4 / 10; }
+.grid-item-9 { grid-column: 3 / 9; grid-row: 6 / 10; }
+
+/* ========================================
+   EFEK HOVER
+   ======================================== */
+.hover-scale:hover img { 
+  transform: scale(1.05); 
+}
+
+.hover-text {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.clickable-image:hover .hover-text {
+  opacity: 1;
+}
+
+/* ========================================
+   RESPONSIF: DESKTOP (>768px)
+   ======================================== */
+@media (min-width: 769px) {
+  body {
+    overflow: hidden;
+  }
+  
+  .gallery-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .section {
+    min-width: 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+  }
+}
+
+/* ========================================
+   RESPONSIF: MOBILE (≤768px)
+   ======================================== */
+@media (max-width: 768px) {
+  /* Body Mobile */
+  body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Kontainer Galeri Mobile */
+  .gallery-container {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+  
+  /* Section Mobile */
+  .section {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 4rem 1.5rem !important;
+  }
+  
+  /* Section Intro (Pertama) */
+  .section:first-child {
+    padding-top: 5rem !important;
+  }
+  
+  .mobile-intro-section {
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+    padding: 0 !important;
+  }
+  
+  /* Postcard Wrapper */
+  .postcard-wrapper {
+    transform: none !important;
+    width: 100% !important;
+  }
+  
+  .postcard-wrapper > div {
+    padding: 1.25rem !important;
+    max-width: 100% !important;
+  }
+  
+  .postcard-image {
+    width: 100% !important;
+    height: 280px !important;
+  }
+  
+  .postcard-wrapper h2 {
+    font-size: 1.75rem !important;
+  }
+  
+  /* Teks Intro */
+  .intro-text {
+    text-align: center !important;
+    max-width: 100% !important;
+  }
+  
+  .intro-text h1 {
+    font-size: 3rem !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .intro-text p {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Grid Gambar (Ditumpuk Vertikal) */
+  .masonry-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .masonry-grid > div {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 350px !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  
+  .masonry-grid img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 350px !important;
+    object-fit: cover !important;
+  }
+  
+  /* Tombol Kembali Mobile */
+  a.fixed.top-8.left-8 {
+    top: 1.5rem !important;
+    left: 1.5rem !important;
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  /* Teks Hover Selalu Terlihat di Mobile */
+  .hover-text {
+    opacity: 1 !important;
+  }
+}
+  </style>
+</head>
+
+<body class="bg-[#0D1526] font-sans">
+  
+  <!-- ==========================================
+       NAVIGASI - TOMBOL KEMBALI
+       ========================================== -->
+  <a
+    href="index.html"
+    class="font-inter fixed top-8 left-8 z-50 bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-full font-medium transition-colors duration-200 shadow-lg"
+  >
+    ← Back
+  </a>
+  
+  <!-- ==========================================
+       LIGHTBOX MODAL
+       ========================================== -->
+  <div
+    id="lightbox"
+    class="lightbox fixed inset-0 z-[9999] bg-black bg-opacity-90"
+    style="display: none;"
+  >
+    <!-- Tombol Tutup -->
+    <span
+      id="closeLightbox"
+      class="absolute top-5 right-8 text-white text-4xl font-bold cursor-pointer hover:text-gray-300 z-[10000]"
     >
-      ← Back
-    </a>
-    <!-- Lightbox Modal -->
-    <div
-      id="lightbox"
-      class="lightbox fixed inset-0 z-[9999] bg-black bg-opacity-80"
-    >
-      <span
-        id="closeLightbox"
-        class="absolute top-5 right-8 text-white text-4xl font-bold cursor-pointer hover:text-gray-300"
-        >&times;</span
-      >
-      <div
-        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[90%] max-h-[90%]"
-      >
-        <img
-          id="lightboxImage"
-          src=""
-          alt=""
-          class="max-w-full max-h-full object-contain"
-        />
-      </div>
+      &times;
+    </span>
+    
+    <!-- Gambar Lightbox -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[90%] max-h-[90%]">
+      <img
+        id="lightboxImage"
+        src=""
+        alt=""
+        class="max-w-full max-h-full object-contain"
+      />
     </div>
-    <div class="gallery-container">
-      <!-- Section 1 - Main Introduction -->
-      <div class="section bg-black flex items-center justify-center">
-        <div
-          class="flex items-center justify-between w-full max-w-7xl mx-auto px-12"
-        >
-          <!-- Left side - Postcard -->
+  </div>
+  
+  <!-- ==========================================
+       KONTAINER GALERI UTAMA
+       ========================================== -->
+  <div class="gallery-container">
+    
+    <!-- ==========================================
+         SECTION 1 - HALAMAN INTRO
+         ========================================== -->
+    <div class="section bg-black flex items-center justify-center">
+      <div class="flex items-center justify-between w-full max-w-7xl mx-auto px-12 mobile-intro-section">
+        
+        <!-- Sisi Kiri - Postcard -->
+        <div class="transform rotate-3 hover:rotate-0 transition-transform duration-300 postcard-wrapper">
           <div
-            class="transform rotate-3 hover:rotate-0 transition-transform duration-300"
+            class="bg-white p-4 rounded-lg shadow-xl cursor-pointer clickable-image"
+            data-src="/assets/img/galeri-img/mentor 1.jpg"
           >
-            <div
-              class="bg-white p-4 rounded-lg shadow-xl cursor-pointer clickable-image"
-              data-src="/assets/img/galeri-img/mentor 1.jpg"
-            >
-              <div class="relative w-96 h-64 rounded-lg mb-4 overflow-hidden">
-                <img
-                  src="/assets/img/galeri-img/mentor 1.jpg"
-                  alt="Relawan-Mentor"
-                  class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-                />
-                <div
-                  class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-                  style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-                >
-                  Relawan Mentor
-                </div>
-              </div>
-              <div class="text-center">
-                <h2 class="text-3xl font-bold font-product mb-2">
-                  Penggerak<br />GemaNusa
-                </h2>
+            <div class="relative w-96 h-64 rounded-lg mb-4 overflow-hidden postcard-image">
+              <img
+                src="/assets/img/galeri-img/mentor 1.jpg"
+                alt="Relawan-Mentor"
+                class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+              />
+              <div
+                class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+                style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
+              >
+                Relawan Mentor
               </div>
             </div>
-          </div>
-          <!-- Right side - Text content -->
-          <div class="text-right max-w-lg">
-            <h1
-              class="text-6xl font-bold font-product text-stone-100 mb-8 leading-tight"
-            >
-              Penerang <br />Harapan
-            </h1>
-            <div class="text-stone-100 space-y-4">
-              <p class="text-lg font-medium font-inter">
-                Menjadi sahabat belajar bagi anak-anak yang membutuhkan, membawa
-                cahaya ilmu hingga ke pelosok negeri.
-              </p>
-              <p class="text-base leading-relaxed font-inter">
-                Peduli dengan masa depan anak-anak Indonesia melalui pendidikan
-                yang inklusif dan berkualitas.
-              </p>
+            <div class="text-center">
+              <h2 class="text-3xl font-bold font-product mb-2">
+                Penggerak<br />GemaNusa
+              </h2>
             </div>
           </div>
         </div>
+        
+        <!-- Sisi Kanan - Konten Teks -->
+        <div class="text-right max-w-lg intro-text">
+          <h1 class="text-6xl font-bold font-product text-stone-100 mb-8 leading-tight">
+            Penerang <br />Harapan
+          </h1>
+          <div class="text-stone-100 space-y-4">
+            <p class="text-lg font-medium font-inter">
+              Menjadi sahabat belajar bagi anak-anak yang membutuhkan, membawa
+              cahaya ilmu hingga ke pelosok negeri.
+            </p>
+            <p class="text-base leading-relaxed font-inter">
+              Peduli dengan masa depan anak-anak Indonesia melalui pendidikan
+              yang inklusif dan berkualitas.
+            </p>
+          </div>
+        </div>
+        
       </div>
-      <!-- Section 2 - Masonry Grid -->
-      <div class="section bg-black flex items-center justify-center">
-        <div class="masonry-grid">
-          <!-- Grid Item 1 -->
+    </div>
+    
+    <!-- ==========================================
+         SECTION 2 - GRID GAMBAR MASONRY
+         ========================================== -->
+    <div class="section bg-black flex items-center justify-center">
+      <div class="masonry-grid">
+        
+        <!-- Item Grid 1 - Kegiatan Mentoring -->
+        <div
+          class="grid-item-1 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/galeri-img/mentor 2.jpg"
+        >
+          <img
+            src="/assets/img/galeri-img/mentor 2.jpg"
+            alt="Relawan-Mentor"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
           <div
-            class="grid-item-1 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/galeri-img/mentor 2.jpg"
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
           >
-            <img
-              src="/assets/img/galeri-img/mentor 2.jpg"
-              alt="Relawan-Mentor"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Kegiatan Mentoring
-            </div>
+            Kegiatan Mentoring
           </div>
-          <!-- Grid Item 2 -->
+        </div>
+        
+        <!-- Item Grid 2 - Pembagian GemakanBerkah -->
+        <div
+          class="grid-item-2 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/galeri-img/donasi.jpg"
+        >
+          <img
+            src="/assets/img/galeri-img/donasi.jpg"
+            alt="Relawan-GemaNusa"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
           <div
-            class="grid-item-2 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/galeri-img/donasi.jpg"
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
           >
-            <img
-              src="/assets/img/galeri-img/donasi.jpg"
-              alt="Relawan-GemaNusa"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Pembagian GemakanBerkah
-            </div>
+            Pembagian GemakanBerkah
           </div>
-          <!-- Grid Item 3 -->
+        </div>
+        
+        <!-- Item Grid 3 - Dapur Peduli -->
+        <div
+          class="grid-item-3 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/image-program-catalog/program-dapur-peduli.jpg"
+        >
+          <img
+            src="/assets/img/image-program-catalog/program-dapur-peduli.jpg"
+            alt="Relawan-Mentor"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
           <div
-            class="grid-item-3 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/image-program-catalog/program-dapur-peduli"
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
           >
-            <img
-              src="/assets/img/image-program-catalog/program-dapur-peduli.jpg"
-              alt="Relawan-Mentor"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Dapur Peduli
-            </div>
+            Dapur Peduli
           </div>
-          <!-- Grid Item 4 -->
+        </div>
+        
+        <!-- Item Grid 4 - ASEAN Youth Exchange -->
+        <div
+          class="grid-item-4 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/image-program-catalog/program-asean-youth-exchange.jpg"
+        >
+          <img
+            src="/assets/img/image-program-catalog/program-asean-youth-exchange.jpg"
+            alt="Donasi"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
           <div
-            class="grid-item-4 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/image-program-catalog/program-asean-youth-exchange.jpg"
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
           >
-            <img
-              src="/assets/img/image-program-catalog/program-asean-youth-exchange.jpg"
-              alt="Donasi"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              ASEAN Yputh Exchange
-            </div>
+            ASEAN Youth Exchange
           </div>
-          <!-- Grid Item 5 -->
-          <div class="grid-item-5 rounded-lg shadow-lg">
+        </div>
+        
+        <!-- Item Grid 5 - Relawan Bencana -->
+        <div class="grid-item-5 rounded-lg shadow-lg relative overflow-hidden">
+          <picture>
+            <!-- Gambar untuk Mobile -->
+            <source 
+              media="(max-width: 768px)" 
+              srcset="/assets/img/galeri-img/relawan-mobile.png"
+            />
+            <!-- Gambar untuk Desktop (default) -->
             <img
               src="/assets/img/galeri-img/relawan 3.jpg"
               alt="Relawan-Bencana-GemaNusa"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+              class="w-full h-full object-cover rounded-lg"
             />
-          </div>
-          <!-- Grid Item 6 -->
+          </picture>
+        </div>
+        
+        <!-- Item Grid 6 - Gerakan Sembako Harapan -->
+        <div
+          class="grid-item-6 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/image-program-catalog/program-gerakan-sembako-harapan.jpg"
+        >
+          <img
+            src="/assets/img/image-program-catalog/program-gerakan-sembako-harapan.jpg"
+            alt="Gerakan Sembako Harapan"
+            class="w-full h-full object-cover object-center rounded-lg transition-transform duration-300"
+          />
           <div
-            class="grid-item-6 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/image-program-catalog/program-gerakan-sembako-harapan.jpg"
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
           >
-            <img
-              src="/assets/img/image-program-catalog/program-gerakan-sembako-harapan.jpg"
-              alt="Gerakan Sembako Harapan"
-              class="w-full h-full object-cover object-center rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Gerakan Sembako Harapan
-            </div>
-          </div>
-          <!-- Grid Item 7 -->
-          <div
-            class="grid-item-7 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/image-program-catalog/program-laut-bersih-bersinar.jpg"
-          >
-            <img
-              src="/assets/img/image-program-catalog/program-laut-bersih-bersinar.jpg"
-              alt="Donasi"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Laut Bersih Bersinar
-            </div>
-          </div>
-          <!-- Grid Item 8 -->
-          <div
-            class="grid-item-8 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/galeri-img/mentor-3.jpg"
-          >
-            <img
-              src="/assets/img/galeri-img/mentor-3.jpg"
-              alt="Night Cityscape"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Mentoring di SD
-            </div>
-          </div>
-          <!-- Grid Item 9 -->
-          <div
-            class="grid-item-9 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
-            data-src="/assets/img/galeri-img/relawan 1.jpg"
-          >
-            <img
-              src="/assets/img/galeri-img/relawan 1.jpg"
-              alt="Cars & Streets"
-              class="w-full h-full object-cover rounded-lg transition-transform duration-300"
-            />
-            <div
-              class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
-              style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
-            >
-              Relawan Pengajar Di Pelosok Desa
-            </div>
+            Gerakan Sembako Harapan
           </div>
         </div>
+        
+        <!-- Item Grid 7 - Laut Bersih Bersinar -->
+        <div
+          class="grid-item-7 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/image-program-catalog/program-laut-bersih-bersinar.jpg"
+        >
+          <img
+            src="/assets/img/image-program-catalog/program-laut-bersih-bersinar.jpg"
+            alt="Donasi"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
+          <div
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
+          >
+            Laut Bersih Bersinar
+          </div>
+        </div>
+        
+        <!-- Item Grid 8 - Mentoring di SD -->
+        <div
+          class="grid-item-8 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/galeri-img/mentor-3.jpg"
+        >
+          <img
+            src="/assets/img/galeri-img/mentor-3.jpg"
+            alt="Night Cityscape"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
+          <div
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
+          >
+            Mentoring di SD
+          </div>
+        </div>
+        
+        <!-- Item Grid 9 - Relawan Pengajar -->
+        <div
+          class="grid-item-9 rounded-lg shadow-lg cursor-pointer clickable-image hover-scale transition-transform duration-300 relative overflow-hidden"
+          data-src="/assets/img/galeri-img/relawan 1.jpg"
+        >
+          <img
+            src="/assets/img/galeri-img/relawan 1.jpg"
+            alt="Cars & Streets"
+            class="w-full h-full object-cover rounded-lg transition-transform duration-300"
+          />
+          <div
+            class="hover-text absolute bottom-4 left-4 text-white font-semibold text-lg z-10"
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)"
+          >
+            Relawan Pengajar Di Pelosok Desa
+          </div>
+        </div>
+        
       </div>
     </div>
-    <script>
-      $(document).ready(function () {
+    
+  </div>
+  
+  
+  <!-- JAVASCRIPT -->
+  <script>
+    $(document).ready(function () {
+     
+      // Desktop: Scroll Horizontal dengan Mouse Wheel
+
+      if ($(window).width() > 768) {
         $("body").on("wheel", function (e) {
           e.preventDefault();
           window.scrollBy(e.originalEvent.deltaY, 0);
         });
-        $(".clickable-image").on("click", function () {
-          $("#lightboxImage").attr("src", $(this).data("src"));
-          $("#lightbox").fadeIn(300);
-        });
-        $("#closeLightbox, #lightbox").on("click", function (e) {
-          if (e.target === this) {
-            $("#lightbox").fadeOut(300);
-          }
-        });
-        $(document).on("keydown", function (e) {
-          if (e.keyCode === 27) {
-            $("#lightbox").fadeOut(300);
-          }
-        });
-        $("#lightboxImage").on("click", function (e) {
-          e.stopPropagation();
-        });
         $("body").css("scroll-behavior", "smooth");
+      }
+     
+      // Fungsionalitas Lightbox
+      
+      
+      // Buka lightbox saat gambar diklik
+      $(".clickable-image").on("click", function () {
+        $("#lightboxImage").attr("src", $(this).data("src"));
+        $("#lightbox").fadeIn(300);
       });
-      document.addEventListener("wheel", function (e) {
-        if (!window.jQuery) {
-          e.preventDefault();
-          window.scrollBy(e.deltaY, 0);
+      
+      // Tutup lightbox saat tombol close atau background diklik
+      $("#closeLightbox, #lightbox").on("click", function (e) {
+        if (e.target === this) {
+          $("#lightbox").fadeOut(300);
         }
       });
-    </script>
-  </body>
+      
+      // Tutup lightbox saat tombol ESC ditekan
+      $(document).on("keydown", function (e) {
+        if (e.keyCode === 27) {
+          $("#lightbox").fadeOut(300);
+        }
+      });
+      
+      // Cegah lightbox tertutup saat gambar diklik
+      $("#lightboxImage").on("click", function (e) {
+        e.stopPropagation();
+      });
+      
+    });
+ 
+    // Vanilla JS: Scroll Horizontal untuk Desktop
+  
+    document.addEventListener("wheel", function (e) {
+      if (!window.jQuery && window.innerWidth > 768) {
+        e.preventDefault();
+        window.scrollBy(e.deltaY, 0);
+      }
+    });
+  </script>
+  
+</body>
 </html>

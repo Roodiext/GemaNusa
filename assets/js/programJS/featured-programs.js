@@ -99,42 +99,21 @@ function initializeFeaturedPrograms() {
         
         isAnimating = true;
         
-        const cardsGrid = document.getElementById('cardsGrid');
-        
-        // Close all other cards first (auto-close feature)
+        // Auto-close any other expanded cards
         const expandedCards = document.querySelectorAll('.card.expanded');
         expandedCards.forEach(expandedCard => {
             if (expandedCard !== card) {
                 expandedCard.classList.remove('expanded');
-                expandedCard.classList.remove('non-expanded');
-                expandedCard.style.order = '';
             }
         });
         
-        // Add has-expanded class to container
-        if (cardsGrid) {
-            cardsGrid.classList.add('has-expanded');
-        }
-        
-        // Add expanded class to clicked card
+        // Expand clicked card (overlay handled by CSS)
         card.classList.add('expanded');
-        card.style.order = '-1';
         
-        // Mark other cards as non-expanded
-        freshCards.forEach(c => {
-            if (c !== card) {
-                c.classList.add('non-expanded');
-                c.style.order = '0';
-            }
-        });
-        
-        // Force layout recalculation
-        card.offsetHeight;
-        
-        // Set animation complete after transition
+        // Complete after transition
         setTimeout(() => {
             isAnimating = false;
-        }, 500);
+        }, 350);
 
         console.log('Card expanded');
     }
@@ -144,27 +123,12 @@ function initializeFeaturedPrograms() {
         
         isAnimating = true;
         
-        const cardsGrid = document.getElementById('cardsGrid');
-        
-        // Remove expanded class
+        // Remove expanded state only
         card.classList.remove('expanded');
-        card.style.order = '';
         
-        // Remove has-expanded class from container
-        if (cardsGrid) {
-            cardsGrid.classList.remove('has-expanded');
-        }
-        
-        // Remove non-expanded class from other cards
-        freshCards.forEach(c => {
-            c.classList.remove('non-expanded');
-            c.style.order = '';
-        });
-        
-        // Set animation complete after transition
         setTimeout(() => {
             isAnimating = false;
-        }, 500);
+        }, 350);
 
         console.log('Card collapsed');
     }
@@ -178,27 +142,13 @@ function initializeFeaturedPrograms() {
         
         isAnimating = true;
         
-        const cardsGrid = document.getElementById('cardsGrid');
-        
         expandedCards.forEach(card => {
             card.classList.remove('expanded');
-            card.style.order = '';
-        });
-        
-        // Remove has-expanded class from container
-        if (cardsGrid) {
-            cardsGrid.classList.remove('has-expanded');
-        }
-        
-        // Remove non-expanded class from all cards
-        freshCards.forEach(c => {
-            c.classList.remove('non-expanded');
-            c.style.order = '';
         });
         
         setTimeout(() => {
             isAnimating = false;
-        }, 500);
+        }, 350);
     }
 
     // Filter cards by category

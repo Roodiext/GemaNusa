@@ -11,7 +11,7 @@ class EnhancedLumaAI {
 
     // Bubble chat system
     this.bubbleMessages = [
-      "Halo! Aku Luma , Selamat datang di Gema Nusa!",
+      "Halo! Aku Luma, Selamat datang di Gema Nusa!",
       "Yuk, jelajahi program-program lingkungan kita bersama! 🌱",
       "Ada yang ingin kamu tanyakan tentang konservasi alam? 🌍",
       "Aku bisa bantu kamu temukan program yang cocok! 🎯",
@@ -22,36 +22,137 @@ class EnhancedLumaAI {
     this.bubbleTimer = null;
     this.bubbleVisible = false;
 
+    // Enhanced topic categories dengan lebih banyak kata kunci
     this.topicCategories = {
       environment: [
-        "lingkungan",
-        "alam",
-        "bumi",
-        "ekosistem",
-        "polusi",
-        "konservasi",
+        "lingkungan", "alam", "bumi", "ekosistem", "polusi", "konservasi",
+        "hutan", "laut", "sungai", "pencemaran", "sampah", "plastik",
+        "perubahan iklim", "pemanasan global", "emisi", "karbon", "iklim",
+        "global warming", "greenhouse", "ozon", "pencemaran udara", "pencemaran air"
       ],
-      programs: ["program", "kegiatan", "acara", "aktivitas", "proyek"],
-      quest: ["quest", "kuis", "tes", "rekomendasi", "cocok", "sesuai"],
-      impact: ["dampak", "hasil", "pencapaian", "perubahan", "statistik"],
+      programs: [
+        "program", "kegiatan", "acara", "aktivitas", "proyek", "inisiatif",
+        "kampanye", "gerakan", "aksi", "event", "kegiatan lingkungan", "proyek lingkungan"
+      ],
+      quest: [
+        "quest", "kuis", "tes", "rekomendasi", "cocok", "sesuai", 
+        "rekomendasi program", "tes minat", "penilaian", "assessment", "quiz"
+      ],
+      impact: [
+        "dampak", "hasil", "pencapaian", "perubahan", "statistik",
+        "pencapaian", "kontribusi", "pengaruh", "manfaat", "achievement",
+        "result", "outcome", "impact"
+      ],
       community: [
-        "komunitas",
-        "relawan",
-        "volunteer",
-        "bergabung",
-        "kolaborasi",
+        "komunitas", "relawan", "volunteer", "bergabung", "kolaborasi",
+        "anggota", "partisipasi", "sukarelawan", "tim", "community",
+        "join", "partisipasi", "anggota baru"
       ],
-      help: ["bantuan", "tanya", "info", "informasi", "cara"],
+      help: [
+        "bantuan", "tanya", "info", "informasi", "cara", "help",
+        "bantuan", "support", "tolong", "panduan", "faq", "how to"
+      ],
+      organization: [
+        "gema nusa", "organisasi", "yayasan", "lembaga", "visi", "misi",
+        "tujuan", "sejarah", "latar belakang", "tentang kami", "about",
+        "foundation", "ngo"
+      ],
+      donation: [
+        "donasi", "sumbangan", "kontribusi", "bantuan dana", "funding",
+        "sponsor", "dukungan finansial", "donate", "sponsorship", "fund"
+      ],
+      contact: [
+        "kontak", "hubungi", "alamat", "email", "telepon", "whatsapp",
+        "contact", "location", "alamat kantor", "nomor telepon"
+      ],
+      events: [
+        "event", "acara", "webinar", "seminar", "workshop", "pelatihan",
+        "training", "lokakarya", "simposium", "konferensi"
+      ]
     };
 
+    // Enhanced fallback responses
     this.fallbackResponses = [
-      "Maaf, saya kurang memahami maksud Anda. Bagaimana kalau kita membahas program-program lingkungan kami?",
-      "Hmm, saya masih belajar untuk topik itu. Tapi saya bisa membantu Anda menemukan program lingkungan yang sesuai.",
-      "Wah, itu topik yang menarik! Bagaimana kalau kita eksplorasi program-program Gema Nusa?",
+      "Terima kasih atas pertanyaannya! Mohon maaf, untuk saat ini saya belum bisa merespons pertanyaan tersebut. Namun saya bisa membantu Anda dengan informasi tentang program lingkungan, Quest Luma, atau cara bergabung dengan komunitas kami.",
+      "Pertanyaan yang menarik! Saat ini pengetahuan saya masih terbatas pada topik lingkungan dan program Gema Nusa. Ada hal lain yang bisa saya bantu?",
+      "Maaf, saya masih belajar untuk topik itu. Tapi saya bisa membantu Anda menemukan program lingkungan yang sesuai atau menjelaskan tentang Quest Luma!",
+      "Wah, pertanyaan yang bagus! Untuk saat ini, saya fokus membantu mengenai program lingkungan Gema Nusa. Mau tahu tentang Quest Luma atau program kami yang lain?"
     ];
 
+    // Enhanced response patterns
+    this.responsePatterns = this.initializeResponsePatterns();
     this.contextualResponses = this.initializeAdvancedResponses();
     this.init();
+  }
+
+  initializeResponsePatterns() {
+    return [
+      {
+        patterns: [/quest|luma quest|kuis|tes|rekomendasi program|test minat/i],
+        response: "Quest Luma adalah fitur interaktif untuk mengetahui program mana yang paling cocok dengan minat dan kemampuan Anda! Quest ini berupa serangkaian pertanyaan singkat yang akan membantu kami memberikan rekomendasi program terbaik. Mau mulai quest sekarang?",
+        followUp: "quest"
+      },
+      {
+        patterns: [/program|kegiatan|acara|aktivitas|proyek|inisiatif|kampanye/i],
+        response: "Kami memiliki berbagai program lingkungan seperti:\n\n🌲 **Program Hutan** - konservasi dan restorasi hutan\n🌊 **Program Laut** - pelestarian ekosistem laut\n♻️ **Program Daur Ulang** - pengelolaan sampah berkelanjutan\n🌱 **Program Pertanian** - pertanian berkelanjutan\n🏙️ **Program Perkotaan** - green city dan urban farming\n\nProgram mana yang ingin Anda ketahui lebih detail?",
+        followUp: "programs"
+      },
+      {
+        patterns: [/gabung|bergabung|daftar|menjadi relawan|volunteer|anggota|partisipasi/i],
+        response: "Bergabung dengan Gema Nusa sangat mudah!\n\n1️⃣ **Daftar** di website kami atau melalui aplikasi\n2️⃣ **Pilih program** yang sesuai minat dan lokasi\n3️⃣ **Ikuti orientasi** online atau offline\n4️⃣ **Mulai berkontribusi** sesuai kemampuan!\n\nApakah Anda sudah memiliki program yang diminati?",
+        followUp: "join"
+      },
+      {
+        patterns: [/dampak|hasil|pencapaian|statistik|perubahan|kontribusi|pencapaian/i],
+        response: "Sampai saat ini, Gema Nusa telah mencapai:\n\n🌳 **15,000+ pohon** ditanam di berbagai wilayah\n🐠 **500+ hektar** ekosistem laut dilindungi\n♻️ **2,500+ ton** sampah berhasil didaur ulang\n👥 **10,000+ relawan** aktif berkontribusi\n🏆 **50+ komunitas** terbentuk di seluruh Indonesia\n\nSemua ini berkat kontribusi orang-orang hebat seperti Anda!",
+        followUp: "impact"
+      },
+      {
+        patterns: [/halo|hai|hei|hallo|hi|helo|selamat pagi|selamat siang|selamat malam/i],
+        response: "Halo juga! 👋 Senang bertemu dengan Anda. Saya Luma, asisten virtual Gema Nusa. Saya di sini untuk membantu Anda mengenal lebih jauh tentang program lingkungan, Quest Luma, dan cara bergabung dengan komunitas kami. Ada yang ingin Anda ketahui?",
+        followUp: "greeting"
+      },
+      {
+        patterns: [/terima kasih|makasih|thanks|thank you|thx|terimakasih/i],
+        response: "Sama-sama! 😊 Senang bisa membantu. Jika ada pertanyaan lain tentang Gema Nusa atau program lingkungan, jangan ragu untuk bertanya ya!",
+        followUp: "thanks"
+      },
+      {
+        patterns: [/bye|selamat tinggal|sampai jumpa|dadah|goodbye|daah|see you/i],
+        response: "Sampai jumpa! 👋 Terima kasih sudah berkunjung. Jangan lupa untuk menjaga bumi kita ya! 🌍💚 Kalau ada yang ingin ditanyakan lagi, saya selalu di sini.",
+        followUp: "goodbye"
+      },
+      {
+        patterns: [/apa itu gema nusa|tentang gema nusa|organisasi|visi misi|sejarah gema nusa/i],
+        response: "Gema Nusa adalah gerakan sosial dan kreatif yang menyatukan generasi muda Indonesia dalam aksi nyata untuk lingkungan dan keberlanjutan. 🎯\n\n**Visi kami:** Menciptakan Indonesia yang hijau dan berkelanjutan melalui kolaborasi anak muda.\n\n**Misi:**\n• Melestarikan lingkungan melalui aksi nyata\n• Memberdayakan generasi muda\n• Membangun komunitas peduli lingkungan",
+        followUp: "about"
+      },
+      {
+        patterns: [/donasi|sumbangan|bantuan dana|kontribusi finansial|sponsor|dukungan dana/i],
+        response: "Anda bisa berkontribusi melalui donasi untuk mendukung program-program lingkungan kami. Donasi digunakan untuk:\n• Penanaman pohon\n• Konservasi laut\n• Program edukasi lingkungan\n• Pengembangan komunitas\n\nInfo lebih lanjut bisa dicek di website kami atau hubungi tim kami ya!",
+        followUp: "donation"
+      },
+      {
+        patterns: [/lokasi|alamat|kantor|cabang|regional|dimana lokasinya/i],
+        response: "Gema Nusa memiliki jaringan komunitas di berbagai kota di Indonesia. Kami berbasis digital dengan komunitas lokal yang tersebar. Untuk info komunitas terdekat, bisa dicek di halaman komunitas website kami atau tanyakan langsung ke admin.",
+        followUp: "location"
+      },
+      {
+        patterns: [/kontak|hubungi|email|telepon|whatsapp|nomor hp|contact/i],
+        response: "Anda bisa menghubungi kami melalui:\n📧 Email: info@gemanusa.org\n📱 WhatsApp: +62-XXX-XXXX-XXXX\n🌐 Website: www.gemanusa.org\n\nKami akan dengan senang hati membantu Anda!",
+        followUp: "contact"
+      },
+      {
+        patterns: [/event|acara|webinar|seminar|workshop|pelatihan|training/i],
+        response: "Kami rutin mengadakan berbagai event lingkungan seperti:\n• Webinar lingkungan\n• Workshop daur ulang\n• Aksi tanam pohon\n• Beach cleanup\n• Pelatihan relawan\n\nCek jadwal terbaru di website kami atau media sosial Gema Nusa!",
+        followUp: "events"
+      },
+      {
+        patterns: [/bagaimana cara|tutorial|panduan|step by step|cara membuat/i],
+        response: "Saya bisa bantu memberikan panduan! Bisa jelaskan lebih detail apa yang ingin Anda ketahui caranya? Misalnya cara bergabung, cara ikut program, atau yang lainnya?",
+        followUp: "tutorial"
+      }
+    ];
   }
 
   init() {
@@ -85,6 +186,8 @@ class EnhancedLumaAI {
         z-index: 1000;
         display: none;
         flex-direction: column;
+        max-width: calc(100vw - 40px);
+        max-height: calc(100vh - 120px);
     `;
 
     chatContainer.innerHTML = `
@@ -112,7 +215,7 @@ class EnhancedLumaAI {
     </div>
     <div>
         <div class="font-product" style="font-weight: 500; font-size: 16px;">Luma AI Bot</div>
-        <div class="font-inter" style="font-size: 12px; opacity: 0.8;" id="luma-status">Lumens Nusantara AI Bot</div>
+        <div class="font-inter" style="font-size: 12px; opacity: 0.8;" id="luma-status">Tim Gema Nusa</div>
     </div>
 </div>
 
@@ -124,6 +227,7 @@ class EnhancedLumaAI {
                 cursor: pointer;
                 padding: 4px;
                 opacity: 0.8;
+                transition: opacity 0.2s;
             ">×</button>
         </div>
         
@@ -252,7 +356,9 @@ class EnhancedLumaAI {
                         justify-content: center;
                         cursor: pointer;
                         transition: all 0.2s;
+                        opacity: 0.5;
                     "
+                    disabled
                 >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -265,7 +371,7 @@ class EnhancedLumaAI {
 
     document.body.appendChild(chatContainer);
 
-    // Luma Mascot Container (Always Visible) - Same as luma-ocean
+    // Luma Mascot Container (Always Visible) - Larger size for desktop
     const mascotContainer = document.createElement("div");
     mascotContainer.id = "luma-mascot-container";
     mascotContainer.style.cssText = `
@@ -273,8 +379,8 @@ class EnhancedLumaAI {
       bottom: 8px;
       right: 16px;
       z-index: 30;
-      width: 64px;
-      height: 64px;
+      width: 80px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -282,28 +388,30 @@ class EnhancedLumaAI {
 
     const mascotImg = document.createElement("img");
     mascotImg.id = "luma-mascot";
-    mascotImg.src = "/assets/img/luma-ai-bot/luma-ai-bot.svg"; // Same as luma-ocean
+    mascotImg.src = "/assets/img/luma-ai-bot/luma-ai-bot.svg";
     mascotImg.alt = "Luma";
     mascotImg.style.cssText = `
-      width: 48px;
-      height: 48px;
+      width: 64px;
+      height: 64px;
       object-fit: contain;
       cursor: pointer;
       transition: all 0.3s ease;
     `;
 
     mascotImg.addEventListener("mouseenter", () => {
-      mascotImg.style.transform = "scale(1.1)";
+      mascotImg.style.transform = "scale(1.15)";
+      mascotImg.style.filter = "drop-shadow(0 0 12px rgba(123, 0, 255, 0.4))";
     });
 
     mascotImg.addEventListener("mouseleave", () => {
       mascotImg.style.transform = "scale(1)";
+      mascotImg.style.filter = "none";
     });
 
     mascotContainer.appendChild(mascotImg);
     document.body.appendChild(mascotContainer);
 
-    // Bubble Chat (Separate from Mascot) - Same style as luma-ocean
+    // Bubble Chat (Separate from Mascot)
     const bubbleChat = document.createElement("div");
     bubbleChat.id = "luma-bubble-chat";
     bubbleChat.style.cssText = `
@@ -315,6 +423,7 @@ class EnhancedLumaAI {
       transition: all 0.3s ease;
       opacity: 0;
       pointer-events: none;
+      max-width: 20rem;
     `;
 
     bubbleChat.innerHTML = `
@@ -324,9 +433,8 @@ class EnhancedLumaAI {
         box-shadow: 0 8px 32px rgba(0,0,0,0.12);
         border: 1px solid #e5e7eb;
         padding: 16px;
-        max-width: 18rem;
-        margin-bottom: 80px;
-        margin-right: 40px;
+        margin-bottom: 90px;
+        margin-right: 50px;
         position: relative;
       ">
         <p id="luma-bubble-message" style="
@@ -360,12 +468,18 @@ class EnhancedLumaAI {
         background-color: #f3f4f6 !important;
         border-color: #9ca3af !important;
     }
-    #luma-send-btn:hover {
-        background-color: #7b00ffff !important;
+    #luma-send-btn:hover:not(:disabled) {
+        background-color: #6a00e6 !important;
+        transform: scale(1.05);
     }
     #luma-send-btn:disabled {
         background-color: #9ca3af !important;
         cursor: not-allowed !important;
+    }
+    #luma-close-btn:hover {
+        opacity: 1 !important;
+        background: rgba(255,255,255,0.1) !important;
+        border-radius: 50%;
     }
 `;
     document.head.appendChild(style);
@@ -416,6 +530,7 @@ class EnhancedLumaAI {
 
     if (container.style.display === "none" || !container.style.display) {
       container.style.display = "flex";
+      container.classList.add("show");
       mascotImg.style.opacity = "0.7";
       this.stopBubbleChat(); // Stop bubble when chat is open
       setTimeout(() => {
@@ -423,6 +538,7 @@ class EnhancedLumaAI {
       }, 100);
     } else {
       container.style.display = "none";
+      container.classList.remove("show");
       mascotImg.style.opacity = "1";
       this.startBubbleChat(); // Resume bubble when chat is closed
     }
@@ -454,6 +570,7 @@ class EnhancedLumaAI {
       // Show bubble with animation
       bubbleChat.style.opacity = "1";
       bubbleChat.style.transform = "translateY(0)";
+      bubbleChat.classList.add("show");
       this.bubbleVisible = true;
       
       // Hide after 4 seconds
@@ -472,6 +589,7 @@ class EnhancedLumaAI {
     if (bubbleChat && this.bubbleVisible) {
       bubbleChat.style.opacity = "0";
       bubbleChat.style.transform = "translateY(16px)";
+      bubbleChat.classList.remove("show");
       this.bubbleVisible = false;
       
       // Schedule next message (8-12 seconds interval)
@@ -491,6 +609,11 @@ class EnhancedLumaAI {
     // Add user message
     this.addMessage(message, "user");
     input.value = "";
+    
+    // Disable send button after sending
+    const sendBtn = document.getElementById("luma-send-btn");
+    sendBtn.disabled = true;
+    sendBtn.style.opacity = "0.5";
 
     // Show typing
     this.showTyping();
@@ -544,7 +667,7 @@ class EnhancedLumaAI {
                 word-wrap: break-word;
             ">
                 <div style="font-weight: 500; color: #7b00ffff; margin-bottom: 4px;">Luma</div>
-                ${content}
+                ${content.replace(/\n/g, '<br>')}
                 <div style="font-size: 11px; color: #9ca3af; margin-top: 6px;">
                     ${time}
                 </div>
@@ -624,25 +747,58 @@ class EnhancedLumaAI {
     document.getElementById("luma-status").textContent = "Tim Gema Nusa";
   }
 
+  // Enhanced response generation dengan pattern matching
   generateResponse(message) {
     const lowerMessage = message.toLowerCase();
-
-    if (lowerMessage.includes("quest")) {
-      return "Quest Luma adalah fitur interaktif untuk mengetahui program mana yang paling cocok dengan minat dan kemampuan Anda! Quest ini berupa serangkaian pertanyaan singkat yang akan membantu kami memberikan rekomendasi program terbaik.";
-    } else if (lowerMessage.includes("program")) {
-      return "Kami memiliki berbagai program lingkungan seperti:\n\n🌲 Program Hutan - konservasi dan restorasi hutan\n🌊 Program Laut - pelestarian ekosistem laut\n♻️ Program Daur Ulang - pengelolaan sampah berkelanjutan\n🌱 Program Pertanian - pertanian berkelanjutan\n\nMau tahu lebih detail program yang mana?";
-    } else if (
-      lowerMessage.includes("gabung") ||
-      lowerMessage.includes("bergabung")
-    ) {
-      return "Bergabung dengan Gema Nusa sangat mudah!\n\n1️⃣ Daftar di website kami\n2️⃣ Pilih program yang sesuai minat\n3️⃣ Ikuti orientasi online\n4️⃣ Mulai berkontribusi!\n\nApakah Anda sudah memiliki program yang diminati?";
-    } else if (lowerMessage.includes("dampak")) {
-      return "Sampai saat ini, Gema Nusa telah mencapai:\n\n🌳 15,000+ pohon ditanam\n🐠 500+ hektar laut dilindungi\n♻️ 2,500+ ton sampah didaur ulang\n👥 10,000+ relawan aktif\n\nSemua ini berkat kontribusi orang-orang hebat seperti Anda!";
-    } else if (lowerMessage.includes("halo") || lowerMessage.includes("hai")) {
-      return "Halo juga! Senang bertemu dengan Anda. Saya di sini untuk membantu Anda mengenal lebih jauh tentang Gema Nusa dan program-program lingkungan kami. Ada yang ingin Anda ketahui?";
-    } else {
-      return "Terima kasih atas pertanyaannya! Saya akan dengan senang hati membantu Anda. Anda bisa bertanya tentang program kami, cara bergabung, atau mencoba Quest Luma untuk menemukan program yang tepat untuk Anda.";
+    
+    // Cek pattern matching terlebih dahulu
+    for (const pattern of this.responsePatterns) {
+      for (const regex of pattern.patterns) {
+        if (regex.test(lowerMessage)) {
+          return pattern.response;
+        }
+      }
     }
+
+    // Fallback berdasarkan kategori kata kunci
+    const detectedCategories = this.detectCategories(lowerMessage);
+    
+    if (detectedCategories.length > 0) {
+      const primaryCategory = detectedCategories[0];
+      return this.getCategoryResponse(primaryCategory);
+    }
+
+    // Ultimate fallback - random dari fallback responses
+    return this.fallbackResponses[
+      Math.floor(Math.random() * this.fallbackResponses.length)
+    ];
+  }
+
+  detectCategories(message) {
+    const categories = [];
+    for (const [category, keywords] of Object.entries(this.topicCategories)) {
+      if (keywords.some(keyword => message.includes(keyword))) {
+        categories.push(category);
+      }
+    }
+    return categories;
+  }
+
+  getCategoryResponse(category) {
+    const responses = {
+      environment: "Topik lingkungan memang sangat penting! 🌍 Di Gema Nusa, kami memiliki berbagai program konservasi alam mulai dari hutan hingga laut. Mau tahu program apa saja yang tersedia?",
+      programs: "Program kami sangat beragam dan menarik! 🌱 Ada program hutan, laut, daur ulang, pertanian berkelanjutan, dan banyak lagi. Program mana yang ingin Anda ketahui lebih detail?",
+      quest: "Quest Luma bisa membantu menemukan program yang cocok untuk Anda! 🎯 Hanya butuh 2-3 menit untuk menyelesaikannya. Dengan quest ini, Anda bisa dapat rekomendasi program yang sesuai minat. Mau mencoba?",
+      impact: "Kami bangga dengan dampak yang telah dicapai bersama relawan! 📊 Hingga kini sudah 15,000+ pohon ditanam, 500+ hektar laut dilindungi, dan 10,000+ relawan aktif berkontribusi. Ingin berkontribusi juga?",
+      community: "Komunitas Gema Nusa tersebar di seluruh Indonesia! 👥 Bergabung sangat mudah dan Anda bisa memilih program sesuai minat dan lokasi. Mau tahu caranya bergabung?",
+      help: "Saya di sini untuk membantu! 😊 Anda bisa bertanya tentang program, Quest Luma, cara bergabung, dampak yang sudah kami capai, atau info lainnya tentang Gema Nusa.",
+      organization: "Gema Nusa adalah wadah bagi generasi muda untuk aksi lingkungan yang nyata! 🎯 Visi kami menciptakan Indonesia yang hijau dan berkelanjutan melalui kolaborasi anak muda!",
+      donation: "Terima kasih atas ketertarikan untuk mendukung! 💜 Donasi sangat membantu kelangsungan program lingkungan kami seperti penanaman pohon, konservasi laut, dan edukasi lingkungan.",
+      contact: "Untuk informasi lebih lanjut, Anda bisa menghubungi kami melalui email, WhatsApp, atau media sosial. Tim kami akan dengan senang hati membantu Anda!",
+      events: "Kami rutin mengadakan berbagai event dan kegiatan lingkungan! 🗓️ Mulai dari webinar, workshop, aksi tanam pohon, hingga beach cleanup. Cek jadwal terbaru di website kami!"
+    };
+    
+    return responses[category] || this.fallbackResponses[0];
   }
 
   initializeAdvancedResponses() {

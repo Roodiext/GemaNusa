@@ -1,48 +1,45 @@
 <section id="luma-care" class="min-h-screen bg-[#F9FAFB] text-gray-800 p-6">
-	<!-- Hero -->
-	<div id="luma-hero" class="max-w-4xl mx-auto text-center py-20 transition-opacity duration-700">
-		<div class="bg-white rounded-xl shadow-md p-10">
-			<h1 class="text-4xl font-semibold text-gray-800">Luma Care Match</h1>
-			<p class="mt-3 text-lg text-gray-600">Cocokkan pasangan bantuan dan bantu Luma menyebarkan kebaikan!</p>
+	<!-- Hero Section -->
+<div id="luma-hero" class="relative min-h-screen flex items-center justify-center px-4 bg-white">
+  <div class="container mx-auto px-6 sm:px-8 z-10">
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10">
 
-			<!-- Target / Achievement -->
-			<div class="mt-6 flex justify-center gap-4">
-				<div class="px-4 py-2 bg-green-50 rounded-lg text-center">
-					<div class="text-xl font-semibold">≥ 800</div>
-					<div class="text-sm text-gray-600">Pahlawan Peduli</div>
-				</div>
-				<div class="px-4 py-2 bg-yellow-50 rounded-lg text-center">
-					<div class="text-xl font-semibold">600–799</div>
-					<div class="text-sm text-gray-600">Relawan Hebat</div>
-				</div>
-				<div class="px-4 py-2 bg-gray-50 rounded-lg text-center">
-					<div class="text-xl font-semibold">400–599</div>
-					<div class="text-sm text-gray-600">Pejuang Peduli</div>
-				</div>
-			</div>
+      <!-- Left: Text Content -->
+      <div class="max-w-xl text-center md:text-left">
+        <h1 class="text-4xl md:text-5xl font-semibold text-gray-800 mb-4">Luma Care Match</h1>
+        <p class="text-lg md:text-xl text-gray-600 mb-6">
+          Cocokkan pasangan bantuan dan bantu Luma menyebarkan kebaikan!
+        </p>
 
-			<button id="start-game-btn" class="mt-8 px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">Mulai Game</button>
-			<div class="mt-4 text-sm text-gray-500">Klik kartu untuk membalik. Cocokkan semua pasangan!</div>
+        <!-- Buttons -->
+        <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <button id="start-game-btn" class="px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">
+            Mulai Game
+          </button>
+          <a href="/pages/index.html#games" class="px-6 py-3 bg-white text-green-600 border border-green-600 rounded-lg shadow hover:bg-green-50 transition text-center">
+            Kembali Beranda
+          </a>
+        </div>
 
-			<!-- Instructions -->
-			<div class="mt-8 text-left">
-				<div class="bg-gray-50 border rounded-lg p-4">
-					<h3 class="font-semibold mb-2">Cara Bermain</h3>
-					<ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-						<li>Klik satu kartu untuk membalik, lalu klik kartu kedua untuk mencocokkan.</li>
-						<li>Jika cocok, kartu tetap terbuka. Jika salah, kartu akan kembali dalam 1 detik.</li>
-						<li>Capai semua pasangan untuk menyelesaikan permainan.</li>
-					</ul>
-					<h3 class="font-semibold mt-3 mb-2">Tips & Trik</h3>
-					<ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-						<li>Ingat posisi ikon yang sudah pernah dibuka untuk mengurangi moves.</li>
-						<li>Kerjakan per baris/area supaya mudah menghafal posisi.</li>
-						<li>Bersantai dan fokus – waktu & moves memengaruhi skor.</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="mt-4 text-sm text-gray-500">
+          Klik kartu untuk membalik. Cocokkan semua pasangan!
+        </div>
+      </div>
+
+      <!-- Right: Mascot -->
+      <div class="flex justify-center md:justify-end">
+        <img 
+          src="/assets/img/luma-ai-bot/lumaCareMatch.png" 
+          alt="Luma" 
+          class="w-52 sm:w-64 md:w-72 lg:w-80 h-auto"
+        >
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 
 	<!-- Game Area -->
 	<div id="luma-game" class="max-w-4xl mx-auto hidden transition-opacity duration-700">
@@ -75,8 +72,8 @@
 		<div class="mt-6 flex items-center justify-between">
 			<div class="flex items-center space-x-3">
 				<button id="reset-btn" class="px-4 py-2 bg-gray-100 rounded text-gray-700 border">Reset</button>
-				<button id="to-hero-btn" class="px-4 py-2 bg-gray-50 rounded text-gray-700 border">Kembali ke Hero</button>
-				<button id="page-home-btn" class="px-4 py-2 bg-gray-50 rounded text-gray-700 border">Kembali ke Beranda</button>
+				<button id="to-hero-btn" class="px-4 py-2 bg-gray-50 rounded text-gray-700 border">Main Menu</button>
+				<button id="page-home-btn" class="px-4 py-2 bg-gray-50 rounded text-gray-700 border">Beranda</button>
 			</div>
 		</div>
 	</div>

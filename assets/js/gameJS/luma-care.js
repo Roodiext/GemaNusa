@@ -5,6 +5,10 @@ let startBtn, hero, gameArea, board, timerEl, movesEl, progressBar, messageEl, b
 let resultModal, resultScore, resultMoves, resultTime, resultTitle, resultBadge, resultDialog;
 let playAgainBtn, homeBtn, resetBtn;
 
+// Audio elements
+let bgmAudio, flipSfx, matchSfx, failSfx, winnerSfx;
+let isMuted = false;
+
 // existing game state variables and constants
 const icons = ['🚑','📚','💊','🧥','🧸','🚰','🩺','🪣'];
 let deck = [];
@@ -16,7 +20,6 @@ let matchedPairs = 0;
 let timer = 0;
 let timerInterval = null;
 let started = false;
-
 const DIALOG = {
 	start: 'Yuk cocokkan pasangan bantuan! ❤️',
 	correct: 'Mantap! Tepat sasaran 🎯',
@@ -29,6 +32,82 @@ const DIALOG = {
 		pemula: 'Jangan khawatir, coba lagi! 🤝'
 	}
 };
+
+// Audio system functions
+function initAudio() {
+	bgmAudio = document.getElementById('bgm-audio');
+	flipSfx = document.getElementById('flip-sfx');
+	matchSfx = document.getElementById('match-sfx');
+	failSfx = document.getElementById('fail-sfx');
+	winnerSfx = document.getElementById('winner-sfx');
+	
+	// Set volume levels
+	if (bgmAudio) bgmAudio.volume = 0.5;
+	if (flipSfx) flipSfx.volume = 0.6;
+	if (matchSfx) matchSfx.volume = 0.7;
+	if (failSfx) failSfx.volume = 0.8;
+	if (winnerSfx) winnerSfx.volume = 0.8;
+	
+	// Handle page visibility changes for background music
+	document.addEventListener('visibilitychange', () => {
+		if (document.hidden) {
+			pauseBGM();
+		} else {
+			resumeBGM();
+		}
+	});
+}
+
+function playSound(audioElement) {
+	if (!audioElement || isMuted) return;
+	
+	try {
+		audioElement.currentTime = 0;
+		audioElement.play().catch(error => {
+			console.log('Audio play failed:', error);
+		});
+	} catch (error) {
+		console.log('Audio error:', error);
+	}
+}
+
+function playBGM() {
+	if (!bgmAudio || isMuted) return;
+	
+	try {
+		bgmAudio.play().catch(error => {
+			console.log('BGM play failed:', error);
+		});
+	} catch (error) {
+		console.log('BGM error:', error);
+	}
+}
+
+function pauseBGM() {
+	if (bgmAudio && !bgmAudio.paused) {
+		bgmAudio.pause();
+	}
+}
+
+function resumeBGM() {
+	if (bgmAudio && bgmAudio.paused && !isMuted) {
+		bgmAudio.play().catch(error => {
+			console.log('BGM resume failed:', error);
+		});
+	}
+}
+
+function toggleMute() {
+	isMuted = !isMuted;
+	
+	if (isMuted) {
+		pauseBGM();
+	} else {
+		resumeBGM();
+	}
+	
+	return isMuted;
+}
 
 function showBubble(text, timeout = 2500) {
 	bubbleText.textContent = text;
@@ -102,63 +181,6 @@ function flipToHide(card) {
 	card.querySelector('.card-back').style.opacity = '1';
 }
 
-function onCardClick(e) {
-	const card = e.currentTarget;
-	if (lockBoard) return;
-	if (card.classList.contains('flipped')) return;
-
-	// start timer on first click
-	if (!started) {
-		startTimer();
-		started = true;
-	}
-
-	flipToShow(card);
-
-	if (!firstCard) {
-		firstCard = card;
-		return;
-	}
-	secondCard = card;
-	moves++;
-	movesEl.textContent = moves;
-	checkForMatch();
-}
-
-function checkForMatch() {
-	if (!firstCard || !secondCard) return;
-	const isMatch = firstCard.dataset.value === secondCard.dataset.value;
-	if (isMatch) {
-		// keep open
-		firstCard.removeEventListener('click', onCardClick);
-		secondCard.removeEventListener('click', onCardClick);
-		firstCard.classList.add('matched');
-		secondCard.classList.add('matched');
-		firstCard = null; secondCard = null;
-		matchedPairs++;
-		updateProgress();
-		showMessage(DIALOG.correct);
-		// near finish check
-		if (8 - matchedPairs <= 3 && matchedPairs < 8) {
-			showMessage(DIALOG.almost);
-		}
-		if (matchedPairs === 8) {
-			endGame();
-		}
-	} else {
-		// wrong
-		lockBoard = true;
-		showMessage(DIALOG.wrong);
-		setTimeout(() => {
-			flipToHide(firstCard);
-			flipToHide(secondCard);
-			firstCard = null;
-			secondCard = null;
-			lockBoard = false;
-		}, 1000);
-	}
-}
-
 function updateProgress() {
 	const pct = (matchedPairs / 8) * 100;
 	progressBar.style.width = pct + '%';
@@ -190,8 +212,72 @@ function titleForScore(score) {
 	return { title: '🤝 Pemula Peduli', dialog: DIALOG.finished.pemula };
 }
 
+function onCardClick(e) {
+	const card = e.currentTarget;
+	if (lockBoard) return;
+	if (card.classList.contains('flipped')) return;
+
+	// start timer on first click
+	if (!started) {
+		startTimer();
+		started = true;
+	}
+
+	flipToShow(card);
+	playSound(flipSfx);
+
+	if (!firstCard) {
+		firstCard = card;
+		return;
+	}
+	secondCard = card;
+	moves++;
+	movesEl.textContent = moves;
+	checkForMatch();
+}
+
+function checkForMatch() {
+	if (!firstCard || !secondCard) return;
+	const isMatch = firstCard.dataset.value === secondCard.dataset.value;
+	if (isMatch) {
+		// keep open
+		firstCard.removeEventListener('click', onCardClick);
+		secondCard.removeEventListener('click', onCardClick);
+		firstCard.classList.add('matched');
+		secondCard.classList.add('matched');
+		firstCard = null; secondCard = null;
+		matchedPairs++;
+		updateProgress();
+		playSound(matchSfx);
+		showMessage(DIALOG.correct);
+		// near finish check
+		if (8 - matchedPairs <= 3 && matchedPairs < 8) {
+			showMessage(DIALOG.almost);
+		}
+		if (matchedPairs === 8) {
+			endGame();
+		}
+	} else {
+		// wrong
+		lockBoard = true;
+		playSound(failSfx);
+		showMessage(DIALOG.wrong);
+		setTimeout(() => {
+			flipToHide(firstCard);
+			flipToHide(secondCard);
+			firstCard = null;
+			secondCard = null;
+			lockBoard = false;
+		}, 1000);
+	}
+}
+
 function endGame() {
 	stopTimer();
+	
+	// Stop background music and play winner sound
+	pauseBGM();
+	
 	const sc = calcScore();
 	const t = titleForScore(sc);
 	resultScore.textContent = sc;
@@ -200,6 +286,8 @@ function endGame() {
 	resultBadge.textContent = t.title;
 	resultDialog.textContent = t.dialog;
 	resultTitle.textContent = 'Selesai!';
+	// play winner sound
+	playSound(winnerSfx);
 	// show modal
 	resultModal.classList.remove('hidden');
 	showBubble(t.dialog, 4000);
@@ -264,6 +352,7 @@ function initBindings() {
 	// NEW buttons
 	const pageHomeBtn = document.getElementById('page-home-btn');
 	const toHeroBtn = document.getElementById('to-hero-btn');
+	const muteToggle = document.getElementById('mute-toggle');
 
 	// bind events (handlers reference existing functions)
 	startBtn.addEventListener('click', function () {
@@ -272,6 +361,10 @@ function initBindings() {
 		gameArea.classList.remove('hidden');
 		// fade in
 		setTimeout(() => gameArea.classList.add('opacity-100'), 20);
+		
+		// Start background music when game begins
+		playBGM();
+		
 		showMessage(DIALOG.start);
 		resetGame(true);
 		// Preview cards after game starts
@@ -280,12 +373,18 @@ function initBindings() {
 
 	playAgainBtn.addEventListener('click', function () {
 		resultModal.classList.add('hidden');
+		
+		// Resume background music
+		playBGM();
+		
 		resetGame(true);
 		// Preview cards when playing again
 		setTimeout(() => previewCards(), 300);
 	});
 
 	homeBtn.addEventListener('click', function () {
+		// Stop background music when going home
+		pauseBGM();
 		window.location.href = '/';
 	});
 
@@ -296,6 +395,8 @@ function initBindings() {
 	// NEW: kembali ke halaman index.html
 	if (pageHomeBtn) {
 		pageHomeBtn.addEventListener('click', function () {
+			// Stop background music when going to home page
+			pauseBGM();
 			window.location.href = '/index.html';
 		});
 	}
@@ -305,6 +406,10 @@ function initBindings() {
 		toHeroBtn.addEventListener('click', function () {
 			// stop timer and reset board but keep hero visible
 			stopTimer();
+			
+			// Stop background music when returning to hero
+			pauseBGM();
+			
 			resetGame(false);
 			// show hero
 			hero.classList.remove('hidden');
@@ -315,6 +420,18 @@ function initBindings() {
 		});
 	}
 
+	// Mute toggle functionality
+	if (muteToggle) {
+		muteToggle.addEventListener('click', function () {
+			const muted = toggleMute();
+			muteToggle.textContent = muted ? '🔇' : '🔊';
+			muteToggle.title = muted ? 'Unmute Sound' : 'Mute Sound';
+		});
+	}
+
+	// initialize audio system
+	initAudio();
+	
 	// initialize board now component and bindings are ready
 	createBoard();
 }

@@ -1,16 +1,11 @@
 .cards-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 32px;
   max-width: 700px;
   margin: 0 auto;
   justify-content: center;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cards-container.has-expanded {
-  max-width: 1020px;
-  grid-template-columns: 660px 320px;
 }
 
 .card {
@@ -23,25 +18,19 @@
 }
 
 .card.expanded {
-  width: 660px;
-  z-index: 10;
-  grid-row: span 2;
-}
-
-.card.non-expanded {
-  width: 320px;
+  z-index: 2;
 }
 
 .card:hover:not(.expanded) {
   transform: translateY(-4px);
 }
-
 .card-inner {
   display: flex;
   width: 100%;
   height: 100%;
   border-radius: 16px;
   overflow: hidden;
+  position: relative;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
@@ -54,19 +43,26 @@
   background-position: center;
 }
 
+/* Detail tampil sebagai overlay agar layout tidak berubah */
 .card-detail {
-  width: 320px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: white;
   padding: 24px;
-  transform: translateX(100%);
   opacity: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.98) translateY(8px);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
+  pointer-events: none;
+  border-radius: 16px;
 }
 
 .card.expanded .card-detail {
-  transform: translateX(0);
   opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }
 
 .overlay-gradient {
@@ -89,8 +85,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .cards-container,
-  .cards-container.has-expanded {
+  .cards-container {
     grid-template-columns: 1fr;
     max-width: 320px;
   }

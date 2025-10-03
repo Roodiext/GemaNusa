@@ -16,6 +16,14 @@ class LumaOceanRescue {
     this.levelCompleted = false;
     this.levelStartScore = 0; // Score when current level started
     
+    // Background music state
+    this.bgmAudio = null;
+    this.bgmMuted = false;
+    
+    // Sound effects
+    this.collectSfx = null;
+    this.winnerSfx = null;
+    
     // Luma chat messages
     this.chatMessages = {
       hero: [
@@ -81,6 +89,8 @@ class LumaOceanRescue {
   }
   
   init() {
+    this.setupBGM();
+    this.setupSoundEffects();
     this.bindEvents();
     this.showHeroMessage();
   }
@@ -109,7 +119,19 @@ class LumaOceanRescue {
           startBtn.style.transform = '';
         }, 150);
         
+        // Start background music immediately on user gesture
+        this.startBGM();
+
         this.startGame();
+        return;
+      }
+
+      // Music toggle button
+      const musicBtn = e.target.closest('#music-toggle-btn');
+      if (musicBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.toggleBGM();
         return;
       }
       
@@ -121,6 +143,19 @@ class LumaOceanRescue {
         e.preventDefault();
         console.log('Back home button clicked');
         this.backToHome();
+      }
+    });
+    
+    // Handle page visibility for audio
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (this.bgmAudio && !this.bgmAudio.paused) {
+          this.bgmAudio.pause();
+        }
+      } else {
+        if (this.isGameActive && this.bgmAudio && !this.bgmMuted) {
+          this.bgmAudio.play().catch(err => console.warn('BGM resume blocked:', err));
+        }
       }
     });
     
@@ -181,6 +216,9 @@ class LumaOceanRescue {
     setTimeout(() => {
       this.showLumaChat(this.chatMessages.gameStart[Math.floor(Math.random() * this.chatMessages.gameStart.length)]);
     }, 500);
+
+    // Ensure music toggle UI is in correct state
+    this.updateMusicToggleUI();
   }
   
   startGameplay() {
@@ -192,6 +230,12 @@ class LumaOceanRescue {
     this.levelCompleted = false;
     this.levelStartScore = 0;
     this.updateUI();
+    
+    // Ensure background music is playing during gameplay
+    if (this.bgmAudio && !this.bgmMuted && this.bgmAudio.paused) {
+      console.log('Starting BGM during gameplay...');
+      this.bgmAudio.play().catch(err => console.warn('BGM gameplay start blocked:', err));
+    }
     
     // Start game timer
     this.gameTimer = setInterval(() => {
@@ -323,6 +367,9 @@ class LumaOceanRescue {
     if (trashElement.autoRemoveTimer) {
       clearTimeout(trashElement.autoRemoveTimer);
     }
+    
+    // Play collect sound effect
+    this.playCollectSound();
     
     // Create splash effect
     this.createSplashEffect(trashElement);
@@ -512,6 +559,11 @@ class LumaOceanRescue {
     if (this.trashSpawnTimer) {
       clearTimeout(this.trashSpawnTimer);
     }
+
+    // Pause background music at end of game
+    if (this.bgmAudio && !this.bgmAudio.paused) {
+      this.bgmAudio.pause();
+    }
     
     // Remove all trash items
     this.trashItems.forEach(item => {
@@ -520,6 +572,9 @@ class LumaOceanRescue {
       }
     });
     this.trashItems = [];
+    
+    // Play winner sound effect
+    this.playWinnerSound();
     
     // Show final results
     setTimeout(() => {
@@ -629,6 +684,129 @@ class LumaOceanRescue {
         chatBubble.classList.remove('opacity-100', 'translate-y-0');
       }, 4000);
     }
+  }
+
+  // ===== Audio Controls =====
+  setupBGM() {
+    this.bgmAudio = document.getElementById('bgm-audio');
+    if (this.bgmAudio) {
+      this.bgmAudio.volume = 0.5; // comfortable default volume
+      this.bgmAudio.muted = this.bgmMuted;
+      console.log('BGM Audio element found:', this.bgmAudio.src);
+    } else {
+      console.warn('BGM Audio element not found!');
+    }
+    this.updateMusicToggleUI();
+  }
+
+  setupSoundEffects() {
+    this.collectSfx = document.getElementById('collect-sfx');
+    this.winnerSfx = document.getElementById('winner-sfx');
+    
+    if (this.collectSfx) {
+      this.collectSfx.volume = 0.7; // slightly louder for feedback
+    }
+    
+    if (this.winnerSfx) {
+      this.winnerSfx.volume = 0.8; // celebration sound
+    }
+  }
+
+  playCollectSound() {
+    if (this.collectSfx && !this.bgmMuted) {
+      try {
+        this.collectSfx.currentTime = 0; // Reset to start
+        const playPromise = this.collectSfx.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.catch(err => console.warn('Collect SFX play blocked:', err));
+        }
+      } catch (err) {
+        console.warn('Collect SFX play error:', err);
+      }
+    }
+  }
+
+  playWinnerSound() {
+    if (this.winnerSfx && !this.bgmMuted) {
+      try {
+        this.winnerSfx.currentTime = 0; // Reset to start
+        const playPromise = this.winnerSfx.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.catch(err => console.warn('Winner SFX play blocked:', err));
+        }
+      } catch (err) {
+        console.warn('Winner SFX play error:', err);
+      }
+    }
+  }
+
+  updateMusicToggleUI() {
+    const btn = document.getElementById('music-toggle-btn');
+    const icon = document.getElementById('music-toggle-icon');
+    if (btn) btn.setAttribute('aria-pressed', this.bgmMuted ? 'true' : 'false');
+    if (icon) icon.textContent = this.bgmMuted ? '🔇' : '🔊';
+  }
+
+  startBGM() {
+    console.log('Starting BGM...');
+    if (!this.bgmAudio) {
+      console.log('BGM audio not found, setting up...');
+      this.setupBGM();
+    }
+    
+    if (this.bgmAudio && !this.bgmMuted) {
+      try {
+        console.log('Playing BGM, muted:', this.bgmMuted);
+        this.bgmAudio.currentTime = 0;
+        this.bgmAudio.loop = true; // Ensure looping
+        const playPromise = this.bgmAudio.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise
+            .then(() => {
+              console.log('BGM started successfully');
+            })
+            .catch(err => {
+              console.warn('BGM play blocked:', err);
+              // Try to play after user interaction
+              document.addEventListener('click', () => {
+                if (!this.bgmAudio.paused || this.bgmAudio.currentTime > 0) return;
+                this.bgmAudio.play().catch(e => console.warn('BGM retry failed:', e));
+              }, { once: true });
+            });
+        }
+      } catch (err) {
+        console.warn('BGM play error:', err);
+      }
+    } else {
+      console.log('BGM not started - audio missing or muted:', !this.bgmAudio, this.bgmMuted);
+    }
+  }
+
+  toggleBGM() {
+    console.log('Toggling BGM, current muted state:', this.bgmMuted);
+    this.bgmMuted = !this.bgmMuted;
+    
+    if (this.bgmAudio) {
+      this.bgmAudio.muted = this.bgmMuted;
+      if (this.bgmMuted) {
+        console.log('Pausing BGM');
+        this.bgmAudio.pause();
+      } else if (this.isGameActive) {
+        console.log('Resuming BGM');
+        this.bgmAudio.play().catch(err => console.warn('BGM resume blocked:', err));
+      }
+    }
+    
+    // Also mute/unmute sound effects
+    if (this.collectSfx) {
+      this.collectSfx.muted = this.bgmMuted;
+    }
+    if (this.winnerSfx) {
+      this.winnerSfx.muted = this.bgmMuted;
+    }
+    
+    this.updateMusicToggleUI();
+    console.log('BGM toggled, new muted state:', this.bgmMuted);
   }
 }
 
