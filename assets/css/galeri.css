@@ -1,67 +1,202 @@
 
-        /* === HORIZONTAL SCROLL SETUP === */
-        /* Tailwind tidak support overflow-x tanpa overflow-y secara bersamaan */
-        body {
-            overflow-x: auto;
-            overflow-y: hidden;
-        }
+body {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
 
-        /* === GALLERY CONTAINER === */
-        /* Tailwind tidak punya width: fit-content utility class */
-        .gallery-container {
-            display: flex;
-            width: fit-content;
-            height: 100vh;
-        }
-        
-        .section {
-            min-width: 100vw;
-            height: 100vh;
-            flex-shrink: 0;
-        }
+/* ========================================
+   KONTAINER GALERI
+   ======================================== */
+.gallery-container {
+  display: flex;
+  width: fit-content;
+  height: 100vh;
+}
 
-        /* === LIGHTBOX === */
-        /* Display none untuk initial state (di-toggle dengan JavaScript) */
-        .lightbox {
-            display: none;
-        }
+.section {
+  min-width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
 
-        /* === MASONRY GRID LAYOUT === */
-        /* Taassets/jsilwind hanya support grid sampai 12 columns, ini butuh 30 columns */
-        /* Tailwind tidak support custom grid-template-rows */
-        .masonry-grid {
-            display: grid;
-            grid-template-columns: repeat(30, 1fr);
-            grid-template-rows: repeat(8, 1fr);
-            gap: 0.75rem;
-            height: 95vh;
-            width: 170vw;
-            padding: 1rem;
-        }
+/* ========================================
+   LIGHTBOX
+   ======================================== */
+.lightbox {
+  display: none;
+}
 
-        /* === GRID ITEM POSITIONS === */
-        /* Tailwind tidak support grid-column/row dengan nilai custom seperti 1/6, 16/22, dst */
-        .grid-item-1 { grid-column: 1 / 6; grid-row: 1 / 4; }
-        .grid-item-2 { grid-column: 6 / 9; grid-row: 1 / 6; }
-        .grid-item-3 { grid-column: 16 / 22; grid-row: 1 / 4; }
-        .grid-item-4 { grid-column: 24 / 36; grid-row: 1 / 10; }
-        .grid-item-5 { grid-column: 1 / 3; grid-row: 4 / 10; }
-        .grid-item-6 { grid-column: 10 / 14; grid-row: 1 / 10; }
-        .grid-item-7 { grid-column: 15 / 19; grid-row: 5 / 8; }
-        .grid-item-8 { grid-column: 19 / 22; grid-row: 4 / 10; }
-        .grid-item-9 { grid-column: 3 / 9; grid-row: 6 / 10; }
+/* ========================================
+   TATA LETAK MASONRY GRID (Desktop)
+   ======================================== */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 0.75rem;
+  height: 95vh;
+  width: 170vw;
+  padding: 1rem;
+}
 
-        /* === HOVER EFFECTS === */
-        /* Tailwind tidak support hover untuk child elements (parent:hover > child) */
-        .hover-scale:hover img { 
-            transform: scale(1.05); 
-        }   
-        
-        .hover-text {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .clickable-image:hover .hover-text {
-            opacity: 1;
-        }
+/* Posisi Item Grid */
+.grid-item-1 { grid-column: 1 / 6; grid-row: 1 / 4; }
+.grid-item-2 { grid-column: 6 / 9; grid-row: 1 / 6; }
+.grid-item-3 { grid-column: 16 / 22; grid-row: 1 / 4; }
+.grid-item-4 { grid-column: 24 / 36; grid-row: 1 / 10; }
+.grid-item-5 { grid-column: 1 / 3; grid-row: 4 / 10; }
+.grid-item-6 { grid-column: 10 / 14; grid-row: 1 / 10; }
+.grid-item-7 { grid-column: 15 / 19; grid-row: 5 / 8; }
+.grid-item-8 { grid-column: 19 / 22; grid-row: 4 / 10; }
+.grid-item-9 { grid-column: 3 / 9; grid-row: 6 / 10; }
+
+/* ========================================
+   EFEK HOVER
+   ======================================== */
+.hover-scale:hover img { 
+  transform: scale(1.05); 
+}
+
+.hover-text {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.clickable-image:hover .hover-text {
+  opacity: 1;
+}
+
+/* ========================================
+   RESPONSIF: DESKTOP (>768px)
+   ======================================== */
+@media (min-width: 769px) {
+  body {
+    overflow: hidden;
+  }
+  
+  .gallery-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .section {
+    min-width: 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+  }
+}
+
+/* ========================================
+   RESPONSIF: MOBILE (≤768px)
+   ======================================== */
+@media (max-width: 768px) {
+  /* Body Mobile */
+  body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Kontainer Galeri Mobile */
+  .gallery-container {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+  
+  /* Section Mobile */
+  .section {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 4rem 1.5rem !important;
+  }
+  
+  /* Section Intro (Pertama) */
+  .section:first-child {
+    padding-top: 5rem !important;
+  }
+  
+  .mobile-intro-section {
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+    padding: 0 !important;
+  }
+  
+  /* Postcard Wrapper */
+  .postcard-wrapper {
+    transform: none !important;
+    width: 100% !important;
+  }
+  
+  .postcard-wrapper > div {
+    padding: 1.25rem !important;
+    max-width: 100% !important;
+  }
+  
+  .postcard-image {
+    width: 100% !important;
+    height: 280px !important;
+  }
+  
+  .postcard-wrapper h2 {
+    font-size: 1.75rem !important;
+  }
+  
+  /* Teks Intro */
+  .intro-text {
+    text-align: center !important;
+    max-width: 100% !important;
+  }
+  
+  .intro-text h1 {
+    font-size: 3rem !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .intro-text p {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Grid Gambar (Ditumpuk Vertikal) */
+  .masonry-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .masonry-grid > div {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 350px !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  
+  .masonry-grid img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 350px !important;
+    object-fit: cover !important;
+  }
+  
+  /* Tombol Kembali Mobile */
+  a.fixed.top-8.left-8 {
+    top: 1.5rem !important;
+    left: 1.5rem !important;
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  /* Teks Hover Selalu Terlihat di Mobile */
+  .hover-text {
+    opacity: 1 !important;
+  }
+}

@@ -1,4 +1,10 @@
 <section id="hero-section" class="h-screen bg-white flex items-center relative overflow-hidden">
+  <!-- Audio Elements -->
+  <audio id="bgm-audio" src="/assets/audio/lumaGreenBGM.mp3" preload="auto" loop class="hidden"></audio>
+  <audio id="correct-sfx" src="/assets/audio/collect.mp3" preload="auto" class="hidden"></audio>
+  <audio id="wrong-sfx" src="/assets/audio/fail.mp3" preload="auto" class="hidden"></audio>
+  <audio id="winner-sfx" src="/assets/audio/winner.mp3" preload="auto" class="hidden"></audio>
+  
   <!-- Background Pattern -->
   <div class="absolute inset-0 opacity-5">
     <svg width="100%" height="100%">
@@ -44,7 +50,7 @@
       <!-- Right: Mascot -->
       <div class="flex justify-center md:justify-end">
         <img 
-          src="../assets/img/luma-ai-bot/lumaGreenMission.png" 
+          src="/assets/img/luma-ai-bot/lumaGreenMission.png" 
           alt="Luma" 
           class="w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72"
         >
@@ -68,7 +74,7 @@
         <!-- Mascot with Speech Bubble -->
         <div class="relative mb-8 sm:mb-10">
             <div class="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center mx-auto mb-5">
-                <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-20 h-20 sm:w-24 sm:h-24">
+                <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-20 h-20 sm:w-24 sm:h-24">
             </div>
             <div class="bg-gray-50 rounded-xl px-6 sm:px-7 py-4 sm:py-5 shadow-sm border border-gray-100 relative mx-auto">
                 <p class="text-gray-700 font-medium text-base sm:text-lg font-product">Menyiapkan permainan...</p>
@@ -93,7 +99,7 @@
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center flex-shrink-0">
-                        <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-10 h-10 sm:w-12 sm:h-12">
+                        <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-10 h-10 sm:w-12 sm:h-12">
                     </div>
                     <div>
                         <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 font-product">Misi Pemilahan Sampah</h2>
@@ -109,6 +115,9 @@
                         <p class="text-xs sm:text-sm text-gray-500 uppercase tracking-wide mb-1">Tersisa</p>
                         <p id="items-left" class="text-3xl sm:text-4xl font-bold text-gray-900">8</p>
                     </div>
+                    <button id="mute-toggle" class="text-2xl hover:bg-gray-100 p-2 rounded-lg transition-colors" title="Toggle Sound">
+                        🔊
+                    </button>
                 </div>
             </div>
             
@@ -207,7 +216,7 @@
                 <div class="absolute -bottom-2 left-6 w-4 h-4 bg-white border-r-2 border-b-2 border-gray-200 transform rotate-45"></div>
             </div>
             <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center cursor-pointer shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 active:scale-95">
-                <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-full h-full">
+                <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-full h-full">
             </div>
         </div>
     </div>
@@ -215,8 +224,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mt-12 sm:mt-16 max-w-3xl mx-auto">
                 <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3">🎯</div>
-                    <h3 class="font-semibold text-gray-900 mb-2 teext-lg font-product">Mudah Dimainkan</h3>
-                     <p class="text-sm sm:text-base text-gray-600 font-inter">Seret dan lepas item ke kategori yang tepat</p>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-base sm:text-lg font-product">Mudah Dimainkan</h3>
+                    <p class="text-sm sm:text-base text-gray-600 font-inter">Seret dan lepas item ke kategori yang tepat</p>
                 </div>
                 <div class="bg-gray-50 rounded-xl p-6 sm:p-7 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3">🏆</div>
@@ -240,7 +249,7 @@
         <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-5 font-product">Selamat!</h3>
         <div class="bg-gray-50 rounded-xl p-5 sm:p-7 mb-5 sm:mb-6 border border-gray-100">
             <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center mx-auto mb-4 border-2 border-emerald-100">
-                <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-12 h-12 sm:w-16 sm:h-16">
+                <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-12 h-12 sm:w-16 sm:h-16">
             </div>
             <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm border border-gray-100">
                 <p class="text-gray-700 font-medium text-base sm:text-lg font-product">Hebat! Kamu berhasil menyelesaikan misi hijau! 🌿✨</p>

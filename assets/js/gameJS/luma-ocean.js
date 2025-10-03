@@ -231,12 +231,6 @@ class LumaOceanRescue {
     this.levelStartScore = 0;
     this.updateUI();
     
-    // Ensure background music is playing during gameplay
-    if (this.bgmAudio && !this.bgmMuted && this.bgmAudio.paused) {
-      console.log('Starting BGM during gameplay...');
-      this.bgmAudio.play().catch(err => console.warn('BGM gameplay start blocked:', err));
-    }
-    
     // Start game timer
     this.gameTimer = setInterval(() => {
       this.timeLeft--;
@@ -692,9 +686,6 @@ class LumaOceanRescue {
     if (this.bgmAudio) {
       this.bgmAudio.volume = 0.5; // comfortable default volume
       this.bgmAudio.muted = this.bgmMuted;
-      console.log('BGM Audio element found:', this.bgmAudio.src);
-    } else {
-      console.warn('BGM Audio element not found!');
     }
     this.updateMusicToggleUI();
   }
@@ -703,19 +694,19 @@ class LumaOceanRescue {
     this.collectSfx = document.getElementById('collect-sfx');
     this.winnerSfx = document.getElementById('winner-sfx');
     
+    // Set volume for sound effects
     if (this.collectSfx) {
-      this.collectSfx.volume = 0.7; // slightly louder for feedback
+      this.collectSfx.volume = 0.7;
     }
-    
     if (this.winnerSfx) {
-      this.winnerSfx.volume = 0.8; // celebration sound
+      this.winnerSfx.volume = 0.8;
     }
   }
 
   playCollectSound() {
     if (this.collectSfx && !this.bgmMuted) {
       try {
-        this.collectSfx.currentTime = 0; // Reset to start
+        this.collectSfx.currentTime = 0;
         const playPromise = this.collectSfx.play();
         if (playPromise && typeof playPromise.then === 'function') {
           playPromise.catch(err => console.warn('Collect SFX play blocked:', err));
@@ -729,7 +720,7 @@ class LumaOceanRescue {
   playWinnerSound() {
     if (this.winnerSfx && !this.bgmMuted) {
       try {
-        this.winnerSfx.currentTime = 0; // Reset to start
+        this.winnerSfx.currentTime = 0;
         const playPromise = this.winnerSfx.play();
         if (playPromise && typeof playPromise.then === 'function') {
           playPromise.catch(err => console.warn('Winner SFX play blocked:', err));
@@ -748,51 +739,27 @@ class LumaOceanRescue {
   }
 
   startBGM() {
-    console.log('Starting BGM...');
-    if (!this.bgmAudio) {
-      console.log('BGM audio not found, setting up...');
-      this.setupBGM();
-    }
-    
+    if (!this.bgmAudio) this.setupBGM();
     if (this.bgmAudio && !this.bgmMuted) {
       try {
-        console.log('Playing BGM, muted:', this.bgmMuted);
         this.bgmAudio.currentTime = 0;
-        this.bgmAudio.loop = true; // Ensure looping
         const playPromise = this.bgmAudio.play();
         if (playPromise && typeof playPromise.then === 'function') {
-          playPromise
-            .then(() => {
-              console.log('BGM started successfully');
-            })
-            .catch(err => {
-              console.warn('BGM play blocked:', err);
-              // Try to play after user interaction
-              document.addEventListener('click', () => {
-                if (!this.bgmAudio.paused || this.bgmAudio.currentTime > 0) return;
-                this.bgmAudio.play().catch(e => console.warn('BGM retry failed:', e));
-              }, { once: true });
-            });
+          playPromise.catch(err => console.warn('BGM play blocked:', err));
         }
       } catch (err) {
         console.warn('BGM play error:', err);
       }
-    } else {
-      console.log('BGM not started - audio missing or muted:', !this.bgmAudio, this.bgmMuted);
     }
   }
 
   toggleBGM() {
-    console.log('Toggling BGM, current muted state:', this.bgmMuted);
     this.bgmMuted = !this.bgmMuted;
-    
     if (this.bgmAudio) {
       this.bgmAudio.muted = this.bgmMuted;
       if (this.bgmMuted) {
-        console.log('Pausing BGM');
         this.bgmAudio.pause();
       } else if (this.isGameActive) {
-        console.log('Resuming BGM');
         this.bgmAudio.play().catch(err => console.warn('BGM resume blocked:', err));
       }
     }
@@ -806,7 +773,6 @@ class LumaOceanRescue {
     }
     
     this.updateMusicToggleUI();
-    console.log('BGM toggled, new muted state:', this.bgmMuted);
   }
 }
 

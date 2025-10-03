@@ -1,10 +1,10 @@
 <!-- Luma Ocean Rescue Game Component -->
 <section id="luma-ocean-rescue" class="min-h-screen">
   <!-- Background Music -->
-  <audio id="bgm-audio" src="../assets/audio/lumaOceanBGM.mp3" preload="auto" loop class="hidden"></audio>
+  <audio id="bgm-audio" src="/assets/audio/lumaOceanBGM.mp3" preload="auto" loop class="hidden"></audio>
   <!-- Sound Effects -->
-  <audio id="collect-sfx" src="../assets/audio/collect.mp3" preload="auto" class="hidden"></audio>
-  <audio id="winner-sfx" src="../assets/audio/winner.mp3" preload="auto" class="hidden"></audio>
+  <audio id="collect-sfx" src="/assets/audio/collect.mp3" preload="auto" class="hidden"></audio>
+  <audio id="winner-sfx" src="/assets/audio/winner.mp3" preload="auto" class="hidden"></audio>
   <!-- Hero Section -->
 <div id="hero-section" class="relative min-h-screen flex items-center justify-center px-4">
   <div class="container mx-auto px-6 sm:px-8 z-10">
@@ -40,7 +40,7 @@
       <!-- Right: Mascot -->
       <div class="flex justify-center md:justify-end">
         <img 
-          src="../assets/img/luma-ai-bot/lumaOceanRescue.png" 
+          src="/assets/img/luma-ai-bot/lumaOceanRescue.png" 
           alt="Luma" 
           class="w-52 sm:w-64 md:w-72 lg:w-80 h-auto"
         >
@@ -57,7 +57,7 @@
       <div class="relative mb-8">
         <div class="w-20 h-20 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
         <div class="absolute inset-0 flex items-center justify-center">
-          <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-8 h-8 object-contain">
+          <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-8 h-8 object-contain">
         </div>
       </div>
       <h2 class="text-2xl font-semibold text-slate-800 mb-2 font-product">Menyiapkan Petualangan</h2>
@@ -118,16 +118,25 @@
     </div>
 
     <!-- Game Area -->
-<div id="game-area" 
-     class="absolute inset-0 bg-cover bg-center" 
-     style="background-image: url('../assets/img/game-BG/bg-luma-ocean-rescue.png');">
-</div>
-
+    <div id="game-area" class="absolute inset-0 overflow-hidden" style="background-image: url('/assets/img/game-BG/bg-luma-ocean-rescue.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <!-- Ocean depth overlay for better contrast -->
+      <div class="absolute inset-0 bg-blue-900 opacity-10"></div>
+      
+      <!-- Floating particles -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+        <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-1000"></div>
+        <div class="absolute top-2/3 left-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse delay-2000"></div>
+        <div class="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse delay-3000"></div>
+      </div>
+      
+    </div>
+  </div>
 
   <!-- Luma Mascot (Always Visible) -->
   <div id="luma-mascot-container" class="fixed bottom-8 right-4 z-30">
     <div class="w-16 h-16 flex items-center justify-center">
-      <img id="luma-mascot" src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-12 h-12 object-contain">
+      <img id="luma-mascot" src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-12 h-12 object-contain">
     </div>
   </div>
 
@@ -175,7 +184,7 @@
         <div class="bg-gray-50 rounded-2xl p-5 mb-8 border border-gray-200">
           <div class="flex items-start space-x-4">
             <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-              <img src="../assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-6 h-6 object-contain">
+              <img src="/assets/img/luma-ai-bot/luma-ai-bot.svg" alt="Luma" class="w-6 h-6 object-contain">
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-2">

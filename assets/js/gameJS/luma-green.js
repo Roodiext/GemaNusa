@@ -16,12 +16,14 @@ class LumaGreenGame {
         ];
         this.draggedItem = null;
         this.isMobile = this.checkMobile();
+        
         // Audio elements
         this.bgmAudio = null;
-        this.collectSfx = null;
-        this.failSfx = null;
+        this.correctSfx = null;
+        this.wrongSfx = null;
         this.winnerSfx = null;
         this.isMuted = false;
+        
         this.init();
     }
 
@@ -39,24 +41,15 @@ class LumaGreenGame {
 
     initAudio() {
         this.bgmAudio = document.getElementById('bgm-audio');
-        this.collectSfx = document.getElementById('collect-sfx');
-        this.failSfx = document.getElementById('fail-sfx');
+        this.correctSfx = document.getElementById('correct-sfx');
+        this.wrongSfx = document.getElementById('wrong-sfx');
         this.winnerSfx = document.getElementById('winner-sfx');
         
         // Set volume levels
-        if (this.bgmAudio) this.bgmAudio.volume = 0.5;
-        if (this.collectSfx) this.collectSfx.volume = 0.7;
-        if (this.failSfx) this.failSfx.volume = 0.8;
+        if (this.bgmAudio) this.bgmAudio.volume = 0.4;
+        if (this.correctSfx) this.correctSfx.volume = 0.7;
+        if (this.wrongSfx) this.wrongSfx.volume = 0.8;
         if (this.winnerSfx) this.winnerSfx.volume = 0.8;
-        
-        // Handle page visibility changes for background music
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                this.pauseBGM();
-            } else {
-                this.resumeBGM();
-            }
-        });
     }
 
     playSound(audioElement) {
@@ -72,29 +65,22 @@ class LumaGreenGame {
         }
     }
 
-    playBGM() {
-        if (!this.bgmAudio || this.isMuted) return;
-        
-        try {
-            this.bgmAudio.play().catch(error => {
-                console.log('BGM play failed:', error);
-            });
-        } catch (error) {
-            console.log('BGM error:', error);
+    startBackgroundMusic() {
+        if (this.bgmAudio && !this.isMuted) {
+            try {
+                this.bgmAudio.play().catch(error => {
+                    console.log('BGM play failed:', error);
+                });
+            } catch (error) {
+                console.log('BGM error:', error);
+            }
         }
     }
 
-    pauseBGM() {
-        if (this.bgmAudio && !this.bgmAudio.paused) {
+    stopBackgroundMusic() {
+        if (this.bgmAudio) {
             this.bgmAudio.pause();
-        }
-    }
-
-    resumeBGM() {
-        if (this.bgmAudio && this.bgmAudio.paused && !this.isMuted) {
-            this.bgmAudio.play().catch(error => {
-                console.log('BGM resume failed:', error);
-            });
+            this.bgmAudio.currentTime = 0;
         }
     }
 
@@ -102,9 +88,13 @@ class LumaGreenGame {
         this.isMuted = !this.isMuted;
         
         if (this.isMuted) {
-            this.pauseBGM();
+            this.stopBackgroundMusic();
         } else {
-            this.resumeBGM();
+            // Only start BGM if game is active
+            const gameSection = document.getElementById('game-section');
+            if (gameSection && !gameSection.classList.contains('hidden')) {
+                this.startBackgroundMusic();
+            }
         }
         
         return this.isMuted;
@@ -189,8 +179,8 @@ class LumaGreenGame {
             loadingSection.classList.add('hidden');
             gameSection.classList.remove('hidden');
             
-            // Start background music when game begins
-            this.playBGM();
+            // Start background music
+            this.startBackgroundMusic();
             
             this.generateGameItems();
             this.setupDragAndDrop();
@@ -436,8 +426,8 @@ class LumaGreenGame {
         
         this.updateUI();
         
-        // Play collect sound
-        this.playSound(this.collectSfx);
+        // Play correct sound
+        this.playSound(this.correctSfx);
         
         const correctMessages = [
             "Benar! Bagus sekali! 🎉",
@@ -457,13 +447,13 @@ class LumaGreenGame {
         item.classList.add('border-red-500', 'bg-red-50');
         item.style.animation = 'shake 0.5s ease-in-out';
         
-        // Play fail sound
-        this.playSound(this.failSfx);
-        
         setTimeout(() => {
             item.classList.remove('border-red-500', 'bg-red-50');
             item.style.animation = '';
         }, 500);
+        
+        // Play wrong sound
+        this.playSound(this.wrongSfx);
         
         const wrongMessages = [
             "Ups! Coba lagi ya! Baca petunjuknya dengan teliti! 🤔",
@@ -491,7 +481,7 @@ class LumaGreenGame {
 
     completeGame() {
         // Stop background music and play winner sound
-        this.pauseBGM();
+        this.stopBackgroundMusic();
         this.playSound(this.winnerSfx);
         
         const finalScore = document.getElementById('final-score');
@@ -532,8 +522,8 @@ class LumaGreenGame {
         this.generateGameItems();
         this.setupDragAndDrop();
         
-        // Resume background music
-        this.playBGM();
+        // Restart background music
+        this.startBackgroundMusic();
         
         this.showLumaMessage("Yay! Mari kita mulai misi baru! 🚀", 2000);
     }
@@ -555,12 +545,12 @@ class LumaGreenGame {
             heroSection.style.transform = 'scale(1)';
         }
         
+        // Stop background music
+        this.stopBackgroundMusic();
+        
         this.score = 0;
         this.itemsCompleted = 0;
         this.updateUI();
-        
-        // Stop background music when going back to home
-        this.pauseBGM();
         
         this.showLumaMessage("Sampai jumpa lagi! Terima kasih sudah bermain! 👋", 3000);
     }

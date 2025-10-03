@@ -187,10 +187,10 @@
                   >Pertanyaan 1 dari 5</span
                 >
               </div>
-              <div class="w-full bg-gray-200 rounded-full h-2 sm:h-3">
+              <div class="w-full bg-gray-200 rounded-full h-3">
                 <div
                   id="progress-bar"
-                  class="bg-gradient-to-r from-nusantara-green to-samudra-blue h-2 sm:h-3 rounded-full transition-all duration-500"
+                  class="bg-purple-500 h-3 rounded-full transition-all duration-500"
                   style="width: 20%"
                 ></div>
               </div>
@@ -202,20 +202,26 @@
             </div>
 
             <!-- Navigation -->
-            <div class="flex justify-between mt-6 sm:mt-8 gap-2 sm:gap-4">
+            <div class="flex justify-between items-center mt-8 gap-4">
               <button
                 id="prev-btn"
-                class="px-3 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                class="group flex items-center gap-2 px-5 py-3 text-sm text-gray-600 hover:text-gray-800 bg-white border border-gray-300 hover:border-gray-400 rounded-lg font-medium transition-all duration-200 hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none"
                 disabled
               >
-                ← <span class="hidden xs:inline">Sebelumnya</span>
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                <span>Sebelumnya</span>
               </button>
               <button
                 id="next-btn"
-                class="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-merauke text-white rounded-lg sm:rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                class="group flex items-center gap-2 px-6 py-3 text-sm bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-semibold shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-sm"
                 disabled
               >
-                <span class="hidden xs:inline">Selanjutnya</span> →
+                <span>Selanjutnya</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
               </button>
             </div>
           </div>
@@ -260,18 +266,11 @@
               </div>
             </div>
 
-            <div id="recommended-programs" class="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+            <div id="recommended-programs" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
               <!-- Recommended programs will be inserted here -->
             </div>
 
-            <div class="text-center">
-              <button
-                id="view-programs-btn"
-                class="bg-gradient-to-r from-samudra-blue to-nusantara-green text-white px-6 sm:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg hover:shadow-lg transition-all w-full sm:w-auto"
-              >
-                Lihat Semua Program
-              </button>
-            </div>
+            
           </div>
         </div>
       </section>

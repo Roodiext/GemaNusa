@@ -42,20 +42,11 @@ function initAudio() {
 	winnerSfx = document.getElementById('winner-sfx');
 	
 	// Set volume levels
-	if (bgmAudio) bgmAudio.volume = 0.5;
+	if (bgmAudio) bgmAudio.volume = 0.4;
 	if (flipSfx) flipSfx.volume = 0.6;
 	if (matchSfx) matchSfx.volume = 0.7;
 	if (failSfx) failSfx.volume = 0.8;
 	if (winnerSfx) winnerSfx.volume = 0.8;
-	
-	// Handle page visibility changes for background music
-	document.addEventListener('visibilitychange', () => {
-		if (document.hidden) {
-			pauseBGM();
-		} else {
-			resumeBGM();
-		}
-	});
 }
 
 function playSound(audioElement) {
@@ -71,10 +62,21 @@ function playSound(audioElement) {
 	}
 }
 
-function playBGM() {
+function toggleMute() {
+	isMuted = !isMuted;
+	if (isMuted && bgmAudio && !bgmAudio.paused) {
+		bgmAudio.pause();
+	} else if (!isMuted && bgmAudio && bgmAudio.paused && started) {
+		startBackgroundMusic();
+	}
+	return isMuted;
+}
+
+function startBackgroundMusic() {
 	if (!bgmAudio || isMuted) return;
 	
 	try {
+		bgmAudio.currentTime = 0;
 		bgmAudio.play().catch(error => {
 			console.log('BGM play failed:', error);
 		});
@@ -83,30 +85,15 @@ function playBGM() {
 	}
 }
 
-function pauseBGM() {
-	if (bgmAudio && !bgmAudio.paused) {
+function stopBackgroundMusic() {
+	if (!bgmAudio) return;
+	
+	try {
 		bgmAudio.pause();
+		bgmAudio.currentTime = 0;
+	} catch (error) {
+		console.log('BGM stop error:', error);
 	}
-}
-
-function resumeBGM() {
-	if (bgmAudio && bgmAudio.paused && !isMuted) {
-		bgmAudio.play().catch(error => {
-			console.log('BGM resume failed:', error);
-		});
-	}
-}
-
-function toggleMute() {
-	isMuted = !isMuted;
-	
-	if (isMuted) {
-		pauseBGM();
-	} else {
-		resumeBGM();
-	}
-	
-	return isMuted;
 }
 
 function showBubble(text, timeout = 2500) {
@@ -274,10 +261,8 @@ function checkForMatch() {
 
 function endGame() {
 	stopTimer();
-	
-	// Stop background music and play winner sound
-	pauseBGM();
-	
+	// Stop background music when game ends
+	stopBackgroundMusic();
 	const sc = calcScore();
 	const t = titleForScore(sc);
 	resultScore.textContent = sc;
@@ -361,30 +346,25 @@ function initBindings() {
 		gameArea.classList.remove('hidden');
 		// fade in
 		setTimeout(() => gameArea.classList.add('opacity-100'), 20);
-		
-		// Start background music when game begins
-		playBGM();
-		
 		showMessage(DIALOG.start);
 		resetGame(true);
+		// Start background music
+		startBackgroundMusic();
 		// Preview cards after game starts
 		setTimeout(() => previewCards(), 300);
 	});
 
 	playAgainBtn.addEventListener('click', function () {
 		resultModal.classList.add('hidden');
-		
-		// Resume background music
-		playBGM();
-		
 		resetGame(true);
+		// Restart background music
+		startBackgroundMusic();
 		// Preview cards when playing again
 		setTimeout(() => previewCards(), 300);
 	});
 
 	homeBtn.addEventListener('click', function () {
-		// Stop background music when going home
-		pauseBGM();
+		stopBackgroundMusic();
 		window.location.href = '/';
 	});
 
@@ -395,8 +375,7 @@ function initBindings() {
 	// NEW: kembali ke halaman index.html
 	if (pageHomeBtn) {
 		pageHomeBtn.addEventListener('click', function () {
-			// Stop background music when going to home page
-			pauseBGM();
+			stopBackgroundMusic();
 			window.location.href = '/index.html';
 		});
 	}
@@ -406,10 +385,7 @@ function initBindings() {
 		toHeroBtn.addEventListener('click', function () {
 			// stop timer and reset board but keep hero visible
 			stopTimer();
-			
-			// Stop background music when returning to hero
-			pauseBGM();
-			
+			stopBackgroundMusic();
 			resetGame(false);
 			// show hero
 			hero.classList.remove('hidden');
