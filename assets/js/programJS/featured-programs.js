@@ -184,6 +184,6 @@ function initializeFeaturedPrograms() {
 }
 
 // Global function for external access
-window.featuredPrograms = {
+window.featuredPrograms = { 
     initialize: initializeFeaturedPrograms
 };
