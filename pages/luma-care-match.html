@@ -26,7 +26,7 @@
 		(async function(){
 			const root = document.getElementById('component-root');
 			try {
-				const res = await fetch('/components/game/lumaCareMatch/luma-care.html');
+				const res = await fetch('../components/game/lumaCareMatch/luma-care.html');
 				const html = await res.text();
 				root.innerHTML = html;
 			} catch (e) {
