@@ -794,7 +794,7 @@ class EnhancedLumaAI {
       help: "Saya di sini untuk membantu! 😊 Anda bisa bertanya tentang program, Quest Luma, cara bergabung, dampak yang sudah kami capai, atau info lainnya tentang Gema Nusa.",
       organization: "Gema Nusa adalah wadah bagi generasi muda untuk aksi lingkungan yang nyata! 🎯 Visi kami menciptakan Indonesia yang hijau dan berkelanjutan melalui kolaborasi anak muda!",
       donation: "Terima kasih atas ketertarikan untuk mendukung! 💜 Donasi sangat membantu kelangsungan program lingkungan kami seperti penanaman pohon, konservasi laut, dan edukasi lingkungan.",
-      contact: "Untuk informasi lebih lanjut, Anda bisa menghubungi kami melalui email, WhatsApp, atau media sosial. Tim kami akan dengan senang hati membantu Anda!",
+      contact: "Untuk informasi lebih lanjut, Anda bisa menghubun gi kami melalui email, WhatsApp, atau media sosial. Tim kami akan dengan senang hati membantu Anda!",
       events: "Kami rutin mengadakan berbagai event dan kegiatan lingkungan! 🗓️ Mulai dari webinar, workshop, aksi tanam pohon, hingga beach cleanup. Cek jadwal terbaru di website kami!"
     };
     
